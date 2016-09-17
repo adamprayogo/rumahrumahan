@@ -6,9 +6,9 @@
         <meta name="description" content="<?php echo (isset($meta_description)) ? $meta_description : $general_setting['desc']; ?>" />
         <meta name="keywords" content="<?php echo (isset($meta_kw)) ? $meta_kw : $general_setting['keyword']; ?>" />
         <meta name="author" content="<?php echo (isset($meta_author)) ? $meta_author : $general_setting['author']; ?>"/>
-        <meta property="og:image" content="<?php echo (isset($og_image)) ? $meta_description : base_url() . 'statics/images/logo.png' ?>" />
+        <meta property="og:image" content="<?php echo (isset($og_image)) ? $meta_description : base_url() . 'img/logo.png' ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="shortcut icon" href="<?php echo base_url(); ?>statics/images/favicon.ico" />
+        <link rel="shortcut icon" href="<?php echo base_url(); ?>img/favicon.ico" />
         <?php
         //$CI = & get_instance();
         //echo $general_setting['ga_code'];

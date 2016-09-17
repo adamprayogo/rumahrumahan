@@ -44,6 +44,7 @@ class home extends MY_Controller {
 
     function search($item_id = NULL) {
         if ($item_id == NULL) {
+            $this->ft_title = 'Search Page - Rumaqu.com';
             $this->form_validation->set_rules('category', 'category', 'trim|required|xss_clean');
             $this->form_validation->set_rules('type', 'type', 'trim|required|xss_clean');
             $this->form_validation->set_rules('cities', 'cities', 'trim|required|xss_clean');
@@ -74,7 +75,9 @@ class home extends MY_Controller {
                 $id = $item_id;
                 $data['obj'] = $this->estates_model->get_by_id($id);
                 $this->load->model('rating_model');
-                $data['total_rating'] = $this->rating_model->total(array('estates_id' => $id));
+                $data['total_rating'] = $this->rating_model->total_rating(array('estates_id' => $id));
+                $data['total_user'] = $this->rating_model->total_user_rating(array('estates_id' => $id));
+                $data['user_rating'] = $this->rating_model->user_rating(array('estates_id' => $id), array('value'));
                 $this->load->model('estates_amenities_model');
                 $data['amenities_check'] = $this->estates_amenities_model->get_by_estates_id($id);
                 $this->load->model('images_model');

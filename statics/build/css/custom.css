@@ -4216,7 +4216,7 @@ button.fl-head{
     color: #26B99A;
 }
 .container.gap .map #src_map{
-    height:450px;
+    height:400px;
 }
 .map .col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11,.col-md-12,.col-xs-1,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-5,.col-xs-6,.col-xs-7,.col-xs-8,.col-xs-9,.col-xs-10,.col-xs-11,.col-xs-12{
     height:inherit;
@@ -4231,7 +4231,7 @@ button.fl-head{
     .col-md-3#searchform{
         z-index: 1; 
         position: absolute; 
-        padding-top: 50px; 
+        padding-top: 10px; 
         padding-left: 10px;
         height:100%;
     }
@@ -4255,4 +4255,27 @@ button.fl-head{
 .progress-bar{
     font-size: 10px;
     line-height: 13px;
+}
+.progress-bar.progress-bar-2{
+    background-color: #23cc04;
+}
+.carousel-control.right {
+    background-image: none;
+}
+.carousel-control.left {
+    background-image: none;
+}
+.carousel-control.right {
+    color:#e7e7e7;
+}.carousel-control.left {
+    color:#e7e7e7;
+}
+.carousel img {
+    height:inherit;
+    margin-left:auto;
+    margin-right: auto;
+}
+.carousel.slide{
+    height:350px;
+    overflow:hidden;
 }

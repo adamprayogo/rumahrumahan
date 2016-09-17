@@ -117,7 +117,7 @@
         </div>
         <div class="container gap">
             <div class="col-md-7 col-md-offset-3 col-xs-12">
-                <h2>Hasil Pencaharian</h2>
+                <h2>Search Result</h2>
                 <div class="x_title">
                 </div>
                 <div>
@@ -136,7 +136,7 @@
                             if ($item_row->image_path != null) {
                                 $content_row.='<img src="' . base_url() . $item_row->image_path . '" alt="' . $item_row->title . '" class="img-responsive img-rounded" style="max-height:95px;"/>';
                             } else {
-                                $content_row.='<img class="img-responsive img-rounded" style="max-height:95px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_row->title . '"/>';
+                                $content_row.='<img class="img-responsive img-rounded" style="max-height:95px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_row->title . 'style="max-height:95px;"/>';
                             }
                             $price = explode('#', mod_price($item_row->price));
                             if ($item_row->total_rating != null) {
@@ -160,6 +160,10 @@
                         if (count((array) $src_result) < $perPage) {
                             echo $prefix_row . $content_row . $suffix_row;
                         }
+                    } else {
+                        ?>
+                        <p class="text-center">We're sorry, your search criteria is not found.</p>
+                        <?php
                     }
                     ?>
                 </div>
@@ -179,7 +183,14 @@
 $all_location = "";
 if (isset($src_result)) {
     foreach ($src_result as $item_location) {
-        $all_location.="['<b>TESTING</b>'," . $item_location->lat . "," . $item_location->lng . "],";
+        $link = "<a href=" . base_url() . "search/" . $item_row->id . " target=_blank>";
+        $all_location.="['" . $link;
+        if ($item_location->image_path != null) {
+            $all_location.='<img src="' . base_url() . $item_location->image_path . '" alt="' . $item_location->title . '" class="" style="max-height:40px;"/>';
+        } else {
+            $all_location.='<img class="img-responsive" style="max-height:30px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_location->title . '"/>';
+        }
+        $all_location.="</a>'," . $item_location->lat . "," . $item_location->lng . "],";
     }
     echo substr($all_location, 0, -1);
 }
@@ -205,10 +216,12 @@ if (isset($src_result)) {
         var map = new google.maps.Map($('#src_map')[0], {
             scrollwheel: false,
             mapTypeControl: true,
-            mapTypeControlOption: {
-            }
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            mapType: 'hybrid'
         });
-
         var bounds = new google.maps.LatLngBounds();
 
         for (i = 0; i < locations.length; i++) {
@@ -221,13 +234,16 @@ if (isset($src_result)) {
             });
 
             bounds.extend(marker.position);
-
+            marker.addListener('click', function () {
+                map.setZoom(10);
+                map.setCenter(marker.getPosition());
+            });
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    //infowindow.setContent(locations[i][0]);
                     infowindow.open(map, marker);
                 }
             })(marker, i));
+            infowindow.open(map, marker);
         }
 
         map.fitBounds(bounds);

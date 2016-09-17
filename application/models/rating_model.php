@@ -35,6 +35,7 @@ class rating_model extends CI_Model {
             $this->db->group_by($group_by);
         }
         $query = $this->db->get();
+//        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $rows) {
                 $data[] = $rows;
@@ -46,19 +47,47 @@ class rating_model extends CI_Model {
         }
     }
 
-    function total($array_where, $group_by = false) {
+    function total_rating($array_where, $group_by = false) {
         $this->db->select('(SUM(value)/COUNT(*)) as total_rating');
         $this->db->where($array_where);
         if ($group_by != false) {
             $this->db->group_by($group_by);
         }
-        
+
         $this->db->from('rating');
         $query = $this->db->get();
 //        echo $this->db->last_query();
         $rows = $query->result();
         $query->free_result();
-        return $rows[0]->total_rating;
+        if ($rows != null) {
+            return $rows[0]->total_rating;
+        }else{
+            return null;
+        }
+    }
+
+    function total_user_rating($array_where, $group_by = false) {
+        $this->db->select('COUNT(*) as total_user');
+        $this->db->where($array_where);
+        if ($group_by != false) {
+            $this->db->group_by($group_by);
+        }
+
+        $this->db->from('rating');
+        $query = $this->db->get();
+        $rows = $query->result();
+        $query->free_result();
+        if ($rows != null) {
+            return $rows[0]->total_user;
+        }else{
+            return null;
+        }
+    }
+
+    function user_rating($array_where, $group_by = false) {
+        $select = 'value, (count(value)) as total';
+        $order_by = array("value" => 'DESC');
+        return $this->get($select, $array_where, false, false, false, $order_by, $group_by);
     }
 
     function get_by_estates_id($id) {

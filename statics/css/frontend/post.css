@@ -1,0 +1,344 @@
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+.mota{
+	margin-left: 10px;
+}
+.event-list {
+	list-style: none;
+	font-family: 'Lato', sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+.event-list > li {
+	background-color: rgb(255, 255, 255);
+	padding: 0px;
+	margin: 0px 0px 20px;
+}
+.event-list > li > time {
+	display: inline-block;
+	width: 100%;
+	color: rgb(255, 255, 255);
+	background-color: rgb(197, 44, 102);
+	padding: 5px;
+	text-align: center;
+	text-transform: uppercase;
+}
+.event-list > li:nth-child(even) > time {
+	background-color: rgb(165, 82, 167);
+}
+
+.event-list > li > img {
+	width: 100%;
+}
+.event-list > li > .info {
+	padding-top: 5px;
+
+}
+.event-list > li > .info > .title {
+	font-size: 13pt;
+	font-weight: 700;
+	margin: 0px;
+}
+.event-list > li > .info > .post-time {
+
+	font-size: 10pt;
+	font-weight: 300;
+	margin: 0px;
+	margin-left: 10px;
+}
+.event-list > li > .info > ul,
+.event-list > li > .social > ul {
+	display: table;
+	list-style: none;
+	margin: 10px 0px 0px;
+	padding: 0px;
+	width: 100%;
+	text-align: center;
+}
+.event-list > li > .social > ul {
+	margin: 0px;
+}
+.event-list > li > .info > ul > li,
+.event-list > li > .social > ul > li {
+	display: table-cell;
+	cursor: pointer;
+	color: rgb(30, 30, 30);
+	font-size: 11pt;
+	font-weight: 300;
+	padding: 3px 0px;
+
+}
+.event-list > li > .info > ul > li > a {
+	display: block;
+	width: 100%;
+	color: rgb(30, 30, 30);
+	text-decoration: none;
+} 
+.event-list > li > .social > ul > li {    
+	padding: 0px;
+}
+.event-list > li > .social > ul > li > a {
+	padding: 3px 0px;
+} 
+.event-list > li > .info > ul > li:hover,
+.event-list > li > .social > ul > li:hover {
+	color: rgb(30, 30, 30);
+	background-color: rgb(200, 200, 200);
+}
+.facebook a,
+.twitter a,
+.google-plus a {
+	display: block;
+	width: 100%;
+	color: rgb(75, 110, 168) !important;
+}
+.twitter a {
+	color: rgb(79, 213, 248) !important;
+}
+.google-plus a {
+	color: rgb(221, 75, 57) !important;
+}
+.facebook:hover a {
+	color: rgb(255, 255, 255) !important;
+	background-color: rgb(75, 110, 168) !important;
+}
+.twitter:hover a {
+	color: rgb(255, 255, 255) !important;
+	background-color: rgb(79, 213, 248) !important;
+}
+.google-plus:hover a {
+	color: rgb(255, 255, 255) !important;
+	background-color: rgb(221, 75, 57) !important;
+}
+
+.title a{
+	font-size: 15px;
+	font-weight: bold;
+}
+@media (min-width: 768px) {
+	.event-list > li {
+		position: relative;
+		display: block;
+		width: 100%;
+		/* height: 120px; */
+		padding: 0px;
+		background: white;
+		/*border: 1px solid #47639E;*/
+		overflow: hidden;
+		background: white;
+	}
+	.event-list > li > time,
+	.event-list > li > img  {
+		display: inline-block;
+	}
+	.event-list > li > time,
+	.event-list > li > img {
+		width: 120px;
+		float: left;
+	}
+	.event-list > li > .info {
+		background-color: rgb(245, 245, 245);
+		overflow: hidden;
+	}
+	.event-list > li > time,
+	.event-list > li > img {
+		width: 150px;
+		height: 120px;
+		padding: 0px;
+		margin: 0px;
+	}
+	.event-list > li > .info {
+		position: relative;
+		height: 120px;
+		text-align: left;
+		padding-right: 40px;
+		background: white;
+	}	
+	.event-list > li > .info > .title, 
+	.event-list > li > .info > .desc {
+		padding: 0px 10px;
+	}
+	.event-list > li > .info > ul {
+		position: absolute;
+		left: 0px;
+		bottom: 0px;
+	}
+	.event-list > li > .social {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		display: block;
+		width: 40px;
+	}
+	.event-list > li > .social > ul {
+		border-left: 1px solid rgb(230, 230, 230);
+	}
+	.event-list > li > .social > ul > li {			
+		display: block;
+		padding: 0px;
+	}
+	.event-list > li > .social > ul > li > a {
+		display: block;
+		width: 40px;
+		padding: 10px 0px 9px;
+	}
+}
+.list-inline>li {
+	padding: 0 10px 0 0;
+}
+.container-pad {
+	padding: 30px 15px;
+}
+
+
+/**** MODULE ****/
+.bgc-fff {
+	background-color: #fff!important;
+}
+.box-shad {
+	-webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.2);
+	box-shadow: 1px 1px 0 rgba(0,0,0,.2);
+}
+.brdr {
+	border: 1px solid #ededed;
+}
+
+/* Font changes */
+.fnt-smaller {
+	font-size: .9em;
+}
+.fnt-lighter {
+	color: #bbb;
+}
+
+/* Padding - Margins */
+.pad-10 {
+	padding: 10px!important;
+}
+.mrg-0 {
+	margin: 0!important;
+}
+.btm-mrg-10 {
+	margin-bottom: 10px!important;
+}
+.btm-mrg-20 {
+	margin-bottom: 20px!important;
+}
+
+/* Color  */
+.clr-535353 {
+	color: #535353;
+}
+
+
+
+
+/**** MEDIA QUERIES ****/
+@media only screen and (max-width: 991px) {
+	#property-listings .property-listing {
+		padding: 5px!important;
+	}
+	#property-listings .property-listing a {
+		margin: 0;
+	}
+	#property-listings .property-listing .media-body {
+		padding: 10px;
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	#property-listings .property-listing img {
+		max-width: 180px;
+	}
+}
+
+/****BAIVIET CSS****/
+.line {
+	border-bottom: 1px solid #999;
+}
+.detailsView-contents-style td {
+	text-align: justify;
+}
+
+.detailsView-contents-style {
+	height: auto;
+	word-wrap: break-word;
+	text-align: justify;
+}
+
+.detailsView-contents-style .summary {
+	font-weight: bold;
+	text-rendering: optimizeLegibility;
+}
+.detailsView-title-style {
+	padding: 5px 5px 5px 0;
+	font-size: 18px;
+	font-weight: bold;
+	color: #055699;
+	word-wrap: break-word;
+	margin-bottom: 5px;
+}
+
+.contentDetail a {
+	color: #055699;
+}
+.contentDetail .detailsView-title-style {
+	font-size: 17px;
+}
+.date-first {
+	color: #8f8f8f;
+	margin-bottom: 10px;
+}
+.inasub a {
+	text-decoration: none;
+}
+.subinart {
+	margin: 10px 0 15px;
+}
+
+.subinart .artlist {
+	padding: 3px 0 3px 10px;
+	background: url('http://file4.batdongsan.com.vn/images/bullet-xanh.jpg') no-repeat left center;
+}
+
+.subinart a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.subinart .line {
+	border-bottom: 1px dashed #DDDDDD;
+	margin-top: 10px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+}
+.detail-article-content {
+	line-height: 18px;
+	text-align: justify;
+	text-decoration: none;
+	margin-top: 10px;
+	text-rendering: optimizeLegibility;
+}
+
+.detail-article-content u {
+	text-decoration: underline;
+}
+
+.detail-article-content u a, .detail-article-content a u {
+	text-decoration: underline;
+	color: #055699;
+}
+
+.detail-article-content table {
+	margin: auto;
+	border-collapse: separate;
+}
+
+.detail-article-content p {
+	margin: 2% 0;
+}
+
+.event-list a img{
+	height: 120px;
+	width: 158px;
+}

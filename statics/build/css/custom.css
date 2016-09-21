@@ -4238,6 +4238,10 @@ button.fl-head{
         padding-left: 10px;
         height:100%;
     }
+    .carousel.slide{
+        height:350px;
+        overflow:hidden;
+    }
 }
 .item-box:hover{
     opacity:0.5;
@@ -4278,7 +4282,51 @@ button.fl-head{
     margin-left:auto;
     margin-right: auto;
 }
+.info-user{
+    background:#fff;
+}
+
+
+.x_panel.content{
+    padding:0px 0px;
+}
+
+.profile_user{
+    display:block;
+}
+.profile_user .user_pict{
+    width:35%;
+}
+.profile_info h2{
+    color:#696969;
+}
+.profile_user .user_pict .img{
+    height:inherit;
+    margin-left:auto;
+    margin-right: auto;
+}
+.img-circle.profile_img{
+    width:77px;
+    height:77px;
+    overflow:hidden;
+}
+.starrr.user-star{
+    margin-left:auto;
+    margin-right:auto;
+    padding-top:3%;
+}
+.contact-user{
+    padding-top:5%;
+}
+.contact-user .btn{
+    padding-top:0px;
+    padding-bottom:0px;
+}
+.contact-user button span{
+    color:#fff;
+}
+
 .carousel.slide{
-    height:350px;
+    height:300px;
     overflow:hidden;
 }

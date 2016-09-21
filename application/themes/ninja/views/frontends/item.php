@@ -5,8 +5,38 @@
     <!-- page content -->
     <div class="content_wrapper" role="main">
         <div class="container gap">
-            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                <div class="x_panel">
+            <div class="col-md-3 col-xs-12">
+                <div class="x_panel content">
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <?php
+                            if (file_exists(base_url() . $obj[0]->avt)) {
+                                ?>
+                                <img src="<?php echo base_url() . $obj[0]->avt; ?>" alt="..." class="img-circle profile_img">
+                                <?php
+                            } else {
+                                ?>
+                                <img src="<?php echo base_url() . 'statics/images/no_photo.png' ?>" alt="<?php echo 'rumahqu-' . $obj[0]->user_name; ?>" class="img-circle profile_img">
+                                <?php
+                            }
+                            ?>
+                            <div class="starrr user-star" data-rating="3.5"></div>
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2><?php echo $obj[0]->user_name ?></h2>
+                            <span><?php echo $obj[0]->email; ?></span>
+                            <div class="contact-user pull-right">
+                                <button type="button" class="btn btn-success " data-element="phone" phone="<?php echo $obj[0]->phone; ?>"  data-toggle="modal" data-target="#modalDesc"><span class="glyphicon glyphicon-earphone"></span> Call</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 gap">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel content">
                     <div id="item-img" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
@@ -75,8 +105,8 @@
                         </a>
                     </div>
                     <div class="container gap">
-                        <div class="col-md-12">
-                            <h2><?php echo $obj[0]->title ?></h2>
+                        <div class="col-md-12 col-xs-12">
+                            <h3 class="text-center"><?php echo $obj[0]->title ?></h3>
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-6">
@@ -130,8 +160,8 @@
                             }
                             ?>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-3">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <center>
                                     <div class="col-md-12 col-xs-12">
                                         <h3 class="rating-val"><?php echo ($total_rating != null) ? number_format($total_rating, 2, '.', '') : $total_rating = 0; ?></h3>
@@ -198,13 +228,27 @@
                         <div class="col-md-12 col-xs-12 gap">
                             <center>
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-earphone"></span> Call</button>
-                                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-map-marker"></span> Location</button>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalDesc" data-element="location" lat="<?php echo $obj[0]->lng; ?>" lng="<?php echo $obj[0]->lat; ?>"><span class="glyphicon glyphicon-map-marker"></span> Location</button>
                                 </div>
                             </center>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content  text-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <h3></h3>
             </div>
         </div>
     </div>
@@ -215,7 +259,62 @@
             $('.itm-desc').removeClass('itm-desc');
             $(this).remove();
         });
+
+        $('#modalDesc').on('shown.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var elName = button.attr('data-element');
+            var conTitle, conBody;
+            var modal = $(this);
+            modal.find('#itemLocation').remove();
+            if (elName == 'phone') {
+                conTitle = 'Phone Number';
+                conBody = button.attr('phone');
+            } else if (elName == 'location') {
+                conTitle = 'Location';
+                conBody = '';
+                var lat = button.attr('lat');
+                var lng = button.attr('lng');
+                modal.find('.modal-body').append('<div id="itemLocation" style="height:250px; width:100%;">');
+                initMap(parseFloat(lat), parseFloat(lng), 'itemLocation');
+            }
+            modal.find('.modal-title').text(conTitle);
+            modal.find('.modal-body h3').text(conBody);
+        });
     });
+    function initMap(lat, lng, selector) {
+        var map = new google.maps.Map(document.getElementById(selector), {
+            zoom: 14,
+            center: {lat: lat, lng: lng},
+            scrollwheel: false,
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            mapType: 'hybrid'
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: 'Estates Location'
+        });
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {lat: lat, lng: lng},
+            icon:'<?php echo base_url().'img/icon/android-icon-36x36.png'?>'
+        });
+        marker.addListener('click', toggleBounce);
+        infowindow.open(map, marker);
+    }
+
+    function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+</script>
 </script>
 
 <script>
@@ -232,7 +331,8 @@
     });
 </script>
 <script>
-$('#item-img').carousel({
-    interval:false
-});;
+    $('#item-img').carousel({
+        interval: false
+    });
+    ;
 </script>

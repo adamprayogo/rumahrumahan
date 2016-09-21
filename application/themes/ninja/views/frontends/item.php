@@ -109,10 +109,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 text-right">
-                            <h2 class="itm-price"><?php echo $obj[0]->price; ?></h2>
+                        <div class="col-md-3 col-md-offset-9 col-xs-12 text-center">
+                            <h2 class="price">Rp. <?php echo $obj[0]->price; ?></h2>
                         </div>
-                        <div class="col-md-12 gap">
+                        <div class="col-md-12 gap col-xs-12">
                             <div class="itm-desc">
                                 <?php
                                 if (strlen($obj[0]->content) == 0) {
@@ -121,7 +121,6 @@
                                     echo strip_tags($obj[0]->content, '<p><a>');
                                 }
                                 ?>
-
                             </div>
                             <?php
                             if (strlen($obj[0]->content) >= 447) {
@@ -210,7 +209,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#read-more').click(function () {

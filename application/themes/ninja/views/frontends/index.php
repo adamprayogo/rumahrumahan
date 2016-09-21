@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    <?php echo form_open('home/search', 'class="form-horizontal form-label-left input_mask"') ?>
+                    <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask"') ?>
                     <div class="col-md-6 col-xs-6 form-group">
                         <label>Tipe</label>
                         <select class="form-control" name="category">

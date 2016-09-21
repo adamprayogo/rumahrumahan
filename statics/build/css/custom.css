@@ -4215,6 +4215,9 @@ button.fl-head{
     padding:0 0;
     color: #26B99A;
 }
+.price{
+    color: #26B99A;
+}
 .container.gap .map #src_map{
     height:400px;
 }

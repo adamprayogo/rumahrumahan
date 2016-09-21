@@ -43,7 +43,12 @@ class home extends MY_Controller {
     }
 
     function search($item_id = NULL) {
-        if ($item_id == NULL) {
+
+        if (
+                isset($_POST['category']) &&
+                isset($_POST['type']) &&
+                isset($_POST['cities']) &&
+                isset($_POST['price'])) {
             $this->ft_title = 'Search Page - Rumaqu.com';
             $this->form_validation->set_rules('category', 'category', 'trim|required|xss_clean');
             $this->form_validation->set_rules('type', 'type', 'trim|required|xss_clean');
@@ -71,7 +76,7 @@ class home extends MY_Controller {
                 $this->render_frontend_tp('frontends/search', $data);
             }
         } else {
-            if ($item_id != '') {
+            if ($item_id != NULL) {
                 $id = $item_id;
                 $data['obj'] = $this->estates_model->get_by_id($id);
                 $this->load->model('rating_model');
@@ -92,7 +97,7 @@ class home extends MY_Controller {
 //                $this->render_backend_tp('backends/estates/edit', $data);
                 $this->render_frontend_tp('frontends/item', $data);
             } else {
-                redirect('notfound');
+                redirect('home');
             }
         }
     }

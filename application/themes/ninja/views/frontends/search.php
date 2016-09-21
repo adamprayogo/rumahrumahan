@@ -16,7 +16,7 @@
                             </div>
                         </div>
 
-                        <?php echo form_open('default/home/search', 'class="form-horizontal form-label-left input_mask"') ?>
+                        <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask"') ?>
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Tipe</label>
                             <select class="form-control" name="category">
@@ -223,7 +223,6 @@ if (isset($src_result)) {
             mapType: 'hybrid'
         });
         var bounds = new google.maps.LatLngBounds();
-
         for (i = 0; i < locations.length; i++) {
             var infowindow = new google.maps.InfoWindow({
                 content: locations[i][0]

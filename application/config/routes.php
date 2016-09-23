@@ -87,5 +87,6 @@ $route['api/amenities_api/(:num)'] = 'api/amenities_api/index/$1';
 $route['home']='default/home';
 $route['search']='default/home/search';
 $route['search/(:num)']='default/home/search/$1';
+$route['subscribe']='default/home/subscribe';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

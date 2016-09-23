@@ -71,7 +71,7 @@ function resetEmail(){
 	$settings['protocol']         = 'smtp';                   // 'mail', 'sendmail', or 'smtp'
 	$settings['smtp_timeout']     = 5;                        // (in seconds)
 	$settings['smtp_crypto']      = '';                       // '' or 'tls' or 'ssl'
-	$settings['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data
+	$settings['smtp_debug']       = 2;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data
 	$settings['wordwrap']         = true;
 	$settings['wrapchars']        = 76;
 	$settings['mailtype']         = 'html';                   // 'text' or 'html'
@@ -88,7 +88,7 @@ function resetEmail(){
 	$settings['smtp_port']        = 465;
 	$settings['from_email']       = '';
 	$settings['from_user'] = SITE_NAME;
-	$settings['mailpath']         = '';
+	$settings['mailpath']         = '/usr/sbin/sendmail';
 	/*end email settings*/
 	resetSettings($settings,EMAIL_SETTING_FILE);
 }

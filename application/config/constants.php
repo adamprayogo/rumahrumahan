@@ -74,7 +74,7 @@ define('DEFAULT_LOCATION_FILE', APPPATH.'/settings/default_location.dat');
 define('PAYPAL_FILE', APPPATH.'/settings/paypal.dat');
 
 /*site name*/
-define('SITE_NAME','Easy real estates');
+define('SITE_NAME','Rumaqu - Find Estates');
 /* End of file constants.php */
 
 define('DEFAULT_PIN','statics/images/pin.png');

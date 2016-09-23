@@ -1,6 +1,3 @@
-<?php
-//    var_dump($amenities_check);
-?>
 <div class="main_container">
     <!-- page content -->
     <div class="content_wrapper" role="main">
@@ -239,7 +236,6 @@
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc">
     <div class="modal-dialog" role="document">
         <div class="modal-content  text-center">
@@ -265,7 +261,6 @@
             var elName = button.attr('data-element');
             var conTitle, conBody;
             var modal = $(this);
-            modal.find('#itemLocation').remove();
             if (elName == 'phone') {
                 conTitle = 'Phone Number';
                 conBody = button.attr('phone');
@@ -279,6 +274,12 @@
             }
             modal.find('.modal-title').text(conTitle);
             modal.find('.modal-body h3').text(conBody);
+        });
+        $('#modalDesc').on('hidden.bs.modal', function () {
+            var modal = $(this);
+            modal.find('#itemLocation').remove();
+            modal.find('.modal-title').text('');
+            modal.find('.modal-body h3').text('');
         });
     });
     function initMap(lat, lng, selector) {
@@ -301,7 +302,7 @@
             draggable: true,
             animation: google.maps.Animation.DROP,
             position: {lat: lat, lng: lng},
-            icon:'<?php echo base_url().'img/icon/android-icon-36x36.png'?>'
+            icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png' ?>'
         });
         marker.addListener('click', toggleBounce);
         infowindow.open(map, marker);

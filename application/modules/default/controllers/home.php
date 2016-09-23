@@ -13,7 +13,7 @@ class home extends MY_Controller {
     function index() {
         $this->load->helper('form');
         $this->ft_menu = 0;
-        $this->ft_title = $this->lang->line('msg_home');
+        $this->ft_title = $this->lang->line('msg_home') . ' - Rumaqu.com';
         $data['type_list'] = $this->type_model->get("*", array('activated' => ACTIVATED), false, false, false, array('name' => 'ASC'));
         $data['cities_list'] = $this->cities_model->get("cities.name as cities_name, cities.id as cities_id, county.name as county_name, county.id as county_id", false, false, false, false, array('county.name' => 'ASC', 'cities.name' => 'ASC'));
         $this->render_frontend_tp('frontends/index', $data);
@@ -43,7 +43,6 @@ class home extends MY_Controller {
     }
 
     function search($item_id = NULL) {
-
         if (
                 isset($_POST['category']) &&
                 isset($_POST['type']) &&
@@ -99,6 +98,60 @@ class home extends MY_Controller {
             } else {
                 redirect('home');
             }
+        }
+    }
+
+    function subscribe() {
+        $status = 0;
+        if (
+                isset($_POST['categories']) &&
+                isset($_POST['types']) &&
+                isset($_POST['cities']) &&
+                isset($_POST['price']) &&
+                isset($_POST['name']) &&
+                isset($_POST['phone']) &&
+                isset($_POST['email'])
+        ) {
+            $this->form_validation->set_rules('categories', 'categories', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('types', 'types', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('cities', 'cities', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('email', 'required|xss_clean|valid_email|callback_check_subscribe_email_exist_add');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[9]|max_length[60]|xss_clean');
+            $this->form_validation->set_rules('name', 'name', 'trim|required|min_length[3]|max_length[60]|xss_clean|');
+
+            if ($this->form_validation->run()) {
+                $data['categories'] = $this->input->post('categories');
+                $data['types'] = $this->input->post('types');
+                $data['cities'] = $this->input->post('cities');
+                $data['email'] = $this->input->post('email');
+                $data['phone'] = $this->input->post('phone');
+                $data['name'] = $this->input->post('name');
+                $price_range = explode(';', $this->input->post('price'));
+                $data['price_1'] = $price_range[0];
+                $data['price_2'] = $price_range[1];
+                $this->load->model('subscribe_user_model');
+                $insert_id = $this->subscribe_user_model->insert($data);
+                if ($insert_id != 0) {
+                    $status = 1;
+                    $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name');
+                    $this->load->helper('email_ultils');
+                    $this->load->helper('currency');
+                    $category = (KOSAN == $data['categories']) ? 'Kostan' : (KONTRAKAN == $data['categories']) ? 'Kontrakan' : (RUSUN == $data['categories']) ? 'Rusun' : false;
+                    send_welcome_subscribe_email($category, $dataSubscribe[0]->types_name, $dataSubscribe[0]->cities_name, $dataSubscribe[0]->county_name, $dataSubscribe[0]->name, $dataSubscribe[0]->phone, $dataSubscribe[0]->email, format_money($dataSubscribe[0]->price_1, ".", ",", "Rp. "), format_money($dataSubscribe[0]->price_2, ".", ",", "Rp. "));
+//                    send_verified_code('asAsc092','srachmandani@gmail.com');
+                }
+            }
+        }
+        echo json_encode(array("status" => "$status"));
+    }
+
+    public function check_subscribe_email_exist_add($email) {
+        $data = $this->subscribe_user_model->get_by_exact_email($email);
+        if ($data != null) {
+            $this->form_validation->set_message('check_subscribe_email_exist_add', $this->lang->line('vl_feild_value_exist'));
+            return FALSE;
+        } else {
+            return TRUE;
         }
     }
 

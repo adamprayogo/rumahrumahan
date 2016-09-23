@@ -4330,3 +4330,7 @@ button.fl-head{
     height:300px;
     overflow:hidden;
 }
+.modal-header {
+    background-color: #be68aa;
+    color: #fff;
+}

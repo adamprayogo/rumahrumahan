@@ -240,16 +240,16 @@
             });
 //            alert(JSON.stringify(value));
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
-            post.done(function (a, b, c) {
-                console.log(JSON.stringify(a));
-                console.log(JSON.stringify(b));
-                console.log(JSON.stringify(c));
-            });
-            post.fail(function (a, b, c) {
-                console.log(JSON.stringify(a));
-                console.log(JSON.stringify(b));
-                console.log(JSON.stringify(c));
-            });
+//            post.done(function (a, b, c) {
+//                console.log(JSON.stringify(a));
+//                console.log(JSON.stringify(b));
+//                console.log(JSON.stringify(c));
+//            });
+//            post.fail(function (a, b, c) {
+//                console.log(JSON.stringify(a));
+//                console.log(JSON.stringify(b));
+//                console.log(JSON.stringify(c));
+//            });
         });
     });
 </script>

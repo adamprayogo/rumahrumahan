@@ -32,9 +32,10 @@
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>statics/switchery/dist/switchery.min.css">
         <!-- starrr -->
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>statics/rateyo/jquery.rateyo.min.css">
-
         <!-- Custom Theme Style -->
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>statics/build/css/custom.css">
+        <!-- pNotify 4-->
+        <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>statics/pnotify3/pnotify.custom.min.css">
 
 
         <!-- jQuery -->
@@ -58,6 +59,8 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>statics/select2/dist/js/select2.full.min.js"></script>
         <!-- starrr -->
         <script src="<?php echo base_url(); ?>statics/rateyo/jquery.rateyo.min.js"></script>
+        <!-- pNotify3-->
+        <script src="<?php echo base_url(); ?>statics/pnotify3/pnotify.custom.min.js"></script>
         <!-- Custom Theme Scripts -->
         <script type="text/javascript" src="<?php echo base_url(); ?>statics/build/js/custom.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB0ZCtG2kdIz5dX34KnuOIRyTdQPQh3wJs&libraries=places"></script>

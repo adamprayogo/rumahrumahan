@@ -44,7 +44,7 @@ class rating_api extends REST_Controller {
             $this->load->model('rating_model');
             $total_rating = $this->rating_model->get_by_user_id_and_estates_id($user_id, $estates_id);
             if ($total_rating != null) {
-                $where['user_id'] = $user_id;
+                $where['users_id'] = $user_id;
                 $where['estates_id'] = $estates_id;
                 $this->rating_model->update(array('value' => $value, 'comment_title' => $comment_title, 'comment_desc' => $comment_desc), $where);
                 $status = 1;
@@ -52,7 +52,7 @@ class rating_api extends REST_Controller {
                 $insert_id = $this->rating_model->insert(
                         array(
                             'value' => $value,
-                            'user_id' => $user_id,
+                            'users_id' => $user_id,
                             'estates_id' => $estates_id,
                             'comment_desc' => $comment_desc,
                             'comment_title' => $comment_title)

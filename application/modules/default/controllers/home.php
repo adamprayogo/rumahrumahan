@@ -8,6 +8,7 @@ class home extends MY_Controller {
         $this->load->model('cities_model');
         $this->load->model('county_model');
         $this->load->model('estates_model');
+        $this->load->model('subscribe_user_model');
     }
 
     function index() {
@@ -116,7 +117,7 @@ class home extends MY_Controller {
             $this->form_validation->set_rules('types', 'types', 'trim|required|xss_clean');
             $this->form_validation->set_rules('cities', 'cities', 'trim|required|xss_clean');
             $this->form_validation->set_rules('email', 'required|xss_clean|valid_email|callback_check_subscribe_email_exist_add');
-            $this->form_validation->set_rules('phone', 'phone', 'trim|required|min_length[9]|max_length[60]|xss_clean');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required|max_length[30]|xss_clean');
             $this->form_validation->set_rules('name', 'name', 'trim|required|min_length[3]|max_length[60]|xss_clean|');
 
             if ($this->form_validation->run()) {
@@ -129,7 +130,6 @@ class home extends MY_Controller {
                 $price_range = explode(';', $this->input->post('price'));
                 $data['price_1'] = $price_range[0];
                 $data['price_2'] = $price_range[1];
-                $this->load->model('subscribe_user_model');
                 $insert_id = $this->subscribe_user_model->insert($data);
                 if ($insert_id != 0) {
                     $status = 1;
@@ -142,13 +142,13 @@ class home extends MY_Controller {
                 }
             }
         }
-        echo json_encode(array("status" => "$status"));
+        echo json_encode(array("status" => $status));
     }
 
     public function check_subscribe_email_exist_add($email) {
         $data = $this->subscribe_user_model->get_by_exact_email($email);
         if ($data != null) {
-            $this->form_validation->set_message('check_subscribe_email_exist_add', $this->lang->line('vl_feild_value_exist'));
+            //$this->form_validation->set_message('check_subscribe_email_exist_add', $this->lang->line('vl_feild_value_exist'));
             return FALSE;
         } else {
             return TRUE;

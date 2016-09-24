@@ -20,9 +20,9 @@
                         </div>
                     </div>
 
-                    <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask"') ?>
+                    <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask" id="mainForm"') ?>
                     <div class="col-md-6 col-xs-6 form-group">
-                        <label>Tipe</label>
+                        <label>Kategori</label>
                         <select class="form-control" name="category">
                             <option value="<?php echo KOSAN ?>">Kosan</option>
                             <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
@@ -30,7 +30,7 @@
                         </select>
                     </div>
                     <div class="col-md-6 col-xs-6 form-group">
-                        <label>Untuk</label>
+                        <label>Tipe</label>
                         <select class="form-control" name="type">
                             <?php foreach ($type_list as $row) {
                                 ?>
@@ -76,7 +76,28 @@
                         <div class=" text-center">
                             <label>Harga</label>
                         </div>
-                        <input type="text" id="price" value="" name="price" />
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default disabled" type="button">From</button>
+                                </span>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceFrom"/>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default disabled" type="button">To</button>
+                                </span>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceTo"/>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                        <div class="col-md-12 col-xs-12 text-center">
+                            <button class="btn btn-default" id="btnPrice">Ubah</button>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <input type="text" id="price" value="" name="price" />
+                        </div>
                     </div>
                     <div class="col-md-12 col-xs-12">
                         <div class="btn-group btn-group-justified gap" role="group" aria-label="...">
@@ -113,13 +134,12 @@
                         <div class="text-center">
                             <h2>Beritahu Berdasarkan Kireteria</h2>
                             <div class="x_title">
-                                <!--<div class="clearfix"></div>-->
                             </div>
                         </div>
 
                         <?php echo form_open('', 'class="form-horizontal form-label-left input_mask" id="subscribeForm"') ?>
                         <div class="col-md-6 col-xs-6 form-group">
-                            <label>Tipe</label>
+                            <label>Kategori</label>
                             <select class="form-control" name="categories">
                                 <option value="<?php echo KOSAN ?>">Kosan</option>
                                 <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
@@ -127,7 +147,7 @@
                             </select>
                         </div>
                         <div class="col-md-6 col-xs-6 form-group">
-                            <label>Untuk</label>
+                            <label>Tipe</label>
                             <select class="form-control" name="types">
                                 <?php foreach ($type_list as $row) {
                                     ?>
@@ -213,7 +233,7 @@
         $("#price").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 99999999999,
+            max: 9999999,
             grid: true,
             prefix: "Rp ",
             force_edges: true
@@ -221,44 +241,70 @@
         $("#priceSubscribe").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 99999999999,
+            max: 9999999,
             grid: true,
             prefix: "Rp ",
             force_edges: true
+        });
+        var mainSlider = $("#price").data("ionRangeSlider");
+        var subSlider = $("#priceSubscribe").data("ionRangeSlider");
+        $("#btnPrice").click(function (e) {
+            e.preventDefault();
+            mainSlider.update({
+                from: $('#priceFrom').val(),
+                to: $('#priceTo').val()
+            });
+        });
+
+        $(".select2_group").select2();
+        $('#subscribeModal').on('shown.bs.modal', function (event) {
+            event.preventDefault();
+            $(".select2_group").select2().val($("#mainForm :input[name='cities']").val()).change();
+            subSlider.update({
+                from: mainSlider.old_from,
+                to: mainSlider.old_to
+            });
+            $("#subscribeForm :input[name='categories']").val($("#mainForm :input[name='category']").val());
+            $("#subscribeForm :input[name='types']").val($("#mainForm :input[name='type']").val());
+//            $("#subscribeForm :input[name='cities']").val($("#mainForm :input[name='cities']").val());
         });
     });
 </script>
 <script>
     $(document).ready(function () {
+        var $btnSubscribe = $('#subscribeButton');
         $('#subscribeForm').submit(function (event) {
             event.preventDefault();
+            PNotify.removeAll();
             var fields = $("#subscribeForm :input");
             var value = {};
             $.each(fields, function (i, field) {
                 //alert("name : "+$(this).attr("name")+" , value : "+$(this).val());
                 value[$(this).attr("name")] = $(this).val();
             });
-//            alert(JSON.stringify(value));
+            $btnSubscribe.addClass('disabled');
+            $btnSubscribe.html('<i class="fa fa-send"></i> Sending...');
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
-//            post.done(function (a, b, c) {
-//                console.log(JSON.stringify(a));
-//                console.log(JSON.stringify(b));
-//                console.log(JSON.stringify(c));
-//            });
-//            post.fail(function (a, b, c) {
-//                console.log(JSON.stringify(a));
-//                console.log(JSON.stringify(b));
-//                console.log(JSON.stringify(c));
-//            });
+            post.done(function (res) {
+                var option = {
+                    title: 'Subscribe Info',
+                    styling: 'bootstrap3',
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                if (JSON.parse(res).status == 1) {
+                    option.text = "Permintaan berlangganan telah aktif, cek email mu";
+                    option.type = "success";
+                } else {
+                    option.text = "Permintaan berlangganan gagal, email telah dipakai";
+                }
+                $btnSubscribe.html('<i class="fa fa-send"></i> Send');
+                $btnSubscribe.removeClass('disabled');
+                new PNotify(option);
+            });
+            post.fail(function (a, b, c) {
+            });
         });
     });
 </script>
-<script>
-    $(document).ready(function () {
-        $(".select2_group").select2();
-        $('#subscribeModal').on('shown.bs.modal', function () {
-            $(".select2_group").select2();
-        });
-    });
-</script>
-

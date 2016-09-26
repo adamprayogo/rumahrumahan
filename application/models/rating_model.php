@@ -21,7 +21,6 @@ class rating_model extends CI_Model {
                 $this->db->order_by($order, $sort);
             }
         }
-
         $this->db->select($select);
         $this->db->from('rating');
         if ($array_where != false)
@@ -34,6 +33,7 @@ class rating_model extends CI_Model {
         if ($group_by != false) {
             $this->db->group_by($group_by);
         }
+        $this->db->join('users','users.id=rating.users_id','left');
         $query = $this->db->get();
 //        echo $this->db->last_query();
         if ($query->num_rows() > 0) {

@@ -29,14 +29,14 @@ class rating_api extends REST_Controller {
         $first = $this->get('first');
         $offset = $this->get('offset');
 
-        if ($first != null) {
+        if ($first == null) {
             $first = 0;
         }
-        if ($offset != null) {
-            $offset = 18446744073709551615;
+        if ($offset == null) {
+            $offset = 1;
         }
         if ($estates_id != null) {
-            $data = $this->rating_model->get('rating.*, users.users_name', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
+            $data = $this->rating_model->get('rating.*, users.user_name', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
             $this->response($data);
         } else {
             $this->response(array('ok' => 0));

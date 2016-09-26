@@ -21,7 +21,7 @@ class estate_api extends REST_Controller
 		if($offset==null){
 			$offset=1;
 		}
-
+                
 		$like=array();
 		$order=array('estates.updated_at'=>'DESC');
 		$types=$this->get('types_id');
@@ -110,7 +110,6 @@ class estate_api extends REST_Controller
 			WHERE '.$where.' GROUP BY `estates`.`id`
                         ORDER BY `estates`.`created_at` 
                         DESC LIMIT '.$first.','.$offset);
-		//$this->response(array('x'=>$offset));
 		//echo $this->db->last_query();
 		if($data!=null){
 			$this->response($data); 

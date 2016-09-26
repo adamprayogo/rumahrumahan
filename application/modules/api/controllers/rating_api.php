@@ -11,19 +11,35 @@ class rating_api extends REST_Controller {
     }
 
     function rating_get() {
-        $this->load->model('rating_model');
+//        $this->load->model('rating_model');
+//        $estates_id = $this->get('estates_id');
+//        $first = $this->get('first');
+//        $offset = $this->get('offset');
+//        $order = array('rating.created_date' => 'DESC');
+//        $where = array('estates_id' => $estates_id);
+//        $group_by = array('estates_id');
+//        $total_rating = $this->rating_model->total($where, $group_by);
+//        $data = array('total_rating' => "$total_rating");
+//        if ($data != null) {
+//            $this->response([$data]);
+//        } else {
+//            $this->response(array('empty' => 'empty_data'));
+//        }
         $estates_id = $this->get('estates_id');
         $first = $this->get('first');
         $offset = $this->get('offset');
-        $order = array('rating.created_date' => 'DESC');
-        $where = array('estates_id' => $estates_id);
-        $group_by = array('estates_id');
-        $total_rating = $this->rating_model->total($where, $group_by);
-        $data = array('total_rating' => "$total_rating");
-        if ($data != null) {
-            $this->response([$data]);
+
+        if ($first != null) {
+            $first = 0;
+        }
+        if ($offset != null) {
+            $offset = 18446744073709551615;
+        }
+        if ($estates_id != null) {
+            $data = $this->rating_model->get('rating.*, users.users_name', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
+            $this->response($data);
         } else {
-            $this->response(array('empty' => 'empty_data'));
+            $this->response(array('ok' => 0));
         }
     }
 
@@ -41,7 +57,6 @@ class rating_api extends REST_Controller {
             $comment_title = $this->post('comment_title');
             $comment_desc = $this->post('comment_desc');
             $value = $this->post('value');
-            $this->load->model('rating_model');
             $total_rating = $this->rating_model->get_by_user_id_and_estates_id($user_id, $estates_id);
             if ($total_rating != null) {
                 $where['users_id'] = $user_id;
@@ -77,16 +92,6 @@ class rating_api extends REST_Controller {
         $this->response($data);
     }
 
-//	function user_avg_rate_get(){
-//		$user_id=$this->get('user_id');
-//		$this->load->model('rating_model');
-//		$rating = $this->rating_model->get_by_user_estates_id($user_id);
-//		if($rating!=null){
-//			$this->response(array("rating"=>$rating));
-//		}else{
-//			$this->response(array("rating"=>null));
-//		}	
-//	}
 }
 
 ?>

@@ -168,5 +168,5 @@ function object_2_array($d) {
     	$CI =& get_instance();
     	$CI->config->load('template');
     	return APPPATH.'themes/'.$CI->config->item('theme').'/views/';
-    } 
+    }
     ?>

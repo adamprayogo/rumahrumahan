@@ -60,7 +60,7 @@ class estates extends MY_Controller{
 			$bathrooms=$this->input->post('bathrooms');
 			$bedrooms=$this->input->post('bedrooms');
 			$types=$this->input->post('types');
-			$content=$content=preg_replace('/[\r\n]+/', "", htmlspecialchars($this->input->post('content')));
+			$content=  strip_tags(nl2br($this->input->post('content')),'<br>');//preg_replace('/[\r\n]+/', "", strip_tags($this->input->post('content')));//strip_tags($this->input->post('content')));
 			$county=$this->input->post('county');
 			$lat=$this->input->post('lat');
 			$lng=$this->input->post('lng');
@@ -73,7 +73,7 @@ class estates extends MY_Controller{
 			$cities_id=$this->input->post('cities');
 			$area=$this->input->post('area');
 			$marker=$this->input->post('marker');
-			$description=$this->input->post('description');
+			$description=strip_tags(nl2br($this->input->post('content')),'<br>');//$this->input->post('description');
 
 			$keyword=$this->input->post('keyword');
 			$link_youtube=$this->input->post('link_youtube');
@@ -212,7 +212,7 @@ class estates extends MY_Controller{
 			$bathrooms=$this->input->post('bathrooms');
 			$bedrooms=$this->input->post('bedrooms');
 			$types=$this->input->post('types');
-			$content=$this->input->post('content');
+			$content=strip_tags(nl2br($this->input->post('content')),'<br>');
 			$county=$this->input->post('county');
 			$lat=$this->input->post('lat');
 			$lng=$this->input->post('lng');
@@ -225,7 +225,7 @@ class estates extends MY_Controller{
 			$cities_id=$this->input->post('cities');
 			$area=$this->input->post('area');
 			$marker=$this->input->post('marker');
-			$description=$this->input->post('content');
+			$description=  strip_tags(nl2br($this->input->post('content')),'<br>');
 			$keyword=$this->input->post('keyword');
 			$link_youtube=$this->input->post('link_youtube');
 
@@ -273,7 +273,7 @@ class estates extends MY_Controller{
 			}else{
 				$data_array['time_rate']=-1;
 			}
-
+                        var_dump($data_array);
 			$this->estates_model->update($data_array,array('id'=>$id));
 			//echo $this->db->last_query();
 			if(isset($_POST['amen'])){

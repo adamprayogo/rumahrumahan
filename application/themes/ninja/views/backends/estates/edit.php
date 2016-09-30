@@ -1,6 +1,6 @@
 <?php 
+
 require get_theme_folder().'custom_validation.php';
-//var_dump($obj);
 ?>
 <script type="text/javascript" src="<?php echo base_url()?>statics/tinymce/jquery.tinymce.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>statics/css/backend/estates.css"/>
@@ -157,12 +157,13 @@ jQuery(document).ready(function($) {
 				}
 			})
 			.done(function() {
-
+                            
 			})
 			.fail(function() {
 				console.log("error");
 			})
 			.always(function(data) {
+                            console.log(data);
 				$.unblockUI();
 				if(data.ok==1){
 					$.growl.notice({message:'<?php echo lang('edit_successfully') ?>'});  
@@ -531,13 +532,18 @@ $('#county').change(function(){
 				</div>
 
 
-				<div class="form-group">
+<!--				<div class="form-group">
 					<label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_content'); ?></label>
 					<div class="controls col-xs-11">
 						<textarea id="content" name="content" class="form-control"><?php echo $obj[0]->content; ?></textarea>
 					</div>
+				</div>-->
+                                <div class="form-group">
+					<label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_content'); ?></label>
+					<div class="controls col-xs-11">
+						<textarea rows="10" id="content" name="content" class="form-control"><?php echo $obj[0]->description; ?></textarea>
+					</div>
 				</div>
-
 
 				<div class="form-group">
 					<label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_description'); ?></label>
@@ -598,6 +604,7 @@ $('#county').change(function(){
 	</span>
 </div>
 <script type="text/javascript">
+    /*
 jQuery(document).ready(function($) {
 	$('#content').tinymce({
                         // Location of TinyMCE script
@@ -634,7 +641,7 @@ jQuery(document).ready(function($) {
                         	staffid : "991234"
                         }
                     });	
-});
+});*/
 </script>
 
 

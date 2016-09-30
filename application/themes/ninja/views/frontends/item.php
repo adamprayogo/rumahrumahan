@@ -136,21 +136,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-md-offset-9 col-xs-12 text-center">
+                        <div class="col-md-12 col-xs-12 text-right">
                             <h2 class="price">Rp. <?php echo $obj[0]->price; ?></h2>
                         </div>
                         <div class="col-md-12 gap col-xs-12">
                             <div class="itm-desc">
                                 <?php
-                                if (strlen($obj[0]->content) == 0) {
+                                if (strlen($obj[0]->description) == 0) {
                                     echo '<p class="text-center">NO DESCRIPTION</p>';
                                 } else {
-                                    echo strip_tags($obj[0]->content, '<p><a>');
+                                    echo $obj[0]->description;
                                 }
                                 ?>
                             </div>
                             <?php
-                            if (strlen($obj[0]->content) >= 447) {
+                            if (strlen($obj[0]->description) >= 447) {
                                 ?>
                                 <center><button class="btn btn-default" id="read-more">Read More</button></center>
                                 <?php

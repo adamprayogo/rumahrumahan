@@ -126,7 +126,7 @@ class estate_api extends REST_Controller
 			$title=$this->input->post('title');
 			$bathrooms=$this->input->post('bathrooms');
 			$bedrooms=$this->input->post('bedrooms');
-			$content=$content=preg_replace('/[\r\n]+/', "", htmlspecialchars($this->input->post('content')));
+			$content=$this->input->post('content');//preg_replace('/[\r\n]+/', "", htmlspecialchars($this->input->post('content')));
 			$county=$this->input->post('county');
 			$lat=$this->input->post('lat');
 			$lng=$this->input->post('lng');

@@ -132,7 +132,6 @@ class home extends MY_Controller {
                 $data['price_2'] = $price_range[1];
                 $insert_id = $this->subscribe_user_model->insert($data);
                 if ($insert_id != 0) {
-                    $status = 1;
                     $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name');
                     $this->load->helper('email_ultils');
                     $this->load->helper('currency');
@@ -143,8 +142,12 @@ class home extends MY_Controller {
                     } else if (KONTRAKAN == intval($data['categories'])) {
                         $category = 'Kontrakan';
                     }
-                    send_welcome_subscribe_email($category, $dataSubscribe[0]->types_name, $dataSubscribe[0]->cities_name, $dataSubscribe[0]->county_name, $dataSubscribe[0]->name, $dataSubscribe[0]->phone, $dataSubscribe[0]->email, format_money($dataSubscribe[0]->price_1, ".", ",", "Rp. "), format_money($dataSubscribe[0]->price_2, ".", ",", "Rp. "));
-//                    send_verified_code('asAsc092','srachmandani@gmail.com');
+                    $sendEmail = send_welcome_subscribe_email($category, $dataSubscribe[0]->types_name, $dataSubscribe[0]->cities_name, $dataSubscribe[0]->county_name, $dataSubscribe[0]->name, $dataSubscribe[0]->phone, $dataSubscribe[0]->email, format_money($dataSubscribe[0]->price_1, ".", ",", "Rp. "), format_money($dataSubscribe[0]->price_2, ".", ",", "Rp. "));
+                    if ($sendEmail) {
+                        $status = 1;
+                    } else {
+                        $status = 2; //error sending email
+                    }
                 }
             }
         }

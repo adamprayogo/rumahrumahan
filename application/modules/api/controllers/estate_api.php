@@ -96,7 +96,8 @@ class estate_api extends REST_Controller
 		`estates`.`address` as address,
 		`estates`.`id` as id,
 		`estates`.`user_id` as user_id,
-                FORMAT(SUM(`rating`.`value`)/COUNT(*),1) as total_rating';
+                FORMAT(SUM(`rating`.`value`)/COUNT(*),1) as total_rating,
+                COUNT(*) as total_user';
 
 		$data=$this->estates_model->get_by_query(
 			$select.' FROM

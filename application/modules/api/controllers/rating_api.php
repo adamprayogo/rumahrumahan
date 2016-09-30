@@ -11,20 +11,6 @@ class rating_api extends REST_Controller {
     }
 
     function rating_get() {
-//        $this->load->model('rating_model');
-//        $estates_id = $this->get('estates_id');
-//        $first = $this->get('first');
-//        $offset = $this->get('offset');
-//        $order = array('rating.created_date' => 'DESC');
-//        $where = array('estates_id' => $estates_id);
-//        $group_by = array('estates_id');
-//        $total_rating = $this->rating_model->total($where, $group_by);
-//        $data = array('total_rating' => "$total_rating");
-//        if ($data != null) {
-//            $this->response([$data]);
-//        } else {
-//            $this->response(array('empty' => 'empty_data'));
-//        }
         $estates_id = $this->get('estates_id');
         $first = $this->get('first');
         $offset = $this->get('offset');
@@ -36,7 +22,7 @@ class rating_api extends REST_Controller {
             $offset = 1;
         }
         if ($estates_id != null) {
-            $data = $this->rating_model->get('rating.*, users.user_name', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
+            $data = $this->rating_model->get('rating.*, users.user_name, users.avt', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
             $this->response($data);
         } else {
             $this->response(array('ok' => 0));

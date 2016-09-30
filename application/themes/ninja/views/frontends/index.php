@@ -233,7 +233,7 @@
         $("#price").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 9999999,
+            max: 99999999,
             grid: true,
             prefix: "Rp ",
             force_edges: true
@@ -241,7 +241,7 @@
         $("#priceSubscribe").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 9999999,
+            max: 99999999,
             grid: true,
             prefix: "Rp ",
             force_edges: true
@@ -286,6 +286,7 @@
             $btnSubscribe.html('<i class="fa fa-send"></i> Sending...');
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
             post.done(function (res) {
+                console.log(JSON.stringify(res));
                 var option = {
                     title: 'Subscribe Info',
                     styling: 'bootstrap3',

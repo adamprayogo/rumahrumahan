@@ -89,7 +89,7 @@ function send_welcome_subscribe_email($categories_name, $types_name, $cities_nam
                                     </td>
                                     <td style="width:80%;">
                                         <h1 style="margin-top:auto;margin-bottom: auto; "><a href="#" style="text-decoration:none; color:#8692c9;">Rumaqu.com</a></h1>
-                                        <p style="margin-top:-1px;">Thanks for using our subscriber feature</p>
+                                        <p style="margin-top:-1px;"><b>Thanks for using our subscriber feature</b></p>
                                     </td>
                                 </tr>
                             </thead>

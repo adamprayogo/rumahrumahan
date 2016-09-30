@@ -1,5 +1,5 @@
 <?php
-//var_dump($src_result);
+var_dump($price_1);
 ?>
 
 <div class="main_container">
@@ -200,7 +200,7 @@ if (isset($src_result)) {
         $("#price").ionRangeSlider({
             type: "double",
             min: 0,
-            max: 99999999999,
+            max: 99999999,
             from: <?php echo $price_1; ?>,
             to: <?php echo $price_2; ?>,
             grid: true,

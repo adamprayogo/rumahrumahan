@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/rumahrumahan/application/modules/api/controllers/users_api.php</file>
+            <file>file:/C:/xampp/htdocs/rumahrumahan/application/models/rating_model.php</file>
+            <file>file:/C:/xampp/htdocs/rumahrumahan/application/modules/api/controllers/rating_api.php</file>
+            <file>file:/C:/xampp/htdocs/rumahrumahan/application/modules/api/controllers/images_api.php</file>
             <file>file:/C:/xampp/htdocs/rumahrumahan/application/modules/api/controllers/estate_api.php</file>
-            <file>file:/C:/xampp/htdocs/rumahrumahan/application/helpers/email_ultils_helper.php</file>
+            <file>file:/C:/xampp/htdocs/rumahrumahan/application/models/estates_model.php</file>
         </group>
     </open-files>
 </project-private>

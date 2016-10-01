@@ -130,9 +130,10 @@ class home extends MY_Controller {
                 $price_range = explode(';', $this->input->post('price'));
                 $data['price_1'] = $price_range[0];
                 $data['price_2'] = $price_range[1];
+                $data['update_url'] = substr(md5($this->config->item('encryption_key') . $data['email'] . uniqid(rand(), true)), 0, 20);
                 $insert_id = $this->subscribe_user_model->insert($data);
                 if ($insert_id != 0) {
-                    $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name');
+                    $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name', array('email' => $data['email']));
                     $this->load->helper('email_ultils');
                     $this->load->helper('currency');
                     if (KOSAN == intval($data['categories'])) {
@@ -142,11 +143,11 @@ class home extends MY_Controller {
                     } else if (KONTRAKAN == intval($data['categories'])) {
                         $category = 'Kontrakan';
                     }
-                    $sendEmail = send_welcome_subscribe_email($category, $dataSubscribe[0]->types_name, $dataSubscribe[0]->cities_name, $dataSubscribe[0]->county_name, $dataSubscribe[0]->name, $dataSubscribe[0]->phone, $dataSubscribe[0]->email, format_money($dataSubscribe[0]->price_1, ".", ",", "Rp. "), format_money($dataSubscribe[0]->price_2, ".", ",", "Rp. "));
+                    $sendEmail = send_welcome_subscribe_email($category, $dataSubscribe[0]->types_name, $dataSubscribe[0]->cities_name, $dataSubscribe[0]->county_name, $dataSubscribe[0]->name, $dataSubscribe[0]->phone, $dataSubscribe[0]->email, format_money($dataSubscribe[0]->price_1, ".", ",", "Rp. "), format_money($dataSubscribe[0]->price_2, ".", ",", "Rp. "), 'uppref?v=u&email=' . $dataSubscribe[0]->email . '&url=' . $dataSubscribe[0]->update_url);
                     if ($sendEmail) {
                         $status = 1;
                     } else {
-                        $status = 2; //error sending email
+                        $status = 2;
                     }
                 }
             }
@@ -154,7 +155,38 @@ class home extends MY_Controller {
         echo json_encode(array("status" => $status));
     }
 
-    public function check_subscribe_email_exist_add($email) {
+    function updatesub() {
+        $status = 0;
+        if (isset($_POST['email'])) {
+            $this->form_validation->set_rules('email', 'required|xss_clean|valid_email');
+            if ($this->form_validation->run()) {
+                $email = $this->input->post('email');
+                $this->load->helper('email_ultils');
+                $generate_url = substr(md5($this->config->item('encryption_key') . $email . uniqid(rand(), true)), 0, 20);
+                $resUpdate = $this->subscribe_user_model->update(array('update_url' => $generate_url), array('email' => $email));
+                if ($resUpdate > 0) {
+                    $sendUpdate = send_update_preference_newsletter($email, 'uppref?v=u&email=' . $email . '&url=' . $generate_url);
+                    if ($sendUpdate) {
+                        $status = 1;
+                    }
+                }
+            }
+        }
+        echo json_encode(array("status" => $status, "generated_url" => $generate_url));
+    }
+
+    function uppref() {
+        if (
+                isset($_GET['v']) &&
+                isset($_GET['url']) &&
+                isset($_GET['email'])
+        ) {
+            $generated_url = $this->input->get('url');
+            $email = $this->input->get('email');
+        }
+    }
+
+    function check_subscribe_email_exist_add($email) {
         $data = $this->subscribe_user_model->get_by_exact_email($email);
         if ($data != null) {
             //$this->form_validation->set_message('check_subscribe_email_exist_add', $this->lang->line('vl_feild_value_exist'));

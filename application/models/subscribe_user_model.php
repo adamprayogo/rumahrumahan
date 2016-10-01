@@ -72,6 +72,13 @@ class subscribe_user_model extends CI_Model {
         return $this->get($select, $where, $like, 0, 1, $order_by);
     }
 
+    function update($array_data, $where) {
+        $array_data['updated_at'] = date('Y-m-d H:i:s');
+        $this->db->where($where);
+        $this->db->update('subscribe_user', $array_data);
+        return $this->db->affected_rows();
+    }
+
     public function remove($arr_where) {
         $this->db->where($arr_where);
         $this->db->delete('subscribe_user');

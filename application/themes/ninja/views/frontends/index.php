@@ -105,7 +105,7 @@
                                 <button type="submit" class="btn btn btn-success"><i class="fa fa-search"></i> Cari</button>
                             </div>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#subscribeModal"><i class="fa fa-rss"></i> Subscribe</button>
+                                <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#subscribeModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-rss"></i> Subscribe</button>
                             </div>
                         </div>
                     </div>
@@ -121,6 +121,8 @@
     </div>
 
 </div>
+
+<!-- Modal Subscribe-->
 <div class="modal fade" id="subscribeModal" role="dialog" aria-labelledby="subscribeModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content  text-center">
@@ -228,6 +230,21 @@
         </div>
     </div>
 </div>
+
+<!-- Form Resend -->
+<div id="updateSubscribe" hidden>
+    <form class="form-horizontal">
+        <p class='text-center'>Permintaan berlangganan gagal, email telah dipakai, silahkan masukan kembali alamat email untuk mengubah preferensi:</p>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">email</span>
+            <input type="email" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="email">
+        </div>
+        <div class="input-group pull-right">
+            <button type="button" class="btn btn-sm" id="dismisResend" name="cancel">Cancel</button>
+            <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-send"></i> Update</button>
+        </div>
+    </form>
+</div>
 <script>
     $(document).ready(function () {
         $("#price").ionRangeSlider({
@@ -267,7 +284,10 @@
             $("#subscribeForm :input[name='categories']").val($("#mainForm :input[name='category']").val());
             $("#subscribeForm :input[name='types']").val($("#mainForm :input[name='type']").val());
 //            $("#subscribeForm :input[name='cities']").val($("#mainForm :input[name='cities']").val());
+        }).on('hide.bs.modal', function () {
+            PNotify.removeAll();
         });
+
     });
 </script>
 <script>
@@ -279,32 +299,67 @@
             var fields = $("#subscribeForm :input");
             var value = {};
             $.each(fields, function (i, field) {
-                //alert("name : "+$(this).attr("name")+" , value : "+$(this).val());
                 value[$(this).attr("name")] = $(this).val();
             });
             $btnSubscribe.addClass('disabled');
             $btnSubscribe.html('<i class="fa fa-send"></i> Sending...');
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
-            post.done(function (res) {
-                console.log(JSON.stringify(res));
-                var option = {
-                    title: 'Subscribe Info',
-                    styling: 'bootstrap3',
-                    nonblock: {
-                        nonblock: true
-                    }
-                };
+            var subStatus = 0;
+            post.done(function (res) { 
                 if (JSON.parse(res).status == 1) {
-                    option.text = "Permintaan berlangganan telah aktif, cek email mu";
-                    option.type = "success";
+                    var option = {
+                        text: "Permintaan berlangganan telah aktif, cek email mu",
+                        type: "success",
+                        title: 'Subscribe Info',
+                        styling: 'bootstrap3',
+                        nonblock: {
+                            nonblock: true
+                        }
+                    };
+                    new PNotify(option);
                 } else {
-                    option.text = "Permintaan berlangganan gagal, email telah dipakai";
+                    var notice = new PNotify({
+                        text: "<div style='max-width:250px;'>" + $("#updateSubscribe").html() + '</div>',
+                        icon: false,
+                        width: 'auto',
+                        hide: false,
+                        buttons: {
+                            closer: false,
+                            sticker: false
+                        },
+                        insert_brs: false
+                    });
+                    notice.get().find('form').on('click', '#dismisResend', function () {
+                        notice.remove();
+                    }).submit(function (e) {
+                        e.preventDefault();
+                        var email = $(this).find('input[name=email]').val();
+                        if (!email) {
+                            alert('Please provide a username.');
+                            return false;
+                        }
+                        var sendEmailUpdate = $.post('<?php echo base_url() . 'updatesub' ?>', {email: email});
+                        sendEmailUpdate.done(function (resup) {
+                            if (JSON.parse(resup).status == 1) {
+                                notice.update({
+                                    title: 'Success',
+                                    text: 'Email Sudah dikirim <b>' + email + '</b> silahkan di cek',
+                                    icon: true,
+                                    width: PNotify.prototype.options.width,
+                                    hide: true,
+                                    buttons: {
+                                        closer: true,
+                                        sticker: true
+                                    },
+                                    type: 'success'
+                                });
+                            }
+                        });
+                        return false;
+                    });
                 }
                 $btnSubscribe.html('<i class="fa fa-send"></i> Send');
                 $btnSubscribe.removeClass('disabled');
-                new PNotify(option);
-            });
-            post.fail(function (a, b, c) {
             });
         });
     });

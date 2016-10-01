@@ -22,7 +22,7 @@ class rating_api extends REST_Controller {
             $offset = 1;
         }
         if ($estates_id != null) {
-            $data = $this->rating_model->get('rating.*, users.user_name, users.avt', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
+            $data = $this->rating_model->get('rating.*, users.full_name, users.avt', array('rating.estates_id' => $estates_id), false, $first, $offset, array('rating.created_date' => 'DESC'));
             $this->response($data);
         } else {
             $this->response(array('ok' => 0));

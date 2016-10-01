@@ -68,7 +68,7 @@ function reply_contact($subject, $content, $receive_email) {
             ->send();
 }
 
-function send_welcome_subscribe_email($categories_name, $types_name, $cities_name, $county_name, $name, $phone, $email, $price_1, $price_2) {
+function send_welcome_subscribe_email($categories_name, $types_name, $cities_name, $county_name, $name, $phone, $email, $price_1, $price_2, $generated_url) {
     $CI = & get_instance();
     $CI->load->helper('settings');
     $configs = getSettings(EMAIL_SETTING_FILE);
@@ -85,7 +85,7 @@ function send_welcome_subscribe_email($categories_name, $types_name, $cities_nam
                             <thead>
                                 <tr style="background-color: rgba(190, 104, 170, 0.31);">
                                     <td style=" width: 10%; ">
-                                        <a href="#"><img src="' . base_url() . '/img/icon/apple-icon-180x180.png" style="width:100px; vertical-align: right; padding-left: 5px;"/></a>
+                                        <a href="#"><img src="' . base_url() .  '/img/icon/apple-icon-180x180.png" style="width:100px; vertical-align: right; padding-left: 5px;"/></a>
                                     </td>
                                     <td style="width:80%;">
                                         <h1 style="margin-top:auto;margin-bottom: auto; "><a href="#" style="text-decoration:none; color:#8692c9;">Rumaqu.com</a></h1>
@@ -135,6 +135,16 @@ function send_welcome_subscribe_email($categories_name, $types_name, $cities_nam
                                             <br><br>
                                             Koclak Team Dev
                                         </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="background-color: #be68aa; text-align: center;">
+                                        <p style="color:#fff;">
+                                            <b>
+                                                If you willing to update your criteria please click button below:
+                                            </b>
+                                        </p>
+                                        <a href="' . base_url() . $generated_url . '" target="_blank" style=" text-decoration: none; "><button style="background-color: #fbd759; border: none; padding: 5px 32px; text-align: center; display: block;font-size: 16px; cursor:pointer; margin-left:auto; margin-right: auto; font-weight: bold;" type="button">Visit</button></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -242,6 +252,81 @@ function send_newsletter_email($email, $name, $estates_id, $estates_img_path, $e
                                 Copyright © 2016 KoclakDev (2300 Geng Road, Suite 250 Palo Alto, California 94303), All rights reserved.
                                 </small>
                                 </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </body>
+            </html>';
+    $result = $CI->email
+            ->from($configs['from_email'], $configs['from_user'])
+            ->to($email)
+            ->subject($subject)
+            ->message($body)
+            ->send();
+    return $result;
+}
+
+function send_update_preference_newsletter($email, $url_generated) {
+    $CI = & get_instance();
+    $CI->load->helper('settings');
+    $configs = getSettings(EMAIL_SETTING_FILE);
+    $CI->load->library('email', $configs);
+    $CI->email->initialize($configs);
+    $subject = 'Request Update Preferences at rumaqu.com';
+    $body = '<html>
+                <head>
+                    <title>Estate at Rumahqu.com</title>
+                </head>
+                <body style="font-family: Arial, Helvetica, sans-serif;">
+                    <div style="width:100%; height:auto;">
+                        <table cellpadding="10" style="table-layout: auto; border-collapse: separate; width: 100%; border:0px;" cellspacing="0">
+                            <thead>
+                                <tr style="background-color: rgba(190, 104, 170, 0.31);">
+                                    <td style=" width: 10%; ">
+                                        <a href="' . base_url() . '"><img src="' . base_url() . '/img/icon/apple-icon-180x180.png" style="width:100px; vertical-align: right; padding-left: 5px;"/></a>
+                                    </td>
+                                    <td style="width:80%;">
+                                        <h1 style="margin-top:auto;margin-bottom: auto; "><a href="#" style="text-decoration:none; color:#8692c9;">Rumaqu.com</a></h1>
+                                        <p style="margin-top:-1px;"><b>Newsletter notification estates</b></p>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="padding:15px;">
+                                        <div style="max-width: 100%;">
+                                            <p>
+                                                Hi, <b>Adam</b> <br>
+                                                Please follow link above to update your preferences :
+                                            </p>
+                                            <a href="' . base_url() . $url_generated . '" target="_blank">' . base_url() . $url_generated . '</a>
+                                        </div>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            Regards,
+                                            <br><br>
+                                            Koclak Team Dev
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="background-color: #cfcccc;text-align: center;">
+                                        <small>
+                                            If you do not want to receive our notification, from KoclakDev, please unsubscribe. <a href="#">unsubscribe link</a> <br>
+                                            Copyright © 2016 KoclakDev (2300 Geng Road, Suite 250 Palo Alto, California 94303), All rights reserved.
+                                        </small>
+                                    </td>
 
                                 </tr>
                             </tbody>

@@ -51,6 +51,7 @@ define('RUSUN',2);
 /*STATUS*/
 define('SOLD',0);
 define('FEATURED', 1);
+define('FAVORITE',2);
 /*END*/
 
 

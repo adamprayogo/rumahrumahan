@@ -323,7 +323,7 @@ $('#county').change(function(){
 					<div class="controls col-xs-11">
 						<select id="status" name="status" class="form-control">
 							<option value="">-----<?php echo lang('msg_not_set'); ?>-----</option>
-							<option value="<?php echo FEATURED; ?>" <?php if($obj[0]->status==FEATURED)echo 'selected'; ?>><?php echo lang('msg_featured'); ?></option>
+							<option value="<?php echo FEATURED; ?>" <?php if($obj[0]->status==FEATURED)echo 'selected'; ?>>Available</option>
 							<option value="<?php echo SOLD; ?>" <?php if($obj[0]->status==SOLD)echo 'selected'; ?>><?php echo lang('msg_sold'); ?></option>
 						</select>
 					</div>
@@ -335,6 +335,15 @@ $('#county').change(function(){
 						<select id="activate" name="activate" class="form-control">
 							<option value="<?php echo DEACTIVATED; ?>" <?php if($obj[0]->activated==DEACTIVATED)echo 'selected'; ?>><?php echo lang('msg_deactivate'); ?></option>
 							<option value="<?php echo ACTIVATED; ?>" <?php if($obj[0]->activated==ACTIVATED)echo 'selected'; ?>><?php echo lang('msg_activate') ?></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-1" for="txtName">Status Featured</label>
+					<div class="controls col-xs-11">
+						<select id="activate" name="featured" class="form-control">
+							<option value="<?php echo 0; ?>" <?php if($obj[0]->featured==0)echo 'selected'; ?>><?php echo 'Non-Featured' ?></option>
+							<option value="<?php echo 1; ?>" <?php if($obj[0]->featured==1)echo 'selected'; ?>><?php echo 'Featured' ?></option>
 						</select>
 					</div>
 				</div>

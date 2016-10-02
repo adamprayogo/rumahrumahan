@@ -12,7 +12,7 @@ class Estates_model extends CI_Model {
         $this->load->helper('settings');
     }
 
-    function get($select = "*,estates.id as id", $where = false, $like = false, $first = false, $offset = false, $order_by = false,$group_by=false) {
+    function get($select = "*,estates.id as id", $where = false, $like = false, $first = false, $offset = false, $order_by = false, $group_by = false) {
         $data = array();
         $settings = getSettings(CURRENCY_SETTING_FILE);
         if ($order_by != false) {
@@ -34,7 +34,7 @@ class Estates_model extends CI_Model {
         if ($offset != false) {
             $this->db->limit($offset, $first);
         }
-        if($group_by!=false){
+        if ($group_by != false) {
             $this->db->group_by($group_by);
         }
 
@@ -43,26 +43,13 @@ class Estates_model extends CI_Model {
         $this->db->join('users', 'estates.user_id=users.id');
         $this->db->join('cities', 'estates.cities_id=cities.id');
         $this->db->join('marker', 'estates.marker_id=marker.id', 'left');
-        $this->db->join('rating','estates.id = rating.estates_id','left');
+        $this->db->join('rating', 'estates.id = rating.estates_id', 'left');
         $query = $this->db->get();
-
-//        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $rows) {
                 $data[] = $rows;
             }
             foreach ($data as $r) {
-
-                // $position=$settings['position'];
-                // $r->currency=$settings['currency_symbol'];
-                // $price=$r->price;
-                // if($position==0){
-                // 	//before
-                // 	$r->price=$r->currency.' '.$price;
-                // }else{
-                // 	//after
-                // 	$r->price=$price.' '.$r->currency;
-                // }
 
 
                 $r->content = preg_replace('/[\r\n]+/', "", $r->content);
@@ -255,6 +242,7 @@ class Estates_model extends CI_Model {
     }
 
     function update($data_array, $where) {
+        $data_array['updated_at'] = date('Y-m-d H:i:s');
         $this->db->where($where);
         $this->db->update('estates', $data_array);
     }

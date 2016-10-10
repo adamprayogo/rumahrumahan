@@ -44,7 +44,7 @@ define('USER', 2);
 /*PURPOSE*/
 define('KOSAN', 0);
 define('KONTRAKAN', 1);
-define('RUSUN',2);
+//define('RUSUN',2);
 /*END*/
 
 

@@ -15,7 +15,6 @@
                             <select class="form-control" name="category">
                                 <option value="<?php echo KOSAN ?>" <?php if ($category == KOSAN) {echo 'selected';} ?>>Kosan</option>
                                 <option value="<?php echo KONTRAKAN ?>" <?php if ($category == KONTRAKAN) {echo 'selected';} ?>>Kontrakan</option>
-                                <option value="<?php echo RUSUN ?>" <?php if ($category == RUSUN) {echo 'selected';} ?>>Rusun</option>
                             </select>
                         </div>
                         <div class="col-md-6 col-xs-6 form-group">

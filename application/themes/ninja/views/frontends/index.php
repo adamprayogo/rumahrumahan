@@ -42,7 +42,6 @@
                         <select class="form-control" name="category">
                             <option value="<?php  echo KOSAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KOSAN){echo 'selected';}?>>Kosan</option>
                             <option value="<?php echo KONTRAKAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KONTRAKAN){echo 'selected';}?>>Kontrakan</option>
-                            <option value="<?php echo RUSUN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==RUSUN){echo 'selected';}?>>Rusun</option>
                         </select>
                     </div>
                     <div class="col-md-6 col-xs-6 form-group">
@@ -171,7 +170,6 @@
                             <select class="form-control" name="categories">
                                 <option value="<?php echo KOSAN ?>">Kosan</option>
                                 <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
-                                <option value="<?php echo RUSUN ?>">Rusun</option>
                             </select>
                         </div>
                         <div class="col-md-6 col-xs-6 form-group">

@@ -470,9 +470,9 @@ $('#county').change(function(){
 					<div class="controls col-xs-11">
 						<select id="purpose" name="purpose" class="form-control">
 							<option value="">-----<?php echo lang('msg_purpose'); ?>-----</option>
-							<option value="<?php echo SALES?>" <?php if($obj[0]->purpose==SALES){echo 'selected';} ?>><?php echo lang('msg_sale') ?></option>
-							<option value="<?php echo RENT?>" <?php if($obj[0]->purpose==RENT){echo 'selected';} ?>><?php echo lang('msg_rent') ?></option>
-							<option value="<?php echo SALES_AND_RENT ?>" <?php if($obj[0]->purpose==SALES_AND_RENT){echo 'selected';} ?>><?php echo lang('msg_sale_and_rent'); ?></option>
+							<option value="<?php echo KOSAN?>" <?php if($obj[0]->purpose==KOSAN){echo 'selected';} ?>>Kosan</option>
+							<option value="<?php echo KONTRAKAN?>" <?php if($obj[0]->purpose==KONTRAKAN){echo 'selected';} ?>>Kontrakan</option>
+							<option value="<?php echo RUSUN ?>" <?php if($obj[0]->purpose==RUSUN){echo 'selected';} ?>>Rusun</option>
 						</select>
 					</div>
 				</div>

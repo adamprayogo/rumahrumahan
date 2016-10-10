@@ -1,7 +1,3 @@
-<?php
-var_dump($price_1);
-?>
-
 <div class="main_container">
     <!-- page content -->
     <div class="content_wrapper" role="main">
@@ -11,52 +7,26 @@ var_dump($price_1);
                     <div class="x_panel">
                         <div class="text-center">
                             <h2>Cari Berdasarkan Kireteria</h2>
-                            <div class="x_title">
-                                <!--<div class="clearfix"></div>-->
-                            </div>
+                            <div class="x_title"></div>
                         </div>
-
                         <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask"') ?>
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Tipe</label>
                             <select class="form-control" name="category">
-                                <?php
-                                if ($category == KOSAN) {
-                                    ?>
-                                    <option value="<?php echo KOSAN ?>">Kosan</option>
-                                    <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
-                                    <option value="<?php echo RUSUN ?>">Rusun</option>
-                                    <?php
-                                } else if ($category == KONTRAKAN) {
-                                    ?>
-                                    <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
-                                    <option value="<?php echo KOSAN ?>">Kosan</option>
-                                    <option value="<?php echo RUSUN ?>">Rusun</option>
-                                    <?php
-                                } else if ($category == RUSUN) {
-                                    ?>
-                                    <option value="<?php echo RUSUN ?>">Rusun</option>
-                                    <option value="<?php echo KOSAN ?>">Kosan</option>
-                                    <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
-                                    <?php
-                                }
-                                ?>
+                                <option value="<?php echo KOSAN ?>" <?php if ($category == KOSAN) {echo 'selected';} ?>>Kosan</option>
+                                <option value="<?php echo KONTRAKAN ?>" <?php if ($category == KONTRAKAN) {echo 'selected';} ?>>Kontrakan</option>
+                                <option value="<?php echo RUSUN ?>" <?php if ($category == RUSUN) {echo 'selected';} ?>>Rusun</option>
                             </select>
                         </div>
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Untuk</label>
                             <select class="form-control" name="type">
                                 <?php
-                                $head = '';
-                                $body = '';
                                 foreach ($type_list as $row) {
-                                    if ($row->id == $type) {
-                                        $head .= '<option value="' . $row->id . '">' . $row->name . '</option>';
-                                    } else {
-                                        $body .= '<option value="' . $row->id . '">' . $row->name . '</option>';
-                                    }
+                                    ?>
+                                        <option value="<?php echo $row->id;?>" <?php if($row->id == $type){echo 'selected';}?>><?php echo $row->name;?></option>;
+                                    <?php
                                 }
-                                echo $head . $body;
                                 ?>
                             </select>
                         </div>
@@ -68,33 +38,28 @@ var_dump($price_1);
                                 $diff = 0;
                                 $openTag = true;
                                 $closeTag = false;
-                                $selected = '';
                                 foreach ($cities_list as $row) {
-                                    if ($row->cities_id == $cities) {
-                                        $selected = 'selected="selected"';
-                                    }
                                     if ($diff != $row->county_id) {
                                         $diff = $row->county_id;
                                         if ($openTag == false) {
                                             ?>
                                             </optgroup>
-                                            <?php
-                                            $closeTag = true;
-                                        }
-                                        ?>
+                                                <?php
+                                                $closeTag = true;
+                                            }
+                                            ?>
                                         <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
-                                            <option value="<?php echo $row->cities_id; ?>" <?php echo $selected; ?>><?php echo $row->cities_name; ?></option>
+                                            <option value="<?php echo $row->cities_id; ?>" <?php if ($row->cities_id == $cities){echo 'selected';} ?>><?php echo $row->cities_name; ?></option>
                                             <?php
                                             $closeTag = false;
                                         } else {
                                             $openTag = false;
                                             ?>
-                                            <option value="<?php echo $row->cities_id; ?>" <?php echo $selected; ?>><?php echo $row->cities_name; ?></option>
-                                            <?php
-                                        }
-                                        $selected = '';
+                                            <option value="<?php echo $row->cities_id; ?>" <?php if ($row->cities_id == $cities){echo 'selected';} ?>><?php echo $row->cities_name; ?></option>
+                                        <?php
                                     }
-                                    ?>
+                                }
+?>
                                 </optgroup>
                             </select>
                         </div>  
@@ -109,7 +74,7 @@ var_dump($price_1);
                                 <button type="submit" class="btn btn-success"><i class="fa fa-search"></i>    Cari</button>
                             </div>
                         </div>
-                        <?php echo form_close(); ?>
+<?php echo form_close(); ?>
                     </div>
                 </div>
                 <div class="col-md-12 col-xs-12" id="src_map"></div>
@@ -163,9 +128,9 @@ var_dump($price_1);
                     } else {
                         ?>
                         <p class="text-center">We're sorry, your search criteria is not found.</p>
-                        <?php
-                    }
-                    ?>
+    <?php
+}
+?>
                 </div>
             </div>
             <div class="col-md-2 col-xs-12">

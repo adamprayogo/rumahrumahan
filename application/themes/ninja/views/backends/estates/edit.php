@@ -550,14 +550,14 @@ $('#county').change(function(){
                                 <div class="form-group">
 					<label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_content'); ?></label>
 					<div class="controls col-xs-11">
-						<textarea rows="10" id="content" name="content" class="form-control"><?php echo $obj[0]->description; ?></textarea>
+                                            <textarea rows="10" id="content" name="content" class="form-control"><?php echo strip_tags($obj[0]->description); ?></textarea>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_description'); ?></label>
 					<div class="controls col-xs-11">
-						<textarea rows="10" id="description" name="description" class="form-control"><?php echo $obj[0]->description; ?></textarea>
+						<textarea rows="10" id="description" name="description" class="form-control"><?php echo strip_tags($obj[0]->description); ?></textarea>
 					</div>
 				</div>
 

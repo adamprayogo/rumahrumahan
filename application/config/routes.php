@@ -91,7 +91,8 @@ $route['home'] =            'default/home';
 $route['search'] =          'default/home/search';
 $route['search/(:num)'] =   'default/home/search/$1';
 $route['subscribe'] =       'default/home/subscribe';
-$route['updatesub'] =       'default/home/updatesub';
+$route['requpsub'] =        'default/home/requpsub';
 $route['upref'] =           'default/home/upref';
+$route['unsub']=            'default/home/unsub';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

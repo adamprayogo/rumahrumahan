@@ -3,6 +3,11 @@
 //    var_dump($county_list
 //var_dump($cities_list);
 //var_dump($max_price);
+//if(isset($data_update)){
+//    var_dump($data_update);
+//}
+//echo $this->encrypt->decode($url);
+
 ?>
 <div class="main_container">
     <!-- page content -->
@@ -15,18 +20,29 @@
                 <div class="x_panel">
                     <div class="text-center">
                         <h2>Cari Berdasarkan Kireteria</h2>
-                        <div class="x_title">
-                            <!--<div class="clearfix"></div>-->
-                        </div>
+                        <div class="x_title"></div>
                     </div>
 
-                    <?php echo form_open('search', 'class="form-horizontal form-label-left input_mask" id="mainForm"') ?>
+                    <?php
+                    $default_form_home='search';
+                    if(isset($data_update)){
+                        $default_form_home='upref';
+                    }
+                    echo form_open($default_form_home, 'class="form-horizontal form-label-left input_mask" id="mainForm"');
+                    if(isset($data_update)){
+                        ?>
+                        <input type="text" hidden name="name" value="<?php echo $data_update[0]->name;?>"/>
+                        <input type="text" hidden name="email" value="<?php echo $_GET['email'];?>"/>
+                        <input type="text" hidden name="url" value="<?php echo $_GET['url'];?>"/>
+                         <?php
+                    }
+                    ?>
                     <div class="col-md-6 col-xs-6 form-group">
                         <label>Kategori</label>
                         <select class="form-control" name="category">
-                            <option value="<?php echo KOSAN ?>">Kosan</option>
-                            <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
-                            <option value="<?php echo RUSUN ?>">Rusun</option>
+                            <option value="<?php  echo KOSAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KOSAN){echo 'selected';}?>>Kosan</option>
+                            <option value="<?php echo KONTRAKAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KONTRAKAN){echo 'selected';}?>>Kontrakan</option>
+                            <option value="<?php echo RUSUN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==RUSUN){echo 'selected';}?>>Rusun</option>
                         </select>
                     </div>
                     <div class="col-md-6 col-xs-6 form-group">
@@ -34,12 +50,14 @@
                         <select class="form-control" name="type">
                             <?php foreach ($type_list as $row) {
                                 ?>
-                                <option value="<?php echo $row->id ?>"><?php echo $row->name ?></option>
+                                <option value="<?php echo $row->id ?>" <?php if(isset($data_update)&&$data_update[0]->types==$row->id){echo 'selected';}?>><?php echo $row->name; ?></option>
                             <?php }
                             ?>
                         </select>
                     </div>
-
+                    <div class="col-md-6">
+                        
+                    </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 form-group">
                         <label>Lokasi</label>
                         <select class="select2_group form-control" name="cities">
@@ -58,13 +76,13 @@
                                     }
                                     ?>
                                     <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
-                                        <option value="<?php echo $row->cities_id; ?>"><?php echo $row->cities_name; ?></option>
+                                        <option value="<?php echo $row->cities_id; ?>" <?php if(isset($data_update)){if ($row->cities_id == $data_update[0]->cities){echo 'selected';}} ?>><?php echo $row->cities_name; ?></option>
                                         <?php
                                         $closeTag = false;
                                     } else {
                                         $openTag = false;
                                         ?>
-                                        <option value="<?php echo $row->cities_id; ?>"><?php echo $row->cities_name; ?></option>
+                                        <option value="<?php echo $row->cities_id; ?>" <?php if(isset($data_update)){if ($row->cities_id == $data_update[0]->cities){echo 'selected';}} ?>><?php echo $row->cities_name; ?></option>
                                         <?php
                                     }
                                 }
@@ -81,7 +99,7 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-default disabled" type="button">From</button>
                                 </span>
-                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceFrom"/>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceFrom" value="<?php if(isset($data_update)){echo $data_update[0]->price_1;}else{echo 0;}?>"/>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                         <div class="col-md-6 col-xs-12">
@@ -89,7 +107,7 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-default disabled" type="button">To</button>
                                 </span>
-                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceTo"/>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceTo" value="<?php if(isset($data_update)){echo $data_update[0]->price_2;}else{echo 0;}?>"/>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                         <div class="col-md-12 col-xs-12 text-center">
@@ -101,25 +119,33 @@
                     </div>
                     <div class="col-md-12 col-xs-12">
                         <div class="btn-group btn-group-justified gap" role="group" aria-label="...">
+                            <?php if(isset($data_update)){?>
+                            <div class="btn-group" role="group">
+                                <button type="submit" class="btn btn btn-success" id="updateSub"><i class="fa fa-arrow-up"></i> Update</button>
+                            </div>
+                            <?php }else{?>
                             <div class="btn-group" role="group">
                                 <button type="submit" class="btn btn btn-success"><i class="fa fa-search"></i> Cari</button>
                             </div>
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#subscribeModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-rss"></i> Subscribe</button>
                             </div>
+                            <?php } ?>
+                            
                         </div>
                     </div>
                     <?php echo form_close(); ?>
                 </div>
             </div>
         </div>
+        
+    <a href="<?php echo base_url().'default/home/checking_newsletter'?>">check newsletter</a>
         <div class="text-center">
             <small>Available On</small>
         </div>
         <a class="and-img" href="#"></a>
 
     </div>
-
 </div>
 
 <!-- Modal Subscribe-->
@@ -250,10 +276,19 @@
         $("#price").ionRangeSlider({
             type: "double",
             min: 0,
+            <?php if(isset($data_update)){echo 'from:'.$data_update[0]->price_1.',to:'.$data_update[0]->price_2.',';}?>
             max: 99999999,
             grid: true,
             prefix: "Rp ",
-            force_edges: true
+            force_edges: true,
+            onStart: function (data) {
+                $('#priceFrom').val(data.from);
+                $('#priceTo').val(data.to);
+            },
+            onChange: function (data) {
+                $('#priceFrom').val(data.from);
+                $('#priceTo').val(data.to);
+            }            
         });
         $("#priceSubscribe").ionRangeSlider({
             type: "double",
@@ -306,9 +341,10 @@
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
             var subStatus = 0;
             post.done(function (res) { 
+                console.log(res);
                 if (JSON.parse(res).status == 1) {
                     var option = {
-                        text: "Permintaan berlangganan telah aktif, cek email mu",
+                        text: "Permintaan berlangganan telah aktif, cek email mu. Jika belum ada tunggu 30 menit atau kirim ulang.",
                         type: "success",
                         title: 'Subscribe Info',
                         styling: 'bootstrap3',
@@ -317,6 +353,8 @@
                         }
                     };
                     new PNotify(option);
+                    $btnSubscribe.html('<i class="fa fa-send"></i> Send');
+                    $btnSubscribe.removeClass('disabled');
                 } else {
                     var notice = new PNotify({
                         text: "<div style='max-width:250px;'>" + $("#updateSubscribe").html() + '</div>',
@@ -331,14 +369,18 @@
                     });
                     notice.get().find('form').on('click', '#dismisResend', function () {
                         notice.remove();
+                        $btnSubscribe.html('<i class="fa fa-send"></i> Send');
+                        $btnSubscribe.removeClass('disabled');
                     }).submit(function (e) {
                         e.preventDefault();
+                        var $btnResendSub = $(e.currentTarget[2]);
+                        $btnResendSub.addClass('disabled').html('Sending...');
                         var email = $(this).find('input[name=email]').val();
                         if (!email) {
                             alert('Please provide a username.');
                             return false;
                         }
-                        var sendEmailUpdate = $.post('<?php echo base_url() . 'updatesub' ?>', {email: email});
+                        var sendEmailUpdate = $.post('<?php echo base_url() . 'requpsub' ?>', {email: email});
                         sendEmailUpdate.done(function (resup) {
                             if (JSON.parse(resup).status == 1) {
                                 notice.update({
@@ -354,12 +396,12 @@
                                     type: 'success'
                                 });
                             }
+                            $btnSubscribe.html('<i class="fa fa-send"></i> Send');
+                            $btnSubscribe.removeClass('disabled');
                         });
                         return false;
                     });
                 }
-                $btnSubscribe.html('<i class="fa fa-send"></i> Send');
-                $btnSubscribe.removeClass('disabled');
             });
         });
     });

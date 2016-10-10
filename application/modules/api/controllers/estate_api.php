@@ -98,19 +98,21 @@ class estate_api extends REST_Controller {
         }
 
         $select = 'SELECT * , 
-		`estates`.`created_at` as created_at,
-		`estates`.`updated_at` as updated_at,
-		`types`.`name` as type_name,
-		`county`.`name` as county_name,
-		`cities`.`name` as cities_name,
-		`estates`.`address` as address,
-		`estates`.`id` as id,
+		`estates`.`created_at` AS created_at,
+		`estates`.`updated_at` AS updated_at,
+		`types`.`name` AS type_name,
+		`county`.`name` AS county_name,
+		`cities`.`name` AS cities_name,
+		`estates`.`address` AS address,
+		`estates`.`id` AS id,
 		`estates`.`user_id` as user_id,
                 `users`.`full_name` as full_name,
-                CASE WHEN FORMAT(SUM(`rating`.`value`)/COUNT(*),1) IS NOT NULL 
-                THEN FORMAT(SUM(`rating`.`value`)/COUNT(*),1)
-                ELSE 0 as total_rating,
-                COUNT(*) as total_user';
+                CASE 
+                    WHEN FORMAT(SUM(`rating`.`value`)/COUNT(*),1) IS NOT NULL 
+                    THEN FORMAT(SUM(`rating`.`value`)/COUNT(*),1)
+                    ELSE 0 
+                END AS total_rating,
+                COUNT(*) AS total_user';
 		
 		$query = $select . ' FROM
 			(`estates`)

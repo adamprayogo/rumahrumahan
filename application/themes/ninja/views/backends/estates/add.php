@@ -384,9 +384,8 @@ $default_location = getSettings(DEFAULT_LOCATION_FILE);
                     <div class="controls col-xs-11">
                         <select id="purpose" name="purpose" class="form-control">
                             <option value="">-----<?php echo lang('msg_purpose'); ?>-----</option>
-                            <option value="<?php echo KOSAN ?>"><?php echo lang('msg_sale') ?></option>
-                            <option value="<?php echo KONTRAKAN ?>"><?php echo lang('msg_rent') ?></option>
-                            <option value="<?php echo RUSUN ?>"><?php echo lang('msg_sale_and_rent'); ?></option>
+                            <option value="<?php echo KOSAN ?>">Kostan</option>
+                            <option value="<?php echo KONTRAKAN ?>">Kontrakan</option>
                         </select>
                     </div>
                 </div>

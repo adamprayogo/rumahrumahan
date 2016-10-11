@@ -45,13 +45,12 @@ class Estates_model extends CI_Model {
         $this->db->join('marker', 'estates.marker_id=marker.id', 'left');
         $this->db->join('rating', 'estates.id = rating.estates_id', 'left');
         $query = $this->db->get();
+        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $rows) {
                 $data[] = $rows;
             }
             foreach ($data as $r) {
-
-
                 $r->content = preg_replace('/[\r\n]+/', "", $r->content);
                 $r->title = preg_replace('/[\r\n]+/', "", $r->title);
                 $r->created_at = date('d-m-Y H:i:s', strtotime($r->created_at));
@@ -249,6 +248,15 @@ class Estates_model extends CI_Model {
 
     function update_query($query) {
         $this->db->query($query);
+    }
+
+    function update_visitor($estates_id) {
+        $current_count_view = $this->get_by_id($estates_id);
+        if ($current_count_view != null) {
+            $data_array['view_counter'] = $current_count_view[0]->view_counter + 1;
+            $this->db->where('id',$estates_id);
+            $this->db->update('estates', $data_array);
+        }
     }
 
 }

@@ -67,7 +67,7 @@ class home extends MY_Controller {
                     'price >=' => $price_range[0],
                     'price <=' => $price_range[1]
                 );
-                $data['src_result'] = $this->estates_model->get("*,purpose,estates.id as id,estates.activated as activated, (SUM(rating.value)/COUNT(*)) as total_rating", $where, false, false, $this->pg_per_page, array('estates.id' => 'DESC'), array("estates.id"));
+                $data['src_result'] = $this->estates_model->get("*,purpose,estates.id as id,estates.activated as activated, (SUM(rating.value)/COUNT(*)) as total_rating,COUNT(*) AS total_user", $where, false, false, $this->pg_per_page, array('estates.id' => 'DESC'), array("estates.id"));
                 $data['price_1'] = $price_range[0];
                 $data['price_2'] = $price_range[1];
                 $data['type'] = $type;

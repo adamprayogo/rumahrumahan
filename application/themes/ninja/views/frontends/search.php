@@ -95,7 +95,7 @@
                         foreach ($src_result as $item_row) {
                             $idxPage++;
                             $content_row.='<a class="item-box" href="' . base_url() . 'search/' . $item_row->id . '" target="_blank"><div class="col-md-3 col-xs-6">
-                                <div class="x_panel" style="height:200px">
+                                <div class="x_panel" style="height:230px">
                                     <div class="cover-img">';
                             if ($item_row->image_path != null) {
                                 $content_row.='<img src="' . base_url() . $item_row->image_path . '" alt="' . $item_row->title . '" class="img-responsive img-rounded" style="max-height:95px;"/>';
@@ -105,16 +105,27 @@
                             $price = explode('#', mod_price($item_row->price));
                             if ($item_row->total_rating != null) {
                                 $rating = $item_row->total_rating;
+                                $user_rating=$item_row->total_user;
                             } else {
                                 $rating = 0;
+                                $user_rating=0;
                             }
                             $content_row.='</div>
                                 <div class="content">
-                                    <div class="title">' . $item_row->title . '</div>
-                                    <div class="desc">Lorem Ipsum Dolor Sir..</div>
-                                    <div class="col-md-6 col-xs-6 itm-rating"><div class="starrr stars-existing" data-rating="' . $rating . '"></div></div>
-                                    <div class="col-md-6 col-xs-6 itm-price">Rp' . $price[0] . '<b>' . $price[1] . '</b></div>
-                                </div></div></div></a>';
+                                <div class="title">' . $item_row->title . '</div>
+                                <div class="desc">Lorem Ipsum Dolor Sir..</div>
+                                <div class="col-md-6 col-xs-6 itm-rating pull-left"><div class="starrr stars-existing" data-rating="' . $rating . '"></div></div>';
+                                if($item_row->status=0){
+                                    $status= '<b style="color:red; font-size:10px;">FULL</b>';
+                                }else{
+                                    $status= '<b style="color:green; font-size:10px;">AVAILABLE</b>';
+                                }
+                                    
+                            $content_row.='
+                                <div class="col-md-6 col-xs-6" style="padding-right:0; text-align:right;"><small>'.$status.'</small></div>
+                                <div class="col-md-12 col-xs-12" style="opacity:0.6;"><small><i class="fa fa-user"></i> '.$user_rating.'</small></div>
+                                <div class="col-md-12 col-xs-12 itm-price" style="padding-right:0;">Rp' . $price[0] . '<b>' . $price[1] . '</b></div>
+                                            </div></div></div></a>';
                             if ($idxPage == $perPage) {
                                 echo $prefix_row . $content_row . $suffix_row;
                                 $content_row = '';
@@ -184,21 +195,22 @@ if (isset($src_result)) {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                 position: google.maps.ControlPosition.RIGHT_TOP
             },
-            mapType: 'hybrid'
+            mapType: 'hybrid',
         });
         var bounds = new google.maps.LatLngBounds();
+        var markers = [];
         for (i = 0; i < locations.length; i++) {
             var infowindow = new google.maps.InfoWindow({
                 content: locations[i][0]
             });
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                map: map
+                map: map,
+                icon:'<?php echo base_url().'img/icon/android-icon-36x36.png';?>'
             });
-
             bounds.extend(marker.position);
             marker.addListener('click', function () {
-                map.setZoom(10);
+                map.setZoom(17);
                 map.setCenter(marker.getPosition());
             });
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -207,14 +219,13 @@ if (isset($src_result)) {
                 }
             })(marker, i));
             infowindow.open(map, marker);
+            markers.push(marker);
         }
-
+        
         map.fitBounds(bounds);
-
-        var listener = google.maps.event.addListener(map, "idle", function () {
-            map.setZoom(3);
-            google.maps.event.removeListener(listener);
-        });
+        var markerCluster = new MarkerClusterer(map, markers, 
+            {imagePath:'<?php echo base_url().'statics/marker-cluster/images/m'?>'}
+        );
     }
 </script>
 

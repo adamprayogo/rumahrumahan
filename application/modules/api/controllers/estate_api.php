@@ -127,6 +127,7 @@ class estate_api extends REST_Controller {
                         LIMIT ' . $first . ',' . $offset;
         $data = $this->estates_model->get_by_query($query);
         if ($data != null) {
+            $this->estates_model->update_visitor($properties_id);
             $this->response($data);
         } else {
             $this->response(array("empty" => 1));

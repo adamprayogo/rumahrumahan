@@ -303,8 +303,6 @@ class estates extends MY_Controller {
                 }
             }
             $this->estates_model->remove_by_id($id);
-
-            redirect('admin/estates');
         }
     }
 

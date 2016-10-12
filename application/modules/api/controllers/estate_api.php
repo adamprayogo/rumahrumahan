@@ -42,9 +42,9 @@ class estate_api extends REST_Controller {
         if ($user_id != null) {
             $where.=' AND `estates`.`user_id`=' . $user_id;
         }
-		if($featured!=null){
-			$where.=' AND `estates`.`featured`='.$featured;
-		}
+        if ($featured != null) {
+            $where.=' AND `estates`.`featured`=' . $featured;
+        }
         if ($status != null) {
             $where.=' AND `estates`.`status`=' . $status;
         }
@@ -91,7 +91,7 @@ class estate_api extends REST_Controller {
             }
         }
 
-        if ($request != null && $request ='vrating') {
+        if ($request != null && $request = 'vrating') {
             $order_by = ' total_rating DESC ';
         } else {
             $order_by = ' `estates`.`created_at` DESC ';
@@ -113,8 +113,8 @@ class estate_api extends REST_Controller {
                     ELSE 0 
                 END AS total_rating,
                 COUNT(*) AS total_user';
-		
-		$query = $select . ' FROM
+
+        $query = $select . ' FROM
 			(`estates`)
 			LEFT JOIN `types` ON `estates`.`types_id` = `types`.`id`
 			LEFT JOIN `county` ON `estates`.`county_id` = `county`.`id`
@@ -247,8 +247,28 @@ class estate_api extends REST_Controller {
     }
 
     function estates_delete() {
-        $data = array('this not available');
-        $this->response($data);
+//        $data = array('ok'=>0);
+        $properties_id = $this->get('estate_id');
+        $estates = $this->estates_model->get_by_id($properties_id);
+        if ($estates != null) {
+            $this->load->model('images_model');
+            $images = $this->images_model->get_by_estates_id($id);
+            foreach ($images as $r) {
+                try {
+                    unlink($r->path);
+                    unlink($r->thumb_path);
+                    $this->images_model->remove_by_id($r->id);
+                } catch (Exception $e) {
+                    
+                }
+            }
+        }
+        $affect_row = $this->estates_model->remove_by_id($id);
+        if ($affect_row > 0) {
+            $this->response(array('ok' => 1));
+        } else {
+            $this->response(array('ok' => 0));
+        }
     }
 
     function amenities_get() {

@@ -93,7 +93,7 @@ class Estates_model extends CI_Model {
             foreach ($data as $r) {
                 $position = $settings['position'];
                 $r->currency = $settings['currency_symbol'];
-//                $price = $r->price;
+                $price = $r->price;
 //                if ($position == 0) {
 //                    //before
 //                    $r->price = $r->currency . ' ' . $price;
@@ -101,7 +101,7 @@ class Estates_model extends CI_Model {
 //                    //after
 //                    $r->price = $price . ' ' . $r->currency;
 //                }
-
+                $r->price=preg_replace("/\\" . "." . "00$/", "", number_format($price, 2, ".", ","));
                 $r->content = preg_replace('/[\r\n]+/', "", $r->content);
                 $r->title = preg_replace('/[\r\n]+/', "", $r->title);
                 $r->created_at = date('d-m-Y H:i:s', strtotime($r->created_at));

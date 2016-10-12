@@ -246,20 +246,24 @@ class estate_api extends REST_Controller {
         $this->response($data);
     }
 
-    function del_get(){
+    function del_get() {
 //        $data = array('ok'=>0);
-        $properties_id = $this->get('estate_id');
-        $estates = $this->estates_model->get_by_id($properties_id);
-        if ($estates != null) {
-            $this->load->model('images_model');
-            $images = $this->images_model->get_by_estates_id($properties_id);
-            foreach ($images as $r) {
-                try {
-                    unlink($r->path);
-                    unlink($r->thumb_path);
-                    $this->images_model->remove_by_id($r->id);
-                } catch (Exception $e) {
-                    
+        if (isset($_GET['estates_id'])) {
+            $properties_id = $this->input->get('estates_id');
+            $estates = $this->estates_model->get_by_id($properties_id);
+            if ($estates != null) {
+                $this->load->model('images_model');
+                $images = $this->images_model->get_by_estates_id($properties_id);
+                if ($images != null) {
+                    foreach ($images as $r) {
+                        try {
+                            unlink($r->path);
+                            unlink($r->thumb_path);
+                            $this->images_model->remove_by_id($r->id);
+                        } catch (Exception $e) {
+                            
+                        }
+                    }
                 }
             }
         }

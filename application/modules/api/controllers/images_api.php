@@ -52,7 +52,7 @@ class images_api extends REST_Controller
 							"new_image" =>  $thumb_dir, //save as new image //need to create thumbs first
 							"width" => 270,
 							"height" => 200,
-							'master_dim'=>'height'
+							'master_dim'=>'auto'
 							);
 				$this->load->library('image_lib',$config);
 				$this->image_lib->resize();

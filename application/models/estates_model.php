@@ -45,7 +45,6 @@ class Estates_model extends CI_Model {
         $this->db->join('marker', 'estates.marker_id=marker.id', 'left');
         $this->db->join('rating', 'estates.id = rating.estates_id', 'left');
         $query = $this->db->get();
-        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $rows) {
                 $data[] = $rows;

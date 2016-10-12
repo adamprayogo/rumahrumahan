@@ -10,18 +10,21 @@ class home extends MY_Controller {
         $this->load->model('estates_model');
         $this->load->model('subscribe_user_model');
     }
-
     function index() {
         $this->load->helper('form');
         $this->ft_menu = 0;
         $this->ft_title = $this->lang->line('msg_home') . ' - Rumaqu.com';
         $data['type_list'] = $this->type_model->get("*", array('activated' => ACTIVATED), false, false, false, array('name' => 'ASC'));
-//        $this->load->library('encrypt');
-//        $data['url']=$this->encrypt->encode('testing url');
         $data['cities_list'] = $this->cities_model->get("cities.name as cities_name, cities.id as cities_id, county.name as county_name, county.id as county_id", false, false, false, false, array('county.name' => 'ASC', 'cities.name' => 'ASC'));
         $this->render_frontend_tp('frontends/index', $data);
     }
-
+    
+    function page($encrypted_request){
+        $request = app_decode($encrypted_request);
+        if($request=='search'){
+            
+        }
+    }
     function contact() {
         $this->ft_menu = 3;
         $this->ft_title = $this->lang->line('msg_contact');
@@ -209,7 +212,7 @@ class home extends MY_Controller {
                     $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name', array('email' => $to_email->subu_email));
                     send_newsletter_email($to_email->subu_email, $to_email->subu_name, $array_estates, $dataSubscribe[0]->update_url);
                 }
-                echo $this->subscribe_user_model->insert_history(array('subscribe_id'=>$to_email->subu_id,'estates_id'=>$to_email->estates_id));
+                echo $this->subscribe_user_model->insert_history(array('subscribe_id' => $to_email->subu_id, 'estates_id' => $to_email->estates_id));
                 $idx_newsletter++;
             }
             $this->render_frontend_tp('frontends/redirect');

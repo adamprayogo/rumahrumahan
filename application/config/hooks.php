@@ -15,5 +15,23 @@
 // 	'filename' => 'LangLoader.php',
 // 	'filepath' => 'hooks'
 // 	);
+//$hook['pre_system'] = array(
+//    'class'     => 'Router',
+//    'function'  => 'route',
+//    'filename'  => 'Router.php',
+//    'filepath'  => 'hooks'
+//);
+//$hook['post_controller_constructor'][] = array(
+//    'class'     => 'Router',
+//    'function'  => 'app_decode',
+//    'filename'  => 'router.php',
+//    'filepath'  => 'hooks'                      
+//);
+//$hook['post_controller_constructor'][] = array(
+//    'class'     => 'Router',
+//    'function'  => 'app_encode',
+//    'filename'  => 'router.php',
+//    'filepath'  => 'hooks'                      
+//);
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

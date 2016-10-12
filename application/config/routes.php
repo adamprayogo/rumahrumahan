@@ -40,7 +40,6 @@ if (!defined('BASEPATH'))
   | in the URL cannot be matched to a valid route.
   |
  */
-
 $route['default_controller'] = 'default/home';
 $route['404_override'] = 'notfound';
 $route['notfound'] = 'default/notfound';
@@ -87,12 +86,13 @@ $route['api/amenities_api/(:num)'] = 'api/amenities_api/index/$1';
 
 
 /* home frontend router */
-$route['home'] =            'default/home';
-$route['search'] =          'default/home/search';
-$route['search/(:num)'] =   'default/home/search/$1';
-$route['subscribe'] =       'default/home/subscribe';
-$route['requpsub'] =        'default/home/requpsub';
-$route['upref'] =           'default/home/upref';
-$route['unsub']=            'default/home/unsub';
+$route['home'] = 'default/home';
+$route['search'] = 'default/home/search';
+$route['search/(:num)'] = 'default/home/search/$1';
+$route['subscribe'] = 'default/home/subscribe';
+$route['requpsub'] = 'default/home/requpsub';
+$route['upref'] = 'default/home/upref';
+$route['unsub'] = 'default/home/unsub';
+$route['page/(:any)'] = 'default/home/page/$1';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

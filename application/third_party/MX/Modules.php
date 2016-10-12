@@ -195,7 +195,6 @@ class Modules
 	
 	/** Parse module routes **/
 	public static function parse_routes($module, $uri) {
-		
 		/* load the route file */
 		if ( ! isset(self::$routes[$module])) {
 			if (list($path) = self::find('routes', $module, 'config/') AND $path)
@@ -203,12 +202,10 @@ class Modules
 		}
 
 		if ( ! isset(self::$routes[$module])) return;
-			
 		/* parse module routes */
 		foreach (self::$routes[$module] as $key => $val) {						
 					
 			$key = str_replace(array(':any', ':num'), array('.+', '[0-9]+'), $key);
-			
 			if (preg_match('#^'.$key.'$#', $uri)) {							
 				if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE) {
 					$val = preg_replace('#^'.$key.'$#', $val, $uri);

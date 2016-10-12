@@ -94,14 +94,14 @@ class Estates_model extends CI_Model {
             foreach ($data as $r) {
                 $position = $settings['position'];
                 $r->currency = $settings['currency_symbol'];
-                $price = $r->price;
-                if ($position == 0) {
-                    //before
-                    $r->price = $r->currency . ' ' . $price;
-                } else {
-                    //after
-                    $r->price = $price . ' ' . $r->currency;
-                }
+//                $price = $r->price;
+//                if ($position == 0) {
+//                    //before
+//                    $r->price = $r->currency . ' ' . $price;
+//                } else {
+//                    //after
+//                    $r->price = $price . ' ' . $r->currency;
+//                }
 
                 $r->content = preg_replace('/[\r\n]+/', "", $r->content);
                 $r->title = preg_replace('/[\r\n]+/', "", $r->title);

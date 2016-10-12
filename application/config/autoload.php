@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('ultils','database','template','pagination','form_validation','session');
+$autoload['libraries'] = array('ultils','database','template','pagination','form_validation','session','encrypt');
 
 
 /*
@@ -62,9 +62,9 @@ $autoload['libraries'] = array('ultils','database','template','pagination','form
 | Prototype:
 |
 |	$autoload['helper'] = array('url', 'file');
-*/
+*/        
 
-$autoload['helper'] = array('url','currency');
+$autoload['helper'] = array('url','currency','encryption_app');
 
 
 /*

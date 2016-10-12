@@ -7,7 +7,6 @@
 //    var_dump($data_update);
 //}
 //echo $this->encrypt->decode($url);
-
 ?>
 <div class="main_container">
     <!-- page content -->
@@ -24,24 +23,28 @@
                     </div>
 
                     <?php
-                    $default_form_home='search';
-                    if(isset($data_update)){
-                        $default_form_home='upref';
+                    $default_form_home = 'search';
+                    if (isset($data_update)) {
+                        $default_form_home = 'upref';
                     }
                     echo form_open($default_form_home, 'class="form-horizontal form-label-left input_mask" id="mainForm"');
-                    if(isset($data_update)){
+                    if (isset($data_update)) {
                         ?>
-                        <input type="text" hidden name="name" value="<?php echo $data_update[0]->name;?>"/>
-                        <input type="text" hidden name="email" value="<?php echo $_GET['email'];?>"/>
-                        <input type="text" hidden name="url" value="<?php echo $_GET['url'];?>"/>
-                         <?php
+                        <input type="text" hidden name="name" value="<?php echo $data_update[0]->name; ?>"/>
+                        <input type="text" hidden name="email" value="<?php echo $_GET['email']; ?>"/>
+                        <input type="text" hidden name="url" value="<?php echo $_GET['url']; ?>"/>
+                        <?php
                     }
                     ?>
                     <div class="col-md-6 col-xs-6 form-group">
                         <label>Kategori</label>
                         <select class="form-control" name="category">
-                            <option value="<?php  echo KOSAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KOSAN){echo 'selected';}?>>Kosan</option>
-                            <option value="<?php echo KONTRAKAN ?>" <?php if(isset($data_update)&&$data_update[0]->categories==KONTRAKAN){echo 'selected';}?>>Kontrakan</option>
+                            <option value="<?php echo KOSAN ?>" <?php if (isset($data_update) && $data_update[0]->categories == KOSAN) {
+                        echo 'selected';
+                    } ?>>Kosan</option>
+                            <option value="<?php echo KONTRAKAN ?>" <?php if (isset($data_update) && $data_update[0]->categories == KONTRAKAN) {
+                        echo 'selected';
+                    } ?>>Kontrakan</option>
                         </select>
                     </div>
                     <div class="col-md-6 col-xs-6 form-group">
@@ -49,13 +52,15 @@
                         <select class="form-control" name="type">
                             <?php foreach ($type_list as $row) {
                                 ?>
-                                <option value="<?php echo $row->id ?>" <?php if(isset($data_update)&&$data_update[0]->types==$row->id){echo 'selected';}?>><?php echo $row->name; ?></option>
-                            <?php }
-                            ?>
+                                <option value="<?php echo $row->id ?>" <?php if (isset($data_update) && $data_update[0]->types == $row->id) {
+                                echo 'selected';
+                            } ?>><?php echo $row->name; ?></option>
+<?php }
+?>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        
+
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 form-group">
                         <label>Lokasi</label>
@@ -70,22 +75,30 @@
                                     if ($openTag == false) {
                                         ?>
                                         </optgroup>
-                                        <?php
-                                        $closeTag = true;
-                                    }
-                                    ?>
+                                            <?php
+                                            $closeTag = true;
+                                        }
+                                        ?>
                                     <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
-                                        <option value="<?php echo $row->cities_id; ?>" <?php if(isset($data_update)){if ($row->cities_id == $data_update[0]->cities){echo 'selected';}} ?>><?php echo $row->cities_name; ?></option>
+                                        <option value="<?php echo $row->cities_id; ?>" <?php if (isset($data_update)) {
+                                    if ($row->cities_id == $data_update[0]->cities) {
+                                        echo 'selected';
+                                    }
+                                } ?>><?php echo $row->cities_name; ?></option>
                                         <?php
                                         $closeTag = false;
                                     } else {
                                         $openTag = false;
                                         ?>
-                                        <option value="<?php echo $row->cities_id; ?>" <?php if(isset($data_update)){if ($row->cities_id == $data_update[0]->cities){echo 'selected';}} ?>><?php echo $row->cities_name; ?></option>
-                                        <?php
-                                    }
-                                }
-                                ?>
+                                        <option value="<?php echo $row->cities_id; ?>" <?php if (isset($data_update)) {
+                                            if ($row->cities_id == $data_update[0]->cities) {
+                                                echo 'selected';
+                                            }
+                                        } ?>><?php echo $row->cities_name; ?></option>
+        <?php
+    }
+}
+?>
                             </optgroup>
                         </select>
                     </div>  
@@ -98,7 +111,11 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-default disabled" type="button">From</button>
                                 </span>
-                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceFrom" value="<?php if(isset($data_update)){echo $data_update[0]->price_1;}else{echo 0;}?>"/>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceFrom" value="<?php if (isset($data_update)) {
+    echo $data_update[0]->price_1;
+} else {
+    echo 0;
+} ?>"/>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                         <div class="col-md-6 col-xs-12">
@@ -106,7 +123,11 @@
                                 <span class="input-group-btn">
                                     <button class="btn btn-default disabled" type="button">To</button>
                                 </span>
-                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceTo" value="<?php if(isset($data_update)){echo $data_update[0]->price_2;}else{echo 0;}?>"/>
+                                <input type="number" class="form-control" placeholder="Masukan harga" id="priceTo" value="<?php if (isset($data_update)) {
+    echo $data_update[0]->price_2;
+} else {
+    echo 0;
+} ?>"/>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
                         <div class="col-md-12 col-xs-12 text-center">
@@ -118,27 +139,27 @@
                     </div>
                     <div class="col-md-12 col-xs-12">
                         <div class="btn-group btn-group-justified gap" role="group" aria-label="...">
-                            <?php if(isset($data_update)){?>
-                            <div class="btn-group" role="group">
-                                <button type="submit" class="btn btn btn-success" id="updateSub"><i class="fa fa-arrow-up"></i> Update</button>
-                            </div>
-                            <?php }else{?>
-                            <div class="btn-group" role="group">
-                                <button type="submit" class="btn btn btn-success"><i class="fa fa-search"></i> Cari</button>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#subscribeModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-rss"></i> Subscribe</button>
-                            </div>
-                            <?php } ?>
-                            
+<?php if (isset($data_update)) { ?>
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn btn btn-success" id="updateSub"><i class="fa fa-arrow-up"></i> Update</button>
+                                </div>
+<?php } else { ?>
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn btn btn-success"><i class="fa fa-search"></i> Cari</button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#subscribeModal" data-backdrop="static" data-keyboard="false"><i class="fa fa-rss"></i> Subscribe</button>
+                                </div>
+<?php } ?>
+
                         </div>
                     </div>
-                    <?php echo form_close(); ?>
+<?php echo form_close(); ?>
                 </div>
             </div>
         </div>
-        
-    <a href="<?php echo base_url().'default/home/checking_newsletter'?>">check newsletter</a>
+
+<!--        <a href="<?php echo base_url() . 'default/home/checking_newsletter' ?>">check newsletter</a>-->
         <div class="text-center">
             <small>Available On</small>
         </div>
@@ -164,7 +185,7 @@
                             </div>
                         </div>
 
-                        <?php echo form_open('', 'class="form-horizontal form-label-left input_mask" id="subscribeForm"') ?>
+                                    <?php echo form_open('', 'class="form-horizontal form-label-left input_mask" id="subscribeForm"') ?>
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Kategori</label>
                             <select class="form-control" name="categories">
@@ -175,42 +196,42 @@
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Tipe</label>
                             <select class="form-control" name="types">
-                                <?php foreach ($type_list as $row) {
-                                    ?>
+                                    <?php foreach ($type_list as $row) {
+                                        ?>
                                     <option value="<?php echo $row->id ?>"><?php echo $row->name ?></option>
-                                <?php }
-                                ?>
+<?php }
+?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">Lokasi</label>
                             <div class="col-md-10 col-sm-10 col-xs-12"><select class="select2_group form-control" name="cities">
-                                    <?php
-                                    $diff = 0;
-                                    $openTag = true;
-                                    $closeTag = false;
-                                    foreach ($cities_list as $row) {
-                                        if ($diff != $row->county_id) {
-                                            $diff = $row->county_id;
-                                            if ($openTag == false) {
-                                                ?>
+                                        <?php
+                                        $diff = 0;
+                                        $openTag = true;
+                                        $closeTag = false;
+                                        foreach ($cities_list as $row) {
+                                            if ($diff != $row->county_id) {
+                                                $diff = $row->county_id;
+                                                if ($openTag == false) {
+                                                    ?>
                                                 </optgroup>
-                                                <?php
-                                                $closeTag = true;
-                                            }
-                                            ?>
+            <?php
+            $closeTag = true;
+        }
+        ?>
                                             <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
                                                 <option value="<?php echo $row->cities_id; ?>"><?php echo $row->cities_name; ?></option>
-                                                <?php
-                                                $closeTag = false;
-                                            } else {
-                                                $openTag = false;
-                                                ?>
+        <?php
+        $closeTag = false;
+    } else {
+        $openTag = false;
+        ?>
                                                 <option value="<?php echo $row->cities_id; ?>"><?php echo $row->cities_name; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
+        <?php
+    }
+}
+?>
                                     </optgroup>
                                 </select>
                             </div>
@@ -247,7 +268,7 @@
                                 <button type="submit" class="btn btn btn-success" id="subscribeButton"><i class="fa fa-send"></i> Send</button>
                             </div>
                         </div>
-                        <?php echo form_close(); ?>
+<?php echo form_close(); ?>
                     </div>
                 </div>
             </div>
@@ -274,7 +295,9 @@
         $("#price").ionRangeSlider({
             type: "double",
             min: 0,
-            <?php if(isset($data_update)){echo 'from:'.$data_update[0]->price_1.',to:'.$data_update[0]->price_2.',';}?>
+<?php if (isset($data_update)) {
+    echo 'from:' . $data_update[0]->price_1 . ',to:' . $data_update[0]->price_2 . ',';
+} ?>
             max: 99999999,
             grid: true,
             prefix: "Rp ",
@@ -286,7 +309,7 @@
             onChange: function (data) {
                 $('#priceFrom').val(data.from);
                 $('#priceTo').val(data.to);
-            }            
+            }
         });
         $("#priceSubscribe").ionRangeSlider({
             type: "double",
@@ -338,7 +361,7 @@
             $btnSubscribe.html('<i class="fa fa-send"></i> Sending...');
             var post = $.post('<?php echo base_url() . 'subscribe' ?>', value);
             var subStatus = 0;
-            post.done(function (res) { 
+            post.done(function (res) {
                 console.log(res);
                 if (JSON.parse(res).status == 1) {
                     var option = {

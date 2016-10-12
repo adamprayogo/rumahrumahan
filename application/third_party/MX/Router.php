@@ -74,7 +74,6 @@ class MX_Router extends CI_Router
 	
 		/* get the segments array elements */
 		list($module, $directory, $controller) = array_pad($segments, 3, NULL);
-
 		/* check modules */
 		foreach (Modules::$locations as $location => $offset) {
 		

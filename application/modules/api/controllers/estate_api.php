@@ -246,7 +246,7 @@ class estate_api extends REST_Controller {
         $this->response($data);
     }
 
-    function estates_delete() {
+    function del_get(){
 //        $data = array('ok'=>0);
         $properties_id = $this->get('estate_id');
         $estates = $this->estates_model->get_by_id($properties_id);

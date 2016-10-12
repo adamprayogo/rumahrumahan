@@ -252,7 +252,7 @@ class estate_api extends REST_Controller {
         $estates = $this->estates_model->get_by_id($properties_id);
         if ($estates != null) {
             $this->load->model('images_model');
-            $images = $this->images_model->get_by_estates_id($id);
+            $images = $this->images_model->get_by_estates_id($properties_id);
             foreach ($images as $r) {
                 try {
                     unlink($r->path);
@@ -263,7 +263,7 @@ class estate_api extends REST_Controller {
                 }
             }
         }
-        $affect_row = $this->estates_model->remove_by_id($id);
+        $affect_row = $this->estates_model->remove_by_id($properties_id);
         if ($affect_row > 0) {
             $this->response(array('ok' => 1));
         } else {

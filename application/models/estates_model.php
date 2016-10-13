@@ -229,7 +229,11 @@ class Estates_model extends CI_Model {
     }
 
     public function remove_by_id($id) {
-        return $this->delete($where);
+        $where =array('estates_id'=>$id);
+        $data_array['activated']=DEACTIVATED;
+        $this->db->where($where);
+        $this->db->update('estates', $data_array);
+        return $this->db->affected_rows();
     }
     public function delete_by_id($id){
         $where = array('id' => $id);

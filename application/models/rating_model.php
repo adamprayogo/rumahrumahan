@@ -134,6 +134,12 @@ class rating_model extends CI_Model {
         $array_where = array('id' => $id);
         return $this->remove($array_where);
     }
+    public function delete_by_estates_id($estates_id){
+        $array_where = array('estates_id'=>$estates_id);
+        $this->db->where($array_where);
+        $this->db->delete('rating');
+        return $this->db->affected_rows();
+    }
 
     function update($data_array, $array_where) {
         $this->db->where($array_where);

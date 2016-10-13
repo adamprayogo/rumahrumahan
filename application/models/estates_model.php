@@ -228,17 +228,15 @@ class Estates_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function remove($arr_where) {
-        $this->db->where($arr_where);
+    public function remove_by_id($id) {
+        return $this->delete($where);
+    }
+    public function delete_by_id($id){
+        $where = array('id' => $id);
+        $this->db->where($where);
         $this->db->delete('estates');
         return $this->db->affected_rows();
     }
-
-    public function remove_by_id($id) {
-        $where = array('id' => $id);
-        return $this->remove($where);
-    }
-
     function update($data_array, $where) {
         $data_array['updated_at'] = date('Y-m-d H:i:s');
         $this->db->where($where);

@@ -247,7 +247,6 @@ class estate_api extends REST_Controller {
     }
 
     function del_get() {
-//        $data = array('ok'=>0);
         if (
                 isset($_GET['estates_id']) &&
                 isset($_GET['user_id'])

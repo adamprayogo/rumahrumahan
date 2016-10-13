@@ -259,7 +259,6 @@ class Estates_model extends CI_Model {
             $this->db->update('estates', $data_array);
         }
     }
-
 }
 
 ?>

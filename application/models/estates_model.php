@@ -155,7 +155,6 @@ class Estates_model extends CI_Model {
         $like = array();
         $order_by = array();
         $result = $this->get($select, $where, $like, 0, 1, $order_by);
-        //$this->db->last_query();
         return $result;
     }
 

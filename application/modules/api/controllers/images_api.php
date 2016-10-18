@@ -50,9 +50,9 @@ class images_api extends REST_Controller
 				$config=array(
                             "source_image" => $dir.'/'.$_FILES['photo']['name'], //get original image
 							"new_image" =>  $thumb_dir, //save as new image //need to create thumbs first
-							"width" => 270,
-							"height" => 200,
-							'master_dim'=>'auto'
+							"width" => 970,
+							"height" => 900,
+							'master_dim'=>'height'
 							);
 				$this->load->library('image_lib',$config);
 				$this->image_lib->resize();

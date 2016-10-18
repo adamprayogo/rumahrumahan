@@ -2,60 +2,7 @@
 
 require APPPATH . '/libraries/REST_Controller.php';
 
-<<<<<<< HEAD
-	function images_post() 
-	{ 		
-		$this->load->model('estates_model');
-		$this->load->helper('Ultils');
-		if(isset($_FILES['photo']) && isset($_POST['id'])){
-			$id=$this->input->post('id');
-			$dir=create_dir_upload('uploads/');
-			$thumb_dir= create_thumb_dir_upload($dir.'/thumbs');
-			$filename=$_FILES['photo']['name'];
-			$_FILES['photo']['name']=rename_upload_file($filename);
-			$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|GIF|PNG';
-			$config['max_size']	= '5000';
-			$config['upload_path']=$dir;
-			$this->load->library('upload',$config);
-			if ($this->upload->do_upload('photo'))
-			{
-				$this->load->model('images_model');
-				$data['path']=$dir.'/'.$_FILES['photo']['name'];
-				$original_path=$data['path'];
-				$data['estates_id']=$id;
-				$images_id = $this->images_model->insert($data);
-				$config=array(
-                            "source_image" => $dir.'/'.$_FILES['photo']['name'], //get original image
-							"new_image" =>  $thumb_dir, //save as new image //need to create thumbs first
-							"width" => 970,
-							"height" => 900,
-							'master_dim'=>'height'
-							);
-				$this->load->library('image_lib',$config);
-				$this->image_lib->resize();
-				$image_path= $thumb_dir.'/'.$_FILES['photo']['name'];
-				$data=null;
-				$data['thumb_path']=$image_path;
-				$this->estates_model->update(array('image_path'=>$image_path), array('id'=>$id));
-				$this->images_model->update($data,array('id'=>$images_id));
-				$return_data=array(
-					'ok'=>1,
-					'thumb_path'=>$image_path,
-					'estates_id'=>$id,
-					'id'=>$images_id,
-					'path'=>$original_path
-					);
-				$this->response($return_data);
-			}
-			else
-			{
-				$this->response(array('ok'=>0));
-			}
-		}
-	} 
-=======
 class images_api extends REST_Controller {
->>>>>>> bb43978e63145bdf39884a20a01f9fc05e5464ad
 
     public function __construct() {
         parent::__construct();

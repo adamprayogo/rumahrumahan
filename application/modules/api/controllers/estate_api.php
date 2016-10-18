@@ -246,6 +246,24 @@ class estate_api extends REST_Controller {
         $this->response($data);
     }
 
+<<<<<<< HEAD
+    function del_post() {
+//        $data = array('ok'=>0);
+        if (isset($_POST['estates_id'])) {
+            $properties_id = $this->input->post('estates_id');
+            $estates = $this->estates_model->get_by_id($properties_id);
+            if ($estates != null) {
+                $this->load->model('images_model');
+                $images = $this->images_model->get_by_estates_id($properties_id);
+                if ($images != null) {
+                    foreach ($images as $r) {
+                        try {
+                            unlink($r->path);
+                            unlink($r->thumb_path);
+                            $this->images_model->remove_by_id($r->id);
+                        } catch (Exception $e) {
+                            
+=======
     function del_get() {
         if (
                 isset($_GET['estates_id']) &&
@@ -269,6 +287,7 @@ class estate_api extends REST_Controller {
                             } catch (Exception $e) {
                                 
                             }
+>>>>>>> bb43978e63145bdf39884a20a01f9fc05e5464ad
                         }
                     }
                     $affect_row = $this->estates_model->remove_by_id($estates[0]->id);

@@ -10,6 +10,7 @@ class home extends MY_Controller {
         $this->load->model('estates_model');
         $this->load->model('subscribe_user_model');
     }
+
     function index() {
         $this->load->helper('form');
         $this->ft_menu = 0;
@@ -18,13 +19,7 @@ class home extends MY_Controller {
         $data['cities_list'] = $this->cities_model->get("cities.name as cities_name, cities.id as cities_id, county.name as county_name, county.id as county_id", false, false, false, false, array('county.name' => 'ASC', 'cities.name' => 'ASC'));
         $this->render_frontend_tp('frontends/index', $data);
     }
-    
-    function page($encrypted_request){
-        $request = app_decode($encrypted_request);
-        if($request=='search'){
-            
-        }
-    }
+
     function contact() {
         $this->ft_menu = 3;
         $this->ft_title = $this->lang->line('msg_contact');
@@ -67,6 +62,7 @@ class home extends MY_Controller {
                     'purpose' => $category,
                     'types_id' => $type,
                     'cities_id' => $cities,
+                    'estates.activated' => ACTIVATED,
                     'price >=' => $price_range[0],
                     'price <=' => $price_range[1]
                 );
@@ -83,34 +79,35 @@ class home extends MY_Controller {
         } else {
             if ($item_id != NULL) {
                 $id = $item_id;
-                $data['obj'] = $this->estates_model->get_by_id($id);
-                $this->load->model('rating_model');
-                $data['total_rating'] = $this->rating_model->total_rating(array('estates_id' => $id));
-                $data['total_user'] = $this->rating_model->total_user_rating(array('estates_id' => $id));
+                $data['obj'] = $this->estates_model->get_by_id($id, ACTIVATED);
+                if ($data['obj'] != null) {
+                    $this->load->model('rating_model');
+                    $data['total_rating'] = $this->rating_model->total_rating(array('estates_id' => $id));
+                    $data['total_user'] = $this->rating_model->total_user_rating(array('estates_id' => $id));
 //                $data['user_rating'] = $this->rating_model->user_rating(array('estates_id' => $id), array('value'));
-                $data['user_rating']=$this->rating_model->get_by_query(
-                        'SELECT 
+                    $data['user_rating'] = $this->rating_model->get_by_query(
+                            'SELECT 
                             vr.id, 
                             CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
                             ELSE count(*) END AS total_rating FROM value_rating vr
                             LEFT JOIN (
                                     SELECT rating.estates_id,rating.value FROM rating
-                                    WHERE rating.estates_id='.$id.'
+                                    WHERE rating.estates_id=' . $id . '
                                 ) AS r ON r.value = vr.id
                             GROUP BY vr.id
                             ORDER BY vr.id DESC'
-                        );
-                $this->load->model('estates_amenities_model');
-                $data['amenities_check'] = $this->estates_amenities_model->get_by_estates_id($id);
-                $this->load->model('images_model');
-                $data['images'] = $this->images_model->get_by_estates_id($id);
-                $this->load->model('cities_model');
-                $data['cities'] = $this->cities_model->get_by_county_id($data['obj'][0]->county_id);
-                if ($data['obj'] == null) {
+                    );
+                    $this->load->model('estates_amenities_model');
+                    $data['amenities_check'] = $this->estates_amenities_model->get_by_estates_id($id);
+                    $this->load->model('images_model');
+                    $data['images'] = $this->images_model->get_by_estates_id($id);
+                    $this->load->model('cities_model');
+                    $data['cities'] = $this->cities_model->get_by_county_id($data['obj'][0]->county_id);
+                    $this->ft_title = $data['obj'][0]->title . ' - Rumaqu.com';
+                    $this->render_frontend_tp('frontends/item', $data);
+                } else {
                     redirect('home');
                 }
-                $this->ft_title = $data['obj'][0]->title . ' - Rumaqu.com';
-                $this->render_frontend_tp('frontends/item', $data);
             } else {
                 redirect('home');
             }

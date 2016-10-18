@@ -47,10 +47,13 @@ class images_api extends REST_Controller {
                 $images_id = $this->images_model->insert($data);
                 $config = array(
                     "source_image" => $dir . '/' . $_FILES['photo']['name'], //get original image
-                    "new_image" => $thumb_dir, //save as new image //need to create thumbs first
+                    "new_image" => $thumb_dir, //save as new image //need to create thumbs first,
+                    "create_thumb"=>TRUE,
+                    "thumb_marker"=>TRUE,
+                    "maintain_ratio"=>TRUE,
                     "width" => 270,
                     "height" => 200,
-                    'master_dim' => 'auto'
+                    'master_dim' => 'height'
                 );
                 $this->load->library('image_lib', $config);
                 $this->image_lib->resize();

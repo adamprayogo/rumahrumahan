@@ -73,13 +73,13 @@ class rating_api extends REST_Controller {
             $estates_id = $this->input->get('estates_id');
             $select  = '
                 SELECT 
-                vr.id, 
-                CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
-                ELSE count(*) END AS total_rating FROM value_rating vr
-                LEFT JOIN (
-                        SELECT rating.estates_id,rating.value FROM rating
-                        WHERE rating.estates_id='.$estates_id.'
-                    ) AS r ON r.value = vr.id
+                    vr.id, 
+                    CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
+                    ELSE count(*) END AS total_rating FROM value_rating vr
+                    LEFT JOIN (
+                            SELECT rating.estates_id,rating.value FROM rating
+                            WHERE rating.estates_id='.$estates_id.'
+                        ) AS r ON r.value = vr.id
                 GROUP BY vr.id
                 ORDER BY vr.id';
             $data_user_rating = $this->rating_model->get_by_query($select);

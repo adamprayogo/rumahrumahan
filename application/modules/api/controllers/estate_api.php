@@ -246,13 +246,13 @@ class estate_api extends REST_Controller {
         $this->response($data);
     }
 
-    function del_get() {
+    function del_post() {
         if (
-                isset($_GET['estates_id']) &&
-                isset($_GET['user_id'])
+                isset($_POST['estates_id']) &&
+                isset($_POST['user_id'])
         ) {
-            $properties_id = $this->input->get('estates_id');
-            $user_id = $this->input->get('user_id');
+            $properties_id = $this->input->post('estates_id');
+            $user_id = $this->input->post('user_id');
 
             $check_availability = $this->estates_model->get_by_id_and_user_id($properties_id, $user_id);
             if ($check_availability != null) {

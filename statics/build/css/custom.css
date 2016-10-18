@@ -4335,3 +4335,13 @@ button.fl-head{
     background-color: #be68aa;
     color: #fff;
 }
+.progress-user{
+    float:right; 
+    margin-left:1em;    
+    font-size: 10px; 
+    line-height: 13px; 
+    color:#b9b1b1;
+}
+.progress{
+    background-color:rgba(140, 137, 137, 0.46) !important;
+}

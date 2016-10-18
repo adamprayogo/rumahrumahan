@@ -165,59 +165,31 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12">
                                         <div class="starrr starrr-bg stars-existing " data-rating="<?php echo ($total_rating != null) ? $total_rating : $total_rating = 0; ?>"></div>
-                                        <p><small><i class="fa fa-user"></i><?php echo ($total_user != null) ? $total_user : $total_user = 0; ?></small></p>
+                                        <p><small><i class="fa fa-user"></i> <?php echo ($total_user != null) ? $total_user : $total_user = 0; ?></small></p>
                                     </div>
                                 </center>
                             </div>
                             <div class="col-md-6 col-xs-12">
                                 <div style="padding-top:3%; padding-bottom: auto;">
                                     <?php
-                                    $rating1 = 0;
-                                    $rating2 = 0;
-                                    $rating3 = 0;
-                                    $rating4 = 0;
-                                    $rating5 = 0;
                                     if ($user_rating != NULL) {
+                                        $stylebar = array('progress-bar-2', 'progress-bar-success', 'progress-bar-info', 'progress-bar-warning', 'progress-bar-danger');
+                                        $idx_rating = 0;
                                         foreach ($user_rating as $rating) {
-                                            if ($rating->value == 5) {
-                                                $rating5 = $rating->total;
-                                            } else if ($rating->value == 4) {
-                                                $rating4 = $rating->total;
-                                            } else if ($rating->value == 3) {
-                                                $rating3 = $rating->total;
-                                            } else if ($rating->value == 2) {
-                                                $rating2 = $rating->total;
-                                            } else if ($rating->value == 1) {
-                                                $rating1 = $rating->total;
-                                            }
+                                            ?>
+                                            <div class="progress-user">
+                                                <i class="fa fa-user"></i> <?php echo $rating->total_rating; ?>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar <?php echo $stylebar[$idx_rating] ?> text-center" role="progressbar" aria-valuenow="<?php echo $rating->total_rating; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating->total_rating / $total_user) * 100 : 0; ?>%">
+                                                    <p class="pull-left"><i class="fa fa-star"></i> <?php echo $idx_rating + 1; ?></p>
+                                                </div>
+                                            </div>
+                                            <?php
+                                            $idx_rating++;
                                         }
                                     }
                                     ?>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-2" role="progressbar" aria-valuenow="<?php echo $rating5; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating5 / $total_user) * 100 : 0 ?>%">
-                                            <i class="fa fa-user"></i> <?php echo $rating5; ?>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $rating4; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating4 / $total_user) * 100 : 0 ?>%">
-                                            <i class="fa fa-user"></i> <?php echo $rating4; ?>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<?php echo $rating3; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating3 / $total_user) * 100 : 0; ?>%">
-                                            <i class="fa fa-user"></i> <?php echo $rating3; ?>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<?php echo $rating2; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating2 / $total_user) * 100 : 0; ?>%">
-                                            <i class="fa fa-user"></i> <?php echo $rating2; ?>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow<?php echo $rating1; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total_user; ?>" style="width: <?php echo ($total_user != 0) ? ($rating1 / $total_user) * 100 : 0; ?>%">
-                                             <i class="fa fa-user"></i> <?php echo $rating1; ?>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -297,15 +269,16 @@
         var infowindow = new google.maps.InfoWindow({
             content: 'Estates Location'
         });
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             map: map,
-            draggable: true,
             animation: google.maps.Animation.DROP,
             position: {lat: lat, lng: lng},
             icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png' ?>'
         });
         marker.addListener('click', toggleBounce);
         infowindow.open(map, marker);
+        google.maps.event.trigger(map, 'resize');
+        map.setZoom(map.getZoom());
     }
 
     function toggleBounce() {
@@ -335,5 +308,4 @@
     $('#item-img').carousel({
         interval: false
     });
-    ;
 </script>

@@ -87,7 +87,19 @@ class home extends MY_Controller {
                 $this->load->model('rating_model');
                 $data['total_rating'] = $this->rating_model->total_rating(array('estates_id' => $id));
                 $data['total_user'] = $this->rating_model->total_user_rating(array('estates_id' => $id));
-                $data['user_rating'] = $this->rating_model->user_rating(array('estates_id' => $id), array('value'));
+//                $data['user_rating'] = $this->rating_model->user_rating(array('estates_id' => $id), array('value'));
+                $data['user_rating']=$this->rating_model->get_by_query(
+                        'SELECT 
+                            vr.id, 
+                            CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
+                            ELSE count(*) END AS total_rating FROM value_rating vr
+                            LEFT JOIN (
+                                    SELECT rating.estates_id,rating.value FROM rating
+                                    WHERE rating.estates_id='.$id.'
+                                ) AS r ON r.value = vr.id
+                            GROUP BY vr.id
+                            ORDER BY vr.id DESC'
+                        );
                 $this->load->model('estates_amenities_model');
                 $data['amenities_check'] = $this->estates_amenities_model->get_by_estates_id($id);
                 $this->load->model('images_model');

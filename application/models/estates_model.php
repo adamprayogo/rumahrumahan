@@ -228,7 +228,7 @@ class Estates_model extends CI_Model {
     }
 
     public function remove_by_id($id) {
-        $where =array('estates_id'=>$id);
+        $where =array('id'=>$id);
         $data_array['activated']=DEACTIVATED;
         $this->db->where($where);
         $this->db->update('estates', $data_array);

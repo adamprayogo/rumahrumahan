@@ -140,7 +140,7 @@
                             <h2 class="price">Rp. <?php echo $obj[0]->price; ?></h2>
                         </div>
                         <div class="col-md-12 gap col-xs-12">
-                            <div class="itm-desc">
+                            <div class="itm-desc" style="max-height: 200px">
                                 <?php
                                 if (strlen($obj[0]->description) == 0) {
                                     echo '<p class="text-center">NO DESCRIPTION</p>';
@@ -150,7 +150,7 @@
                                 ?>
                             </div>
                             <?php
-                            if (strlen($obj[0]->description) >= 447) {
+                            if (strlen($obj[0]->description) >= 300) {
                                 ?>
                                 <center><button class="btn btn-default" id="read-more">Read More</button></center>
                                 <?php
@@ -252,7 +252,7 @@
 <script>
     $(document).ready(function () {
         $('#read-more').click(function () {
-            $('.itm-desc').removeClass('itm-desc');
+            $('.itm-desc').removeAttr('style');
             $(this).remove();
         });
 

@@ -70,7 +70,7 @@ class estates extends MY_Controller {
             $address = $this->input->post('address');
             $status = $this->input->post('status');
             $activated = $this->input->post('activate');
-			$featured = $this->input->post('featured');
+            $featured = $this->input->post('featured');
             $time_rate = $this->input->post('time_rate');
             $cities_id = $this->input->post('cities');
             $area = $this->input->post('area');
@@ -106,7 +106,7 @@ class estates extends MY_Controller {
                 'description' => $description,
                 'keyword' => $keyword,
                 'link_youtube' => $link_youtube,
-				'featured'=>$featured
+                'featured' => $featured
             );
 
             if ($activated != null) {
@@ -237,7 +237,7 @@ class estates extends MY_Controller {
                 'description' => $description,
                 'keyword' => $keyword,
                 'link_youtube' => $link_youtube,
-				'featured'=>$featured
+                'featured' => $featured
             );
 
             if (isset($_POST['types'])) {
@@ -302,7 +302,11 @@ class estates extends MY_Controller {
                     }
                 }
             }
-            $this->estates_model->remove_by_id($id);
+            $is_delete = $this->estates_model->delete_by_id($id);
+            if ($is_delete > 0) {
+                $this->load->model('rating_model');
+                $delete_rating = $this->rating_model->delete_by_estates_id($id);
+            }
         }
     }
 

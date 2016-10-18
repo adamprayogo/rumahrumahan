@@ -12,7 +12,7 @@ class rating_model extends CI_Model {
         parent::__construct();
     }
 
-    function get($select = "*", $array_where = false, $array_like = false, $first = false, $offset = false, $order_by = false, $group_by=false) {
+    function get($select = "*", $array_where = false, $array_like = false, $first = false, $offset = false, $order_by = false, $group_by = false) {
         $data = array();
         if ($order_by != false) {
             $order = key($order_by);
@@ -33,7 +33,7 @@ class rating_model extends CI_Model {
         if ($group_by != false) {
             $this->db->group_by($group_by);
         }
-        $this->db->join('users','users.id=rating.users_id','left');
+        $this->db->join('users', 'users.id=rating.users_id', 'left');
         $query = $this->db->get();
 //        echo $this->db->last_query();
         if ($query->num_rows() > 0) {
@@ -135,6 +135,13 @@ class rating_model extends CI_Model {
         return $this->remove($array_where);
     }
 
+    public function delete_by_estates_id($estates_id) {
+        $array_where = array('estates_id' => $estates_id);
+        $this->db->where($array_where);
+        $this->db->delete('rating');
+        return $this->db->affected_rows();
+    }
+
     function update($data_array, $array_where) {
         $this->db->where($array_where);
         $data_array['created_date'] = date('Y-m-d H:i:s');
@@ -148,6 +155,25 @@ class rating_model extends CI_Model {
         $this->db->from('rating');
         $order_by = array();
         return $this->get($select, $array_where, false, false, false, $order_by);
+    }
+
+    function get_by_query($query) {
+        $this->db->query('DROP TEMPORARY TABLE IF EXISTS value_rating;');
+        $this->db->query('CREATE TEMPORARY TABLE value_rating (id int);');
+        $this->db->query('INSERT INTO value_rating VALUES(1);');
+        $this->db->query('INSERT INTO value_rating VALUES(2);');
+        $this->db->query('INSERT INTO value_rating VALUES(3);');
+        $this->db->query('INSERT INTO value_rating VALUES(4);');
+        $this->db->query('INSERT INTO value_rating VALUES(5);');
+        $query = $this->db->query($query);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $data[] = $rows;
+            }
+            return $data;
+        } else {
+            return null;
+        }
     }
 
 }

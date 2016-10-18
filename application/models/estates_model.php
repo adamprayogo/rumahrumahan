@@ -155,7 +155,6 @@ class Estates_model extends CI_Model {
         $like = array();
         $order_by = array();
         $result = $this->get($select, $where, $like, 0, 1, $order_by);
-        //$this->db->last_query();
         return $result;
     }
 
@@ -228,17 +227,19 @@ class Estates_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function remove($arr_where) {
-        $this->db->where($arr_where);
+    public function remove_by_id($id) {
+        $where =array('estates_id'=>$id);
+        $data_array['activated']=DEACTIVATED;
+        $this->db->where($where);
+        $this->db->update('estates', $data_array);
+        return $this->db->affected_rows();
+    }
+    public function delete_by_id($id){
+        $where = array('id' => $id);
+        $this->db->where($where);
         $this->db->delete('estates');
         return $this->db->affected_rows();
     }
-
-    public function remove_by_id($id) {
-        $where = array('id' => $id);
-        return $this->remove($where);
-    }
-
     function update($data_array, $where) {
         $data_array['updated_at'] = date('Y-m-d H:i:s');
         $this->db->where($where);
@@ -257,7 +258,6 @@ class Estates_model extends CI_Model {
             $this->db->update('estates', $data_array);
         }
     }
-
 }
 
 ?>

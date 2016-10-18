@@ -246,6 +246,7 @@ class estate_api extends REST_Controller {
         $this->response($data);
     }
 
+<<<<<<< HEAD
     function del_post() {
 //        $data = array('ok'=>0);
         if (isset($_POST['estates_id'])) {
@@ -262,17 +263,41 @@ class estate_api extends REST_Controller {
                             $this->images_model->remove_by_id($r->id);
                         } catch (Exception $e) {
                             
+=======
+    function del_get() {
+        if (
+                isset($_GET['estates_id']) &&
+                isset($_GET['user_id'])
+        ) {
+            $properties_id = $this->input->get('estates_id');
+            $user_id = $this->input->get('user_id');
+
+            $check_availability = $this->estates_model->get_by_id_and_user_id($properties_id, $user_id);
+            if ($check_availability != null) {
+                $estates = $this->estates_model->get_by_id($properties_id);
+                if ($estates != null) {
+                    $this->load->model('images_model');
+                    $images = $this->images_model->get_by_estates_id($estates[0]->id);
+                    if ($images != null) {
+                        foreach ($images as $r) {
+                            try {
+                                unlink($r->path);
+                                unlink($r->thumb_path);
+                                $this->images_model->remove_by_id($r->id);
+                            } catch (Exception $e) {
+                                
+                            }
+>>>>>>> bb43978e63145bdf39884a20a01f9fc05e5464ad
                         }
+                    }
+                    $affect_row = $this->estates_model->remove_by_id($estates[0]->id);
+                    if ($affect_row > 0) {
+                        $this->response(array('ok' => 1));
                     }
                 }
             }
         }
-        $affect_row = $this->estates_model->remove_by_id($properties_id);
-        if ($affect_row > 0) {
-            $this->response(array('ok' => 1));
-        } else {
-            $this->response(array('ok' => 0));
-        }
+        $this->response(array('ok' => 0));
     }
 
     function amenities_get() {

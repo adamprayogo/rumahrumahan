@@ -13,8 +13,16 @@
                         <div class="col-md-6 col-xs-6 form-group">
                             <label>Tipe</label>
                             <select class="form-control" name="category">
-                                <option value="<?php echo KOSAN ?>" <?php if ($category == KOSAN) {echo 'selected';} ?>>Kosan</option>
-                                <option value="<?php echo KONTRAKAN ?>" <?php if ($category == KONTRAKAN) {echo 'selected';} ?>>Kontrakan</option>
+                                <option value="<?php echo KOSAN ?>" <?php
+                                if ($category == KOSAN) {
+                                    echo 'selected';
+                                }
+                                ?>>Kosan</option>
+                                <option value="<?php echo KONTRAKAN ?>" <?php
+                                if ($category == KONTRAKAN) {
+                                    echo 'selected';
+                                }
+                                ?>>Kontrakan</option>
                             </select>
                         </div>
                         <div class="col-md-6 col-xs-6 form-group">
@@ -23,10 +31,14 @@
                                 <?php
                                 foreach ($type_list as $row) {
                                     ?>
-                                        <option value="<?php echo $row->id;?>" <?php if($row->id == $type){echo 'selected';}?>><?php echo $row->name;?></option>;
-                                    <?php
-                                }
-                                ?>
+                                    <option value="<?php echo $row->id; ?>" <?php
+                                    if ($row->id == $type) {
+                                        echo 'selected';
+                                    }
+                                    ?>><?php echo $row->name; ?></option>;
+                                            <?php
+                                        }
+                                        ?>
                             </select>
                         </div>
 
@@ -43,22 +55,30 @@
                                         if ($openTag == false) {
                                             ?>
                                             </optgroup>
-                                                <?php
-                                                $closeTag = true;
+                                            <?php
+                                            $closeTag = true;
+                                        }
+                                        ?>
+                                        <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
+                                            <option value="<?php echo $row->cities_id; ?>" <?php
+                                            if ($row->cities_id == $cities) {
+                                                echo 'selected';
+                                            }
+                                            ?>><?php echo $row->cities_name; ?></option>
+                                                    <?php
+                                                    $closeTag = false;
+                                                } else {
+                                                    $openTag = false;
+                                                    ?>
+                                            <option value="<?php echo $row->cities_id; ?>" <?php
+                                            if ($row->cities_id == $cities) {
+                                                echo 'selected';
+                                            }
+                                            ?>><?php echo $row->cities_name; ?></option>
+                                                    <?php
+                                                }
                                             }
                                             ?>
-                                        <optgroup value="<?php echo $row->county_id ?>" label="<?php echo $row->county_name ?>">
-                                            <option value="<?php echo $row->cities_id; ?>" <?php if ($row->cities_id == $cities){echo 'selected';} ?>><?php echo $row->cities_name; ?></option>
-                                            <?php
-                                            $closeTag = false;
-                                        } else {
-                                            $openTag = false;
-                                            ?>
-                                            <option value="<?php echo $row->cities_id; ?>" <?php if ($row->cities_id == $cities){echo 'selected';} ?>><?php echo $row->cities_name; ?></option>
-                                        <?php
-                                    }
-                                }
-?>
                                 </optgroup>
                             </select>
                         </div>  
@@ -73,7 +93,7 @@
                                 <button type="submit" class="btn btn-success"><i class="fa fa-search"></i>    Cari</button>
                             </div>
                         </div>
-<?php echo form_close(); ?>
+                        <?php echo form_close(); ?>
                     </div>
                 </div>
                 <div class="col-md-12 col-xs-12" id="src_map"></div>
@@ -105,25 +125,25 @@
                             $price = explode('#', mod_price($item_row->price));
                             if ($item_row->total_rating != null) {
                                 $rating = $item_row->total_rating;
-                                $user_rating=$item_row->total_user;
+                                $user_rating = $item_row->total_user;
                             } else {
                                 $rating = 0;
-                                $user_rating=0;
+                                $user_rating = 0;
                             }
                             $content_row.='</div>
                                 <div class="content">
                                 <div class="title">' . $item_row->title . '</div>
                                 <div class="desc">Lorem Ipsum Dolor Sir..</div>
                                 <div class="col-md-6 col-xs-6 itm-rating pull-left"><div class="starrr stars-existing" data-rating="' . $rating . '"></div></div>';
-                                if($item_row->status=0){
-                                    $status= '<b style="color:red; font-size:10px;">FULL</b>';
-                                }else{
-                                    $status= '<b style="color:green; font-size:10px;">AVAILABLE</b>';
-                                }
-                                    
+                            if ($item_row->status = 0) {
+                                $status = '<b style="color:red; font-size:10px;">FULL</b>';
+                            } else {
+                                $status = '<b style="color:green; font-size:10px;">AVAILABLE</b>';
+                            }
+
                             $content_row.='
-                                <div class="col-md-6 col-xs-6" style="padding-right:0; text-align:right;"><small>'.$status.'</small></div>
-                                <div class="col-md-12 col-xs-12" style="opacity:0.6;"><small><i class="fa fa-user"></i> '.$user_rating.'</small></div>
+                                <div class="col-md-6 col-xs-6" style="padding-right:0; text-align:right;"><small>' . $status . '</small></div>
+                                <div class="col-md-12 col-xs-12" style="opacity:0.6;"><small><i class="fa fa-user"></i> ' . $user_rating . '</small></div>
                                 <div class="col-md-12 col-xs-12 itm-price" style="padding-right:0;">Rp' . $price[0] . '<b>' . $price[1] . '</b></div>
                                             </div></div></div></a>';
                             if ($idxPage == $perPage) {
@@ -138,9 +158,9 @@
                     } else {
                         ?>
                         <p class="text-center">We're sorry, your search criteria is not found.</p>
-    <?php
-}
-?>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
             <div class="col-md-2 col-xs-12">
@@ -153,24 +173,6 @@
     </div>
 </div>
 <script>
-    var locations = [
-<?php
-$all_location = "";
-if (isset($src_result)) {
-    foreach ($src_result as $item_location) {
-        $link = "<a href=" . base_url() . "search/" . $item_row->id . " target=_blank>";
-        $all_location.="['" . $link;
-        if ($item_location->image_path != null) {
-            $all_location.='<img src="' . base_url() . $item_location->image_path . '" alt="' . $item_location->title . '" class="" style="max-height:40px;"/>';
-        } else {
-            $all_location.='<img class="img-responsive" style="max-height:30px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_location->title . '"/>';
-        }
-        $all_location.="</a>'," . $item_location->lat . "," . $item_location->lng . "],";
-    }
-    echo substr($all_location, 0, -1);
-}
-?>
-    ];
     $(document).ready(function () {
         $("#price").ionRangeSlider({
             type: "double",
@@ -187,44 +189,77 @@ if (isset($src_result)) {
     });
     //Maps Google//
     function initMap() {
-        var mapDiv = document.getElementById('src_map');
-        var map = new google.maps.Map($('#src_map')[0], {
+//        
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
             scrollwheel: false,
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                 position: google.maps.ControlPosition.RIGHT_TOP
             },
-            mapType: 'hybrid',
-        });
-        var bounds = new google.maps.LatLngBounds();
+            mapType: 'hybrid'
+        }
+        //Display a map on the page
+        map = new google.maps.Map(document.getElementById("src_map"), mapOptions);
+        //multiple marker
+
+        var locations = [
+<?php
+$all_location = "";
+if (isset($src_result)) {
+    foreach ($src_result as $item_location) {
+        $all_location.="[" . $item_location->lat . "," . $item_location->lng . "],";
+    }
+    echo substr($all_location, 0, -1);
+}
+?>
+        ];
+        var windowContent = [<?php
+$all_content = "";
+if (isset($src_result)) {
+    foreach ($src_result as $item_location) {
+        $link = "<a href=" . base_url() . "search/" . $item_row->id . " target=_blank>";
+        $all_content.="['" . $link;
+        if ($item_location->image_path != null) {
+            $all_content.='<img src="' . base_url() . $item_location->image_path . '" alt="' . $item_location->title . '" class="" style="max-height:40px;"/>';
+        } else {
+            $all_content.='<img class="img-responsive" style="max-height:30px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_location->title . '"/>';
+        }
+        $all_content.="</a>'],";
+    }
+    echo substr($all_content, 0, -1);
+}
+?>];
+        var infoWindows = [];
         var markers = [];
-        for (i = 0; i < locations.length; i++) {
-            var infowindow = new google.maps.InfoWindow({
-                content: locations[i][0]
+        for (var i = 0; i < locations.length; i++) {
+            var infoWindow = new google.maps.InfoWindow({
+                content: windowContent[i][0]
             });
             var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
                 map: map,
-                icon:'<?php echo base_url().'img/icon/android-icon-36x36.png';?>'
+                icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png'; ?>'
             });
-            bounds.extend(marker.position);
-            marker.addListener('click', function () {
-                map.setZoom(17);
-                map.setCenter(marker.getPosition());
-            });
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
-            infowindow.open(map, marker);
             markers.push(marker);
+            infoWindows.push(infoWindow);
+            bounds.extend(markers[i].getPosition()); 
+            google.maps.event.addListener(marker, 'click', (function (markers, i,infoWindows) {
+                return function () {
+                    infoWindows[i].close();
+                    map.setZoom(15);
+                    map.setCenter(markers[i].getPosition());
+                    infoWindows[i].setContent(windowContent[i][0]);
+                    infoWindows[i].open(map, markers[i]);
+                };
+            })(markers, i,infoWindows));
+            infoWindows[i].open(map, markers[i]);
         }
-        
         map.fitBounds(bounds);
-        var markerCluster = new MarkerClusterer(map, markers, 
-            {imagePath:'<?php echo base_url().'statics/marker-cluster/images/m'?>'}
+        var markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: '<?php echo base_url() . 'statics/marker-cluster/images/m' ?>'}
         );
     }
 </script>

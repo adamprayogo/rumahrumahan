@@ -46,16 +46,15 @@ class images_api extends REST_Controller {
                 $data['estates_id'] = $id;
                 $images_id = $this->images_model->insert($data);
                 $config = array(
+                    "image_library"=>'gd2',
                     "source_image" => $dir . '/' . $_FILES['photo']['name'], //get original image
                     "new_image" => $thumb_dir, //save as new image //need to create thumbs first,
-                    "create_thumb"=>TRUE,
-                    "thumb_marker"=>TRUE,
-                    "maintain_ratio"=>TRUE,
-                    "width" => 270,
-                    "height" => 200,
-                    'master_dim' => 'height'
+                    "width" => 250,
+                    "height" => 270,
+                    "quality"=>'50%'
                 );
                 $this->load->library('image_lib', $config);
+                $tgus->image_lib->crop();
                 $this->image_lib->resize();
                 $image_path = $thumb_dir . '/' . $_FILES['photo']['name'];
                 $data = null;

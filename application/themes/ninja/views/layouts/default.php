@@ -65,6 +65,7 @@
         <script type="text/javascript" src="<?php echo base_url(); ?>statics/build/js/custom.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB0ZCtG2kdIz5dX34KnuOIRyTdQPQh3wJs&libraries=places"></script>
         <script src="<?php echo base_url();?>statics/marker-cluster/src/markerclusterer.js" type="text/javascript"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>statics/build/js/custom-window.js"></script>
     </head>
     <body>
         <div class="container body">

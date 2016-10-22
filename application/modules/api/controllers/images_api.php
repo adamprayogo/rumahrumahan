@@ -36,8 +36,8 @@ class images_api extends REST_Controller {
             $filename = $_FILES['photo']['name'];
             $_FILES['photo']['name'] = rename_upload_file($filename);
             $config['allowed_types'] = 'gif|jpg|png|jpeg|JPG|JPEG|GIF|PNG';
-            $config['max_size'] = '5000';
             $config['upload_path'] = $dir;
+            $config['upload_url'] = base_url() . "uploads/";
             $this->load->library('upload', $config);
             if ($this->upload->do_upload('photo')) {
                 $this->load->model('images_model');
@@ -45,16 +45,10 @@ class images_api extends REST_Controller {
                 $original_path = $data['path'];
                 $data['estates_id'] = $id;
                 $images_id = $this->images_model->insert($data);
-                $config = array(
-                    "image_library"=>'gd2',
-                    "source_image" => $dir . '/' . $_FILES['photo']['name'], //get original image
-                    "new_image" => $thumb_dir, //save as new image //need to create thumbs first,
-                    "width" => 250,
-                    "height" => 270,
-                    "quality"=>'50%'
-                );
-                $this->load->library('image_lib', $config);
-                $tgus->image_lib->crop();
+                $config_img['source_image'] = $dir . '/' . $_FILES['photo']['name'];
+                $config_img['new_image'] = $thumb_dir;
+                $this->load->library('image_lib');
+                $this->image_lib->initialize($config_img);
                 $this->image_lib->resize();
                 $image_path = $thumb_dir . '/' . $_FILES['photo']['name'];
                 $data = null;
@@ -114,9 +108,7 @@ class images_api extends REST_Controller {
             $this->load->model('estates_model');
             $this->estates_model->update(array('image_path' => $thumb_path), array('id' => $estates_id));
         }
-        //echo "ád";
     }
-
 }
 
 ?>

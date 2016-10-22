@@ -19,7 +19,7 @@ class estates extends MY_Controller {
         }
         $first = ($page - 1) * $this->pg_per_page;
         $total_rows = $this->estates_model->total(array(), array());
-        $data['list'] = $this->estates_model->get("*,estates.id as id,estates.activated as activated", array(), array(), $first, $this->pg_per_page, array('estates.id' => 'DESC'));
+        $data['list'] = $this->estates_model->get("*,estates.id as id,estates.activated as activated", array(), array(), $first, $this->pg_per_page);
         $data['page_link'] = parent::pagination_config($base_url, $total_rows, $this->pg_per_page);
         $data['heading'] = $this->lang->line('msg_estates');
         $this->render_backend_tp('backends/estates/index', $data);

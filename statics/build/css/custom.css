@@ -4247,11 +4247,10 @@ button.fl-head{
 .item-box:hover{
     opacity:0.5;
 }
-.starrr a{
-    font-size: 12px;
-}
-.starrr.starrr-bg a{
-    font-size: 20px;
+.starrr#iw-starrr{
+    padding-right:0px;
+    padding-left:0px;
+    padding-top:2px;
 }
 .rating-val{
     font-size:50px;
@@ -4344,4 +4343,36 @@ button.fl-head{
 }
 .progress{
     background-color:rgba(140, 137, 137, 0.46) !important;
+}
+
+/*gmaps custom window*/
+.gm-style .gm-style-iw {
+    left:0px !important;
+    right:0px !important;
+}
+.container#map-container{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 2px 2px 0 0;  //In accordance with the rounding of the default infowindow corners. 
+}
+.gm-style-iw {
+    margin-top:15px;
+}
+.iw-title{
+    font-weight:bold;
+}
+.iw-price{
+    font-weight:bold;
+    color:green;
+}
+.col-md-4#iw-image{
+    padding-left: 0px;
+}
+.col-md-8#iw-content{
+    padding-left:0px;
+    padding-right: 15px;
 }

@@ -9,6 +9,7 @@ class home extends MY_Controller {
         $this->load->model('county_model');
         $this->load->model('estates_model');
         $this->load->model('subscribe_user_model');
+        $this->load->helper('currency');
     }
 
     function index() {
@@ -66,7 +67,7 @@ class home extends MY_Controller {
                     'price >=' => $price_range[0],
                     'price <=' => $price_range[1]
                 );
-                $data['src_result'] = $this->estates_model->get("*,purpose,estates.id as id,estates.activated as activated, (SUM(rating.value)/COUNT(*)) as total_rating,COUNT(*) AS total_user", $where, false, false, $this->pg_per_page, array('estates.id' => 'DESC'), array("estates.id"));
+                $data['src_result'] = $this->estates_model->get("*,purpose,estates.id as id,estates.activated as activated, (SUM(rating.value)/COUNT(*)) as total_rating,COUNT(*) AS total_user", $where, false, false, $this->pg_per_page, array('estates.id' => 'DESC'));
                 $data['price_1'] = $price_range[0];
                 $data['price_2'] = $price_range[1];
                 $data['type'] = $type;
@@ -147,7 +148,6 @@ class home extends MY_Controller {
                 if ($insert_id != 0) {
                     $dataSubscribe = $this->subscribe_user_model->get('subscribe_user.*,types.name as types_name,cities.name as cities_name,county.name as county_name', array('email' => $data['email'], 'active' => 1));
                     $this->load->helper('email_ultils');
-                    $this->load->helper('currency');
                     if (KOSAN == intval($data['categories'])) {
                         $category = 'Kosan';
                     } else if (RUSUN == intval($data['categories'])) {

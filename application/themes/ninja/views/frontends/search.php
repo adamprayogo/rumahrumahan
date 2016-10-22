@@ -122,7 +122,7 @@
                             } else {
                                 $content_row.='<img class="img-responsive img-rounded" style="max-height:95px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_row->title . 'style="max-height:95px;"/>';
                             }
-                            $price = explode('#', mod_price($item_row->price));
+//                            $price = explode('#', mod_price($item_row->price));
                             if ($item_row->total_rating != null) {
                                 $rating = $item_row->total_rating;
                                 $user_rating = $item_row->total_user;
@@ -144,7 +144,7 @@
                             $content_row.='
                                 <div class="col-md-6 col-xs-6" style="padding-right:0; text-align:right;"><small>' . $status . '</small></div>
                                 <div class="col-md-12 col-xs-12" style="opacity:0.6;"><small><i class="fa fa-user"></i> ' . $user_rating . '</small></div>
-                                <div class="col-md-12 col-xs-12 itm-price" style="padding-right:0;">Rp' . $price[0] . '<b>' . $price[1] . '</b></div>
+                                <div class="col-md-12 col-xs-12 itm-price" style="padding-right:0;">' . format_money($item_row->price, ".", ",", "Rp. ") . '</b></div>
                                             </div></div></div></a>';
                             if ($idxPage == $perPage) {
                                 echo $prefix_row . $content_row . $suffix_row;
@@ -166,7 +166,7 @@
             <div class="col-md-2 col-xs-12">
                 <div class="x_panel text-center">
                     <h2>Pencarian Sejenis</h2>
-                    <div class="x_title"></div>
+                    <div class="x_title "></div>
                 </div>
             </div>
         </div>
@@ -186,6 +186,7 @@
         });
         initMap();
         var $selection = $(".select2_group").select2({});
+        initStar('.starrr',15);
     });
     //Maps Google//
     function initMap() {
@@ -221,13 +222,18 @@ $all_content = "";
 if (isset($src_result)) {
     foreach ($src_result as $item_location) {
         $link = "<a href=" . base_url() . "search/" . $item_row->id . " target=_blank>";
-        $all_content.="['" . $link;
+        $all_content.="['<div class=container id=map-container><div class=col-md-4 id=iw-image>" . $link;
         if ($item_location->image_path != null) {
-            $all_content.='<img src="' . base_url() . $item_location->image_path . '" alt="' . $item_location->title . '" class="" style="max-height:40px;"/>';
+            $all_content.='<img src="' . base_url() . $item_location->image_path . '" alt="' . $item_location->title . '" class="img-responsive" style="height:30px; overflow:hidden;"/>';
         } else {
-            $all_content.='<img class="img-responsive" style="max-height:30px;" src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_location->title . '"/>';
+            $all_content.='<img src="' . base_url() . 'statics/images/no_photo.png" alt="' . $item_location->title . '" style="height:30px; overflow:hidden;"/>';
         }
-        $all_content.="</a>'],";
+        if ($item_location->total_rating != null) {
+            $rating = $item_location->total_rating;
+        } else {
+            $rating = 0;
+        }
+        $all_content.="</a><div class=starrr stars-existing data-rating=" . $rating . " id=iw-starrr></div></div><div class=col-md-8 id=iw-content><div class=iw-title style=display:block;>" . substr($item_location->title, 0,16) . "..</div><div class=iw-price style=display:block;text-align:right;>" . format_money($item_location->price, ".", ",", "Rp. ") . "</div></div></div>'],";
     }
     echo substr($all_content, 0, -1);
 }
@@ -241,39 +247,59 @@ if (isset($src_result)) {
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(locations[i][0], locations[i][1]),
                 map: map,
-                icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png'; ?>'
+                icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png'; ?>',
             });
             markers.push(marker);
             infoWindows.push(infoWindow);
-            bounds.extend(markers[i].getPosition()); 
-            google.maps.event.addListener(marker, 'click', (function (markers, i,infoWindows) {
+            bounds.extend(markers[i].getPosition());
+            google.maps.event.addListener(marker, 'click', (function (markers, i, infoWindows) {
                 return function () {
                     infoWindows[i].close();
-                    map.setZoom(15);
+                    map.setZoom(17);
                     map.setCenter(markers[i].getPosition());
-                    infoWindows[i].setContent(windowContent[i][0]);
                     infoWindows[i].open(map, markers[i]);
                 };
-            })(markers, i,infoWindows));
+            })(markers, i, infoWindows));
             infoWindows[i].open(map, markers[i]);
+            google.maps.event.addListener(infoWindows[i], 'domready', function () {
+                initStar('.starrr#iw-starrr',9);
+                // Reference to the DIV which receives the contents of the infowindow using jQuery
+                var iwOuter = $('.gm-style-iw');
+
+                /* The DIV we want to change is above the .gm-style-iw DIV.
+                 * So, we use jQuery and create a iwBackground variable,
+                 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+                 */
+                var iwBackground = iwOuter.prev();
+
+                // Remove the background shadow DIV
+                iwBackground.children(':nth-child(2)').css({'display': 'none'});
+
+                // Remove the white background DIV
+                iwBackground.children(':nth-child(4)').css({'display': 'none'});
+                var iwCloseBtn = iwOuter.next();
+
+                // Apply the desired effect to the close button
+                iwCloseBtn.css({
+                    right: '60px', top: '29px' // button repositioning
+                });
+
+            });
         }
         map.fitBounds(bounds);
         var markerCluster = new MarkerClusterer(map, markers,
                 {imagePath: '<?php echo base_url() . 'statics/marker-cluster/images/m' ?>'}
         );
     }
-</script>
-
-<script>
-    $(document).ready(function () {
-        $stars = $('.starrr');
+    function initStar(selector,width) {
+        $stars = $(selector);
         $stars.each(function () {
             $(this).rateYo({
                 rating: $(this).attr('data-rating'),
                 ratedFill: '#FFD119',
-                starWidth: "15px",
+                starWidth: width+"px",
                 readOnly: true
             });
         });
-    });
+    }
 </script>

@@ -36,6 +36,8 @@ class Estates_model extends CI_Model {
         }
         if ($group_by != false) {
             $this->db->group_by($group_by);
+        }else{
+            $this->db->group_by(array("estates.id"));
         }
 
         $this->db->join('types', 'estates.types_id = types.id');

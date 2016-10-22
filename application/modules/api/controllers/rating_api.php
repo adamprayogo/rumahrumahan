@@ -73,7 +73,7 @@ class rating_api extends REST_Controller {
             $estates_id = $this->input->get('estates_id');
             $select  = '
                 SELECT 
-                    vr.id, 
+                    vr.id as rate, 
                     CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
                     ELSE count(*) END AS total_rating FROM value_rating vr
                     LEFT JOIN (

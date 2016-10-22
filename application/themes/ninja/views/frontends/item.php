@@ -269,6 +269,12 @@
             position: location,
             icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png' ?>'
         });
+        google.maps.event.addListener(infowindow, 'domready', function () {
+            // Reference to the DIV which receives the contents of the infowindow using jQuery
+            var iwOuter = $('.gm-style-iw');
+            iwOuter.css({"margin-top": 2, "margin-left": 25});
+            iwOuter.siblings()[1].remove();
+        });
         infowindow.open(map, marker);
         map.setZoom(map.getZoom());
     }

@@ -28,7 +28,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-xs-12 gap">
+                </div>
+                <div class="x_panel">
+                    <div class="x_title">
+                        Lokasi Bangunan
+                    </div>
+                    <div class="x_content" style="height:250px;" id="mapLocation">
                     </div>
                 </div>
             </div>
@@ -136,8 +141,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-xs-12 text-right">
-                            <h2 class="price">Rp. <?php echo $obj[0]->price; ?></h2>
+                        <div class="col-md-12 col-xs-12 text-center gap">
+                            <h1 class="price"><?php echo format_money($obj[0]->price, ".", ",", "Rp. "); ?></h1>
                         </div>
                         <div class="col-md-12 gap col-xs-12">
                             <div class="itm-desc" style="max-height: 200px">
@@ -197,7 +202,7 @@
                         <div class="col-md-12 col-xs-12 gap">
                             <center>
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalDesc" data-element="location" lat="<?php echo $obj[0]->lng; ?>" lng="<?php echo $obj[0]->lat; ?>"><span class="glyphicon glyphicon-map-marker"></span> Location</button>
+                                    <!--<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalDesc" data-element="location" lat=""><span class="glyphicon glyphicon-map-marker"></span> Location</button>-->
                                 </div>
                             </center>
                         </div>
@@ -207,7 +212,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc">
     <div class="modal-dialog" role="document">
         <div class="modal-content  text-center">
@@ -227,7 +231,7 @@
             $('.itm-desc').removeAttr('style');
             $(this).remove();
         });
-
+        initMap();
         $('#modalDesc').on('shown.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var elName = button.attr('data-element');
@@ -236,13 +240,6 @@
             if (elName == 'phone') {
                 conTitle = 'Phone Number';
                 conBody = button.attr('phone');
-            } else if (elName == 'location') {
-                conTitle = 'Location';
-                conBody = '';
-                var lat = button.attr('lat');
-                var lng = button.attr('lng');
-                modal.find('.modal-body').append('<div id="itemLocation" style="height:250px; width:100%;">');
-                initMap(parseFloat(lat), parseFloat(lng), 'itemLocation');
             }
             modal.find('.modal-title').text(conTitle);
             modal.find('.modal-body h3').text(conBody);
@@ -254,39 +251,26 @@
             modal.find('.modal-body h3').text('');
         });
     });
-    function initMap(lat, lng, selector) {
-        var map = new google.maps.Map(document.getElementById(selector), {
-            zoom: 14,
-            center: {lat: lat, lng: lng},
+    function initMap() {
+        var location = new google.maps.LatLng(<?php echo $obj[0]->lat; ?>, <?php echo $obj[0]->lng; ?>);
+        var map = new google.maps.Map(document.getElementById("mapLocation"), {
+            zoom: 17,
+            center: location,
             scrollwheel: false,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
+            mapTypeControl: false,
             mapType: 'hybrid'
         });
         var infowindow = new google.maps.InfoWindow({
-            content: 'Estates Location'
+            content: 'Posisi Bangunan'
         });
         var marker = new google.maps.Marker({
             map: map,
             animation: google.maps.Animation.DROP,
-            position: {lat: lat, lng: lng},
+            position: location,
             icon: '<?php echo base_url() . 'img/icon/android-icon-36x36.png' ?>'
         });
-        marker.addListener('click', toggleBounce);
         infowindow.open(map, marker);
-        google.maps.event.trigger(map, 'resize');
         map.setZoom(map.getZoom());
-    }
-
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
     }
 </script>
 </script>

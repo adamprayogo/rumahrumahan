@@ -39,7 +39,7 @@ class Estates_model extends CI_Model {
         }else{
             $this->db->group_by(array("estates.id"));
         }
-
+        
         $this->db->join('types', 'estates.types_id = types.id');
         $this->db->join('county', 'estates.county_id = county.id');
         $this->db->join('users', 'estates.user_id=users.id');

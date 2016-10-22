@@ -4213,7 +4213,7 @@ button.fl-head{
     padding-right: 25px;
 }
 .itm-price{
-    text-align:right;
+    text-align:center;
     color: #26B99A;
 }
 .price{
@@ -4346,7 +4346,7 @@ button.fl-head{
 }
 
 /*gmaps custom window*/
-.gm-style .gm-style-iw {
+/*.gm-style .gm-style-iw {
     left:0px !important;
     right:0px !important;
 }
@@ -4375,4 +4375,4 @@ button.fl-head{
 .col-md-8#iw-content{
     padding-left:0px;
     padding-right: 15px;
-}
+}*/

@@ -112,7 +112,10 @@ class estate_api extends REST_Controller {
                     THEN FORMAT(SUM(`rating`.`value`)/COUNT(*),1)
                     ELSE 0 
                 END AS total_rating,
-                COUNT(*) AS total_user';
+                CASE
+                    WHEN COUNT(*)=1 AND value IS NULL THEN 0
+                    ELSE COUNT(*)
+                END AS total_user';
 
         $query = $select . ' FROM
 			(`estates`)

@@ -71,23 +71,32 @@ class rating_api extends REST_Controller {
     function rating_user_get() {
         if (isset($_GET['estates_id'])) {
             $estates_id = $this->input->get('estates_id');
-            $select  = '
+            $select = '
                 SELECT 
                     vr.id as rate, 
                     CASE WHEN count(*)=1 AND r.estates_id IS NULL THEN 0
                     ELSE count(*) END AS total_rating FROM value_rating vr
                     LEFT JOIN (
                             SELECT rating.estates_id,rating.value FROM rating
-                            WHERE rating.estates_id='.$estates_id.'
+                            WHERE rating.estates_id=' . $estates_id . '
                         ) AS r ON r.value = vr.id
                 GROUP BY vr.id
                 ORDER BY vr.id';
             $data_user_rating = $this->rating_model->get_by_query($select);
-            if($data_user_rating!=null){
+            if ($data_user_rating != null) {
                 $this->response($data_user_rating);
             }
         }
         $this->response(array('ok' => 0));
+    }
+
+    function total_rating_get() {
+        if (isset($_GET['estates_id'])) {
+            $estates_id = $this->input->get('estates_id');
+            $data = $this->rating_model->get_total_rating_by_estates_id($estates_id);
+            $this->response($data);
+        }
+        $this->resposnse(array('ok' => 0));
     }
 
     function rating_put() {

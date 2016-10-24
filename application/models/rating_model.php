@@ -66,12 +66,10 @@ class rating_model extends CI_Model {
         }
     }
 
-    function total_user_rating($array_where, $group_by = false) {
+    function total_user_rating_by_estates_id($estates_id) {
         $this->db->select('COUNT(*) as total_user');
-        $this->db->where($array_where);
-        if ($group_by != false) {
-            $this->db->group_by($group_by);
-        }
+        $this->db->where(array('estates_id' => $estates_id));
+        $this->db->group_by('estates_id');
 
         $this->db->from('rating');
         $query = $this->db->get();
@@ -149,7 +147,7 @@ class rating_model extends CI_Model {
         $this->db->update('rating', $data_array);
     }
 
-    function get_by_estates_id($id,$first=false,$offset=false) {
+    function get_by_estates_id($id, $first = false, $offset = false) {
         //limit first offset 15
         $select = '*';
         $array_where = array('estates_id' => $id);

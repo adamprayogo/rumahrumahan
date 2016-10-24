@@ -79,13 +79,13 @@
                                         if ($idx == 0) {
                                             ?>
                                             <div class="item active">
-                                                <img class="img-responsive" src="<?php echo base_url() . $img->path; ?>">
+                                                <img class="img-responsive" src="<?php echo base_url() . $img->path; ?>"  id="myImg">
                                             </div>
                                             <?php
                                         } else {
                                             ?>
                                             <div class="item">
-                                                <img class="img-responsive" src="<?php echo base_url() . $img->path; ?>">
+                                                <img class="img-responsive" src="<?php echo base_url() . $img->path; ?>"  id="myImg">
                                             </div>
                                             <?php
                                         }
@@ -267,18 +267,14 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content  text-center">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <h3></h3>
-            </div>
-        </div>
-    </div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- The Close Button -->
+    <span class="close" onclick="document.getElementById('myModal').style.display = 'none'">&times;</span>
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
 </div>
 <script>
     $(document).ready(function () {
@@ -349,13 +345,38 @@
 </script>
 <script>
     $(document).ready(function () {
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = $('#myImg');
+        var modalImg = $("#img01");
+        var captionText = $("#caption");
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        };
+
+// Get the <span> element that closes the modal
+        var span = $(".close");
+
+// When the user clicks on <span> (x), close the modal
+
+        span.on('click', function (modal) {
+            modal.style.display = "none";
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
         var win = $(window);
         win.scroll(function () {
             // End of the document reached?
             if ($(document).height() - win.height() == win.scrollTop()) {
 //                $('#loading').show();
                 $.ajax({
-                    url: '<?php base_url();?>',
+                    url: '<?php base_url(); ?>',
                     dataType: 'ajax',
                     success: function (data) {
 //                        $('#posts').append(html);

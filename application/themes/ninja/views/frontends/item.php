@@ -221,45 +221,57 @@
                     </div>
                     <div class="x_content">
                         <ul class="list-unstyled msg_list" id="comment-user">
-                            <?php foreach ($detail_rating as $row_detail_rating) { ?>
-                                <li>
-                                    <div class="col-md-2 col-xs-2">
-                                        <span class="image">
-                                            <?php if (file_exists(base_url() . $row_detail_rating->avt)) { ?>
-                                                <img src="<?php echo $row_detail_rating->avt; ?>" alt="<?php echo 'rumqu_' . $row_detail_rating->user_name . '_avt'; ?>" class="img-responsive img-rounded">
-                                            <?php } else { ?>
-                                                <img src="<?php echo base_url() . 'statics/images/no_photo.png'; ?>" alt="<?php echo 'rumaqu_' . $row_detail_rating->user_name . '_avt'; ?>" class="img-responsive img-rounded">
-                                            <?php } ?>
-                                        </span>
+                            <?php
+                            if ($detail_rating != null) {
+                                foreach ($detail_rating as $row_detail_rating) {
+                                    ?>
+                                    <li>
+                                        <div class="col-md-2 col-xs-2">
+                                            <span class="image">
+                                                <?php if (file_exists(base_url() . $row_detail_rating->avt)) { ?>
+                                                    <img src="<?php echo $row_detail_rating->avt; ?>" alt="<?php echo 'rumqu_' . $row_detail_rating->user_name . '_avt'; ?>" class="img-responsive img-rounded">
+                                                <?php } else { ?>
+                                                    <img src="<?php echo base_url() . 'statics/images/no_photo.png'; ?>" alt="<?php echo 'rumaqu_' . $row_detail_rating->user_name . '_avt'; ?>" class="img-responsive img-rounded">
+                                                <?php } ?>
+                                            </span>
 
-                                        <div class="row">
-                                            <div class="comment-starrr"  data-rating="<?php echo $row_detail_rating->value; ?>"></div>
+                                            <div class="row">
+                                                <div class="comment-starrr"  data-rating="<?php echo $row_detail_rating->value; ?>"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-10 col-xs-10" >
-                                        <div class="row">
-                                            <span><?php echo $row_detail_rating->user_name; ?></span>
+                                        <div class="col-md-10 col-xs-10" >
+                                            <div class="row">
+                                                <span><?php echo $row_detail_rating->user_name; ?></span>
 
-                                            <?php
-                                            $s = $row_detail_rating->created_date;
-                                            $dt = new DateTime($s);
-                                            if (strtotime($row_detail_rating->created_date) <= strtotime('-24 hours')) {
-                                                $date = $dt->format('m/d/Y');
-                                            } else {
-                                                $date = time_elapsed_string($s);
-                                            }
-                                            ?>
-                                            <span class="time pull-right"><small><b><?php echo $date; ?></b></small></span>
+                                                <?php
+                                                $s = $row_detail_rating->created_date;
+                                                $dt = new DateTime($s);
+                                                if (strtotime($row_detail_rating->created_date) <= strtotime('-24 hours')) {
+                                                    $date = $dt->format('m/d/Y');
+                                                } else {
+                                                    $date = time_elapsed_string($s);
+                                                }
+                                                ?>
+                                                <span class="time pull-right"><small><b><?php echo $date; ?></b></small></span>
+                                            </div>
+                                            <div class="row">
+                                                <b><?php echo $row_detail_rating->comment_title; ?></b>
+                                            </div>
+                                            <div class="row">
+                                                <?php echo $row_detail_rating->comment_desc; ?>
+                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <b><?php echo $row_detail_rating->comment_title; ?></b>
-                                        </div>
-                                        <div class="row">
-                                            <?php echo $row_detail_rating->comment_desc; ?>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php } ?>
+                                    </li>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <div class="text-center">
+                                    Belum ada komentar
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -268,9 +280,9 @@
     </div>
 </div>
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="img-modal" class="modal">
     <!-- The Close Button -->
-    <span class="close" onclick="document.getElementById('myModal').style.display = 'none'">&times;</span>
+    <span class="close">&times;</span>
     <!-- Modal Content (The Image) -->
     <img class="modal-content" id="img01">
     <!-- Modal Caption (Image Text) -->
@@ -346,25 +358,25 @@
 <script>
     $(document).ready(function () {
         // Get the modal
-        var modal = document.getElementById('myModal');
+        var modal = $('#img-modal');
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = $('#myImg');
+        var img = $('.carousel-inner img');
         var modalImg = $("#img01");
-        var captionText = $("#caption");
-        img.onclick = function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-        };
+        img.on('click', function () {
+            console.log(this);
+
+            modal.css({'display':'block',"z-index": '1000'});
+            modalImg.attr('src', $(this).attr('src'));
+        });
 
 // Get the <span> element that closes the modal
         var span = $(".close");
 
 // When the user clicks on <span> (x), close the modal
 
-        span.on('click', function (modal) {
-            modal.style.display = "none";
+        span.on('click', function () {
+            modal.css('display', 'none');
         });
     });
 </script>

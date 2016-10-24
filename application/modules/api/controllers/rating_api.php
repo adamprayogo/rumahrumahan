@@ -90,15 +90,6 @@ class rating_api extends REST_Controller {
         $this->response(array('ok' => 0));
     }
 
-    function total_rating_get() {
-        if (isset($_GET['estates_id'])) {
-            $estates_id = $this->input->get('estates_id');
-            $data = $this->rating_model->total_user_rating_by_estates_id($estates_id);
-            $this->response($data);
-        }
-        $this->resposnse(array('ok' => 0));
-    }
-
     function rating_put() {
         $data = array('this not available');
         $this->response($data);

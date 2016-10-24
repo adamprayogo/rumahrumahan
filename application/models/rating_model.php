@@ -149,12 +149,12 @@ class rating_model extends CI_Model {
         $this->db->update('rating', $data_array);
     }
 
-    function get_by_estates_id($id) {
+    function get_by_estates_id($id,$first=false,$offset=false) {
+        //limit first offset 15
         $select = '*';
         $array_where = array('estates_id' => $id);
-        $this->db->from('rating');
         $order_by = array();
-        return $this->get($select, $array_where, false, false, false, $order_by);
+        return $this->get($select, $array_where, false, $first, $offset, $order_by);
     }
 
     function get_by_query($query) {

@@ -4376,3 +4376,13 @@ button.fl-head{
     padding-left:0px;
     padding-right: 15px;
 }
+
+.profile_details .profile_view{
+    width:100%;
+}
+.comment-starrr{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:6px;
+}

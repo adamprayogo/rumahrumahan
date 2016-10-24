@@ -105,6 +105,8 @@ class home extends MY_Controller {
                     $this->load->model('cities_model');
                     $data['cities'] = $this->cities_model->get_by_county_id($data['obj'][0]->county_id);
                     $this->ft_title = $data['obj'][0]->title . ' - Rumaqu.com';
+                    $data['detail_rating'] = $this->rating_model->get_by_estates_id($id);
+                    $this->load->helper('datetime');
                     $this->render_frontend_tp('frontends/item', $data);
                 } else {
                     redirect('home');
@@ -113,6 +115,10 @@ class home extends MY_Controller {
                 redirect('home');
             }
         }
+    }
+
+    function load_more_rating($estates_id, $first, $offset) {
+        $data['detail_rating'] = $this->rating_model->get_by_estates_id($id,$first,$offset);
     }
 
     function subscribe() {

@@ -83,6 +83,10 @@ class rating_api extends REST_Controller {
                 GROUP BY vr.id
                 ORDER BY vr.id';
             $data_user_rating = $this->rating_model->get_by_query($select);
+            $total_rating = $this->rating_model->total_user_rating(array("estates_id"=>$estates_id));
+            foreach($data_user_rating as $data_row){
+                $data_row->overall_rating = ($data_row->total_rating/$total_rating)*100;
+            }
             if ($data_user_rating != null) {
                 $this->response($data_user_rating);
             }

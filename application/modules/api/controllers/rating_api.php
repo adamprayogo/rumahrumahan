@@ -81,7 +81,7 @@ class rating_api extends REST_Controller {
                             WHERE rating.estates_id=' . $estates_id . '
                         ) AS r ON r.value = vr.id
                 GROUP BY vr.id
-                ORDER BY vr.id';
+                ORDER BY vr.id DESC';
             $data_user_rating = $this->rating_model->get_by_query($select);
             $total_rating = $this->rating_model->total_user_rating(array("estates_id"=>$estates_id));
             foreach($data_user_rating as $data_row){

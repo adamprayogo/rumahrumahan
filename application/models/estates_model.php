@@ -110,7 +110,6 @@ class Estates_model extends CI_Model {
                 $r->updated_at = date('d-m-Y H:i:s', strtotime($r->updated_at));
                 continue;
             }
-
             $query->free_result();
             return $data;
         } else {

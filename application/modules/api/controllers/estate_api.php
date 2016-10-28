@@ -227,13 +227,27 @@ class estate_api extends REST_Controller {
 		`estates`.`address` as address,
 		`estates`.`id` as id,
 		`estates`.`user_id` as user_id, ( 6371 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( lat ) ) ) )
-		AS distance 
+		AS distance,
+                CASE WHEN `data_rating`.`total_rating` IS NOT NULL
+                        THEN `data_rating`.`total_rating`
+                    ELSE 0
+                END AS total_rating
 		FROM estates 
 		JOIN `types` ON `estates`.`types_id` = `types`.`id`
 		JOIN `county` ON `estates`.`county_id` = `county`.`id`
 		JOIN `users` ON `estates`.`user_id` = `users`.`id`
 		JOIN `cities` ON `estates`.`cities_id` = `cities`.`id`
 		LEFT JOIN `marker` ON `estates`.`marker_id` = `marker`.`id`
+                LEFT JOIN (
+                    SELECT 
+                    `es`.`id`,
+                    CASE WHEN FORMAT(SUM(`ra`.`value`)/COUNT(*),1) IS NOT NULL 
+                        THEN FORMAT(SUM(`ra`.`value`)/COUNT(*),1)
+                        ELSE 0 
+                    END AS total_rating
+                    FROM estates AS es
+                    LEFT JOIN `rating` AS `ra` ON `es`.`id` = `ra`.`estates_id`
+                ) AS data_rating ON data_rating.id = estates.id
 		WHERE ' . $where . '
 		HAVING distance < ' . $radius . ' ORDER BY distance LIMIT 0 , 20';
         $data = $this->estates_model->get_by_query($select);

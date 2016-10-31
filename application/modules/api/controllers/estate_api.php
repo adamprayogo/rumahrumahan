@@ -87,7 +87,7 @@ class estate_api extends REST_Controller {
                 $where.=' AND `estates`.`price`=' . $min_price;
             }
             if ($max_price != null && $max_price > 0 && is_numeric($max_price)) {
-                $where.=' AND `estates`.`price`=' . $max_price;
+                $where.=' AND `estates`.`price`<=' . $max_price;
             }
         }
 

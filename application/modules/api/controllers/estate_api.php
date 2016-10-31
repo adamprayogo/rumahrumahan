@@ -319,8 +319,6 @@ class estate_api extends REST_Controller {
                 $types = $this->input->post('types');
                 $content = $this->input->post('content');
                 $county = $this->input->post('county');
-                $lat = $this->input->post('lat');
-                $lng = $this->input->post('lng');
                 $price = $this->input->post('price');
                 $purpose = $this->input->post('purpose');
                 $status = $this->input->post('status');
@@ -341,8 +339,6 @@ class estate_api extends REST_Controller {
                     'types_id' => $types,
                     'content' => $content,
                     'county_id' => $county,
-                    'lat' => $lat,
-                    'lng' => $lng,
                     'price' => $price,
                     'address' => $address,
                     'purpose' => $purpose,
@@ -367,7 +363,7 @@ class estate_api extends REST_Controller {
                 } else {
                     $data_array['time_rate'] = null;
                 }
-            } else {
+            } else if (isset($_POST['lat']) && isset($_POST['lng'])) {
                 //update if just lat lng 
                 $lat = $this->input->post('lat');
                 $lng = $this->input->post('lng');

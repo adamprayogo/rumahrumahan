@@ -35,9 +35,9 @@
 */
 
 // The following values will probably need to be changed.
-$db['default']['username'] = "root";//"u507955849_aku";
-$db['default']['password'] = "";//"ShannyR23";
-$db['default']['database'] = "rumahqu";
+$db['default']['username'] = "root";//"u331966318_admin";
+$db['default']['password'] = "";//"Shanny23";
+$db['default']['database'] = "rumahqu"; //"u331966318_rumaq"
 
 // The following values can probably stay the same.
 $db['default']['hostname'] = "localhost";//"mysql.idhostinger.com";

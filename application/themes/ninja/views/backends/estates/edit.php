@@ -562,14 +562,14 @@ foreach ($marker as $r) {
                 <div class="form-group">
                     <label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_content'); ?></label>
                     <div class="controls col-xs-11">
-                        <textarea rows="10" id="content" name="content" class="form-control"><?php echo strip_tags($obj[0]->description,'<br>'); ?></textarea>
+                        <textarea rows="10" id="content" name="content" class="form-control"><?php echo str_replace("<br />",PHP_EOL,$obj[0]->description); ?></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_description'); ?></label>
                     <div class="controls col-xs-11">
-                        <textarea rows="10" id="description" name="description" class="form-control"><?php echo strip_tags($obj[0]->description,'<br>'); ?></textarea>
+                        <textarea rows="10" id="description" name="description" class="form-control"><?php echo str_replace("<br />",PHP_EOL,$obj[0]->description); ?></textarea>
                     </div>
                 </div>
 

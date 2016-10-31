@@ -156,7 +156,7 @@
                                 if (strlen($obj[0]->description) == 0) {
                                     echo '<p class="text-center">NO DESCRIPTION</p>';
                                 } else {
-                                    echo str_replace("\n", "<br>", $obj[0]->description);
+                                    echo $obj[0]->description;
                                 }
                                 ?>
                             </div>

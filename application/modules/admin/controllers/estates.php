@@ -61,7 +61,7 @@ class estates extends MY_Controller {
             $bathrooms = $this->input->post('bathrooms');
             $bedrooms = $this->input->post('bedrooms');
             $types = $this->input->post('types');
-            $content = strip_tags(nl2br($this->input->post('content')), '<br>'); //preg_replace('/[\r\n]+/', "", 
+            $content = $this->input->post('content'); //preg_replace('/[\r\n]+/', "", 
             $county = $this->input->post('county');
             $lat = $this->input->post('lat');
             $lng = $this->input->post('lng');
@@ -75,7 +75,7 @@ class estates extends MY_Controller {
             $cities_id = $this->input->post('cities');
             $area = $this->input->post('area');
             $marker = $this->input->post('marker');
-            $description = strip_tags(nl2br($this->input->post('content')), '<br>'); //$this->input->post('description');
+            $description = $this->input->post('content'); //$this->input->post('description');
             $keyword = $this->input->post('keyword');
             $link_youtube = $this->input->post('link_youtube');
             $user = $_SESSION['user'][0];
@@ -201,7 +201,7 @@ class estates extends MY_Controller {
             $bathrooms = $this->input->post('bathrooms');
             $bedrooms = $this->input->post('bedrooms');
             $types = $this->input->post('types');
-            $content = strip_tags(nl2br($this->input->post('content')), '<br>');
+            $content = $this->input->post('content');
             $county = $this->input->post('county');
             $lat = $this->input->post('lat');
             $lng = $this->input->post('lng');
@@ -215,7 +215,7 @@ class estates extends MY_Controller {
             $cities_id = $this->input->post('cities');
             $area = $this->input->post('area');
             $marker = $this->input->post('marker');
-            $description = strip_tags(nl2br($this->input->post('content')), '<br>');
+            $description = $this->input->post('content');
             $keyword = $this->input->post('keyword');
             $link_youtube = $this->input->post('link_youtube');
 

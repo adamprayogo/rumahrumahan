@@ -132,9 +132,9 @@ class estate_api extends REST_Controller {
         if ($data != null) {
             $this->estates_model->update_visitor($properties_id);
             $this->response($data);
-        } else {
-            $this->response(array("empty" => 1));
         }
+        
+            $this->response(array("ok" => "1"));
     }
 
     function estates_post() {

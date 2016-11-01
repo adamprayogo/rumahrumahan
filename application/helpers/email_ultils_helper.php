@@ -4,6 +4,7 @@ function send_verified_mail($activation_code, $receive_email) {
     $CI = & get_instance();
     $CI->load->helper('settings');
     $configs = getSettings(EMAIL_SETTING_FILE);
+    $conf_contact = getSettings(CONTACT_INFO_SETTING_FILE);
     $CI->load->library('email', $configs);
     $CI->email->initialize($configs);
     $subject = $CI->lang->line('verified_label');
@@ -20,11 +21,62 @@ function send_verified_code($verified_code, $receive_email) {
     $CI = & get_instance();
     $CI->load->helper('settings');
     $configs = getSettings(EMAIL_SETTING_FILE);
+    $conf_contact = getSettings(CONTACT_INFO_SETTING_FILE);
+    $conf_general = getSettings(GENERAL_SETTING_FILE);
     $CI->load->library('email', $configs);
     $CI->email->initialize($configs);
     $subject = $CI->lang->line('verified_label');
-    $body = '<p>' . $CI->lang->line('verified_code_msg') . '&nbsp;<b>' .
-            $verified_code . '</b><p>';
+    $body = '<html>
+                <head>
+                    <title>Kode Verifikasi</title>
+                </head>
+                <body style="font-family: Arial, Helvetica, sans-serif;">
+                    <div style="width:100%; height:auto;">
+                        <table cellpadding="10" style="table-layout: auto; border-collapse: separate; width: 100%; border:0px;" cellspacing="0">
+                            <thead>
+                                <tr style="background-color: rgba(190, 104, 170, 0.31);">
+                                    <td style=" width: 10%; ">
+                                        <a href="'.  base_url().'"><img src="' . base_url() . '/img/icon/apple-icon-180x180.png" style="width:100px; vertical-align: right; padding-left: 5px;"/></a>
+                                    </td>
+                                    <td style="width:80%;">
+                                        <h1 style="margin-top:auto;margin-bottom: auto; "><a href="#" style="text-decoration:none; color:#8692c9;">'.$conf_general['title'].'</a></h1>
+                                        <p style="margin-top:-1px;"><b>Selamat datang pengguna baru</b></p>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="padding:15px;">
+                                        <div style="max-width: 75%;">
+                                            <p>
+                                                Terima kasih telah bergabung di '.$conf_general['title'].', <p>aktifkan segera profil mu dengan kode aktifasi berikut : <b>'.$verified_code.'</b></p>
+                                            </p>
+                                        </div>
+                                        <br>
+
+                                        <p>
+                                            Salam hangat,
+                                            <br><br>
+                                            <i>Team '.$conf_general['title'].' Development</i>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="background-color: #cfcccc;text-align: center;">
+                                        <small>
+                                            '.$conf_general['copyright'].'
+                                            <br>
+                                            '.$conf_contact['address'].'
+                                        </small>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </body>
+            </html>';
     $result = $CI->email
             ->from($configs['from_email'], $configs['from_user'])
             ->to($receive_email)

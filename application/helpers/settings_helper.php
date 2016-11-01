@@ -44,15 +44,15 @@ if(!$settings){
 
 function resetGeneral(){
 	/*Email settings*/
-	$settings['title']='Lrandomdev.com';
+	$settings['title']='rumaqu.com';
 	$settings['video_link']='';
 	$settings['facebook_fanpage']        = 'https://www.facebook.com/pages/LrandomDev/541746319279638?ref=hl';
 	$settings['twitter']='https://twitter.com/lrandomdev';
 	$settings['google_plus']='https://plus.google.com/u/1/116074713175395496992/posts';
 	$settings['pinterest']='http://www.pinterest.com/lrandomDev';
-	$settings['copyright']='&copy; Copyright 2013 by LrandomDev. All rights reserved.';
+	$settings['copyright']='&copy; Copyright 2016 by AS Digital. All rights reserved.';
 	$settings['desc']='Easy Real Estate, Upload properties, Search Properties, Type Properties';
-	$settings['author']='LrandomDev.com';
+	$settings['author']='rumaqu.com';
 	$settings['keyword']='Easy Real Estate, Upload properties, Search Properties, Type Properties';
 	$settings['ga_code']        = "<script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -95,13 +95,13 @@ function resetEmail(){
 
 function resetContactInfo(){
 	/*Email settings*/
-	$settings['email']         = 'demo@lrandomdev.com';
-	$settings['phone']='012345678';
-	$settings['fax']='012345678';
-	$settings['skype']='lrandomdev';
-	$settings['yahoo']='lrandomdev';
-	$settings['address']='to 32, khu 4a, phuong Ha Phong <br> Ha Long , Quang Ninh';
-	$settings['company']='Lrandomdev.com';
+	$settings['email']         = 'info@rumaqu.com';
+	$settings['phone']='';
+	$settings['fax']='';
+	$settings['skype']='';
+	$settings['yahoo']='';
+	$settings['address']='Jalan Raya Siliwangi No.97 Randegan, Banjar';
+	$settings['company']='AS Digital';
 	/*end email settings*/
 	resetSettings($settings,CONTACT_INFO_SETTING_FILE);
 }

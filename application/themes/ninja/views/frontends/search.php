@@ -135,7 +135,7 @@
                                 <div class="title">' . $item_row->title . '</div>
                                 <div class="desc">Lorem Ipsum Dolor Sir..</div>
                                 <div class="col-md-6 col-xs-6 itm-rating pull-left"><div class="starrr stars-existing" data-rating="' . $rating . '"></div></div>';
-                            if ($item_row->status = 1) {
+                            if ($item_row->status = 0) {
                                 $status = '<b style="color:red; font-size:10px;">FULL</b>';
                             } else {
                                 $status = '<b style="color:green; font-size:10px;">AVAILABLE</b>';

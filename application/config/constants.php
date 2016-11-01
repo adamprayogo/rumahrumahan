@@ -49,8 +49,8 @@ define('KONTRAKAN', 1);
 
 
 /*STATUS*/
-define('SOLD',0);
-define('FEATURED', 1);
+define('FEATURED', 0);
+define('SOLD',1);
 define('FAVORITE',2);
 /*END*/
 

@@ -321,9 +321,8 @@ if ($obj[0]->path == null) {
                     <label class="control-label col-xs-1" for="txtName"><?php echo lang('msg_status'); ?></label>
                     <div class="controls col-xs-11">
                         <select id="status" name="status" class="form-control">
-                            <option value="">-----<?php echo lang('msg_not_set'); ?>-----</option>
                             <option value="<?php echo FEATURED; ?>" <?php if ($obj[0]->status == FEATURED) echo 'selected'; ?>>Available</option>
-                            <option value="<?php echo SOLD; ?>" <?php if ($obj[0]->status == SOLD) echo 'selected'; ?>><?php echo lang('msg_sold'); ?></option>
+                            <option value="<?php echo SOLD; ?>" <?php if ($obj[0]->status == SOLD) echo 'selected'; ?>>Full</option>
                         </select>
                     </div>
                 </div>

@@ -186,7 +186,7 @@ class users_api extends REST_Controller {
             $new_pass = $this->post("new_pass");
             $old_pass = $this->post("old_pass");
             $data = $this->users_model->get_by_id($id);
-
+            
             if ($data[0]->pwd == "") {
                 $new_pass = encrypt_pwd($new_pass);
                 $this->users_model->update(array('pwd' => $new_pass), array('id' => $id));
@@ -254,11 +254,11 @@ class users_api extends REST_Controller {
             //if($user==null){
             $data = array('phone' => $phone, 'address' => $address, 'skype' => $skype);
             $this->users_model->update($data, array('id' => $id));
-            $this->response(array('ok' => '0')); //success update
+            $this->response($this->users_model->get_by_id($id));
             exit();
             //}
         }
-        $this->response(array('ok' => '1')); //success update
+        $this->response(array('empty' => 'empty_data'));
     }
 
     function send_enquiry_post() {

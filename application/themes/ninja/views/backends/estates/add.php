@@ -248,7 +248,7 @@ $default_location = getSettings(DEFAULT_LOCATION_FILE);
                     <div class="controls col-xs-11">
                         <select id="status" name="status" class="form-control">
                             <option value="<?php echo FEATURED; ?>">Available</option>
-                            <option value="<?php echo SOLD; ?>"><?php echo lang('msg_sold'); ?></option>
+                            <option value="<?php echo SOLD; ?>"><?php echo "Full"; ?></option>
                         </select>
                     </div>
                 </div>
